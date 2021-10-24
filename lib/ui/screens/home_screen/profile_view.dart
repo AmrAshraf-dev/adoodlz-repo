@@ -124,7 +124,7 @@ class ProfileView extends StatelessWidget {
                   onTap: () {
                     final appNavProvider =
                         context.read<AppNavigationProvider>();
-                    appNavProvider.pageController.animateToPage(2,
+                    appNavProvider.pageController.animateToPage(1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut);
                     appNavProvider.navigatorIndex = 2;

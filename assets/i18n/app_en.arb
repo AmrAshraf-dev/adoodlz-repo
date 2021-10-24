@@ -636,5 +636,14 @@
     "@sendCodeForgetPassword": {
         "description": "Send Code"
     }
+    "submitted": "Submitted",
+    "@submitted": {
+        "description": "submitted"
+    }
+
+     "expired": "expired",
+    "@expired": {
+        "description": "expired"
+    }
 
 }

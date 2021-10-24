@@ -16,6 +16,7 @@ import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/ui/widgets/floating_support_button.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
+import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
 
 class SigninScreen0 extends StatefulWidget {
   const SigninScreen0();
@@ -80,6 +81,7 @@ class _SigninScreen0State extends State<SigninScreen0>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 const SizedBox(
@@ -91,11 +93,11 @@ class _SigninScreen0State extends State<SigninScreen0>
                 ),
                 //if (languageButton.locale == 'en')
                 Padding(
-                  padding: EdgeInsets.only(
-                      right: width * 0.6, bottom: height * 0.02),
+                  padding: EdgeInsets.only(bottom: height * 0.02),
                   child: Text(
                     AppLocalizations.of(context).mobileNumber,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
 
@@ -104,6 +106,7 @@ class _SigninScreen0State extends State<SigninScreen0>
                   textDirection: TextDirection.ltr,
                   child: Flexible(
                     child: IntlPhoneField(
+                      style: const TextStyle(fontSize: 22),
                       // onChanged: (value) => setState(() {
                       //   print("Country Code ${value.countryISOCode}");
                       //   print("Complete Number ${value.completeNumber}");
@@ -148,12 +151,14 @@ class _SigninScreen0State extends State<SigninScreen0>
                       right: width * 0.6, bottom: height * 0.02),
                   child: Text(
                     AppLocalizations.of(context).password,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: TextFormField(
+                    style: const TextStyle(fontSize: 22),
                     onSaved: (value) => setState(() {
                       _signInInfo['password'] = value;
                     }),
@@ -229,84 +234,104 @@ class _SigninScreen0State extends State<SigninScreen0>
                 const SizedBox(
                   height: 25,
                 ),
-                CustomRaisedButton(
-                  onPressed: () async {
-                    if (_signInFormkey.currentState.validate() && !loading) {
-                      _loginButtonController.forward();
-                      setState(() {
-                        loading = true;
-                      });
-                      _signInFormkey.currentState.save();
-                      _signInInfo['mobile'] = _signInInfo['mobile'].trim();
-                      if (_signInInfo['mobile'].length == 14) {
-                        _signInInfo['mobile'] =
-                            _signInInfo['mobile'].replaceFirst('0', '');
-                      }
+                Center(
+                  child: CustomRaisedButton(
+                    onPressed: () async {
+                      if (_signInFormkey.currentState.validate() && !loading) {
+                        _loginButtonController.forward();
+                        setState(() {
+                          loading = true;
+                        });
+                        _signInFormkey.currentState.save();
+                        _signInInfo['mobile'] = _signInInfo['mobile'].trim();
+                        if (_signInInfo['mobile'].length == 14) {
+                          _signInInfo['mobile'] =
+                              _signInInfo['mobile'].replaceFirst('0', '');
+                        }
 
-                      /// change ip country
-                      if (countryISOCode == 'EG') {
-                        Provider.of<ChangeCountryIpProvider>(context,
-                                listen: false)
-                            .changeToEgypt();
-                      } else if (countryISOCode == 'SA') {
-                        Provider.of<ChangeCountryIpProvider>(context,
-                                listen: false)
-                            .changeToSaudi();
-                      } else {
-                        Provider.of<ChangeCountryIpProvider>(context,
-                                listen: false)
-                            .changeToSaudi();
-                      }
+                        /// change ip country
 
-                      /// ///////////
-                      final signinRequestBody =
-                          SigninRequestBody.fromJson(_signInInfo);
-                      final authProvider =
-                          Provider.of<AuthProvider>(context, listen: false);
-                      try {
-                        final success =
-                            await authProvider.signIn(signinRequestBody);
+                        /// ///////////
+                        final signinRequestBody =
+                            SigninRequestBody.fromJson(_signInInfo);
+                        final authProvider =
+                            Provider.of<AuthProvider>(context, listen: false);
 
-                        //ignore: avoid_print
-                        print('$_signInInfo thisss isss ourrr successss');
+                        print(endpoints.generateOtp);
+                        try {
+                          if (countryISOCode == 'EG') {
+                            await Provider.of<ChangeCountryIpProvider>(context,
+                                    listen: false)
+                                .changeToEgypt();
+                          } else if (countryISOCode == 'SA') {
+                            await Provider.of<ChangeCountryIpProvider>(context,
+                                    listen: false)
+                                .changeToSaudi();
+                          } else {
+                            await Provider.of<ChangeCountryIpProvider>(context,
+                                    listen: false)
+                                .changeToSaudi();
+                          }
+                          final success =
+                              await authProvider.signIn(signinRequestBody);
 
-                        if (success == 'true') {
-                          Provider.of<Dio>(context, listen: false).options =
-                              BaseOptions(headers: {
-                            "Authorization":
-                                "Bearer ${Provider.of<AuthProvider>(context, listen: false).tokenData['token']}"
-                          });
+                          //ignore: avoid_print
+                          print('$_signInInfo thisss isss ourrr successss');
 
-                          Navigator.of(context)
-                              .pushReplacementNamed(Routes.homeScreen);
+                          if (success == 'true') {
+                            Provider.of<Dio>(context, listen: false).options =
+                                BaseOptions(headers: {
+                              "Authorization":
+                                  "Bearer ${Provider.of<AuthProvider>(context, listen: false).tokenData['token']}"
+                            });
 
-                          // if (authProvider.user.status == 'User suspended') {
-                          //   _loginButtonController.reverse();
-                          //   showDialog(
-                          //     context: context,
-                          //     builder: (context) => AlertDialog(
-                          //       title: Text(
-                          //           AppLocalizations.of(context).loginFailed),
-                          //       content: Text(
-                          //           AppLocalizations.of(context).suspended),
-                          //     ),
-                          //   );
-                          //   // ignore: avoid_print
-                          //   print('$_signInInfo holddd');
-                          // }
-                        } else if (success == 'User suspended') {
-                          _loginButtonController.reverse();
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text(AppLocalizations.of(context)
-                                        .loginFailed),
-                                    content: Text(
-                                        AppLocalizations.of(context).suspended),
-                                  ));
-                          // ignore: avoid_print
-                          print('$_signInInfo infooooo');
-                        } else {
+                            Navigator.of(context)
+                                .pushReplacementNamed(Routes.homeScreen);
+
+                            // if (authProvider.user.status == 'User suspended') {
+                            //   _loginButtonController.reverse();
+                            //   showDialog(
+                            //     context: context,
+                            //     builder: (context) => AlertDialog(
+                            //       title: Text(
+                            //           AppLocalizations.of(context).loginFailed),
+                            //       content: Text(
+                            //           AppLocalizations.of(context).suspended),
+                            //     ),
+                            //   );
+                            //   // ignore: avoid_print
+                            //   print('$_signInInfo holddd');
+                            // }
+                          } else if (success == 'User suspended') {
+                            _loginButtonController.reverse();
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text(AppLocalizations.of(context)
+                                          .loginFailed),
+                                      content: Text(AppLocalizations.of(context)
+                                          .suspended),
+                                    ));
+                            // ignore: avoid_print
+                            print('$_signInInfo infooooo');
+                          } else {
+                            _loginButtonController.reverse();
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text(AppLocalizations.of(context)
+                                          .loginFailed),
+                                      content: Text(AppLocalizations.of(context)
+                                          .invalidCredentials),
+                                    ));
+
+                            // ignore: avoid_print
+                            print('$_signInInfo invalid credentials');
+
+                            // ignore: avoid_print
+                            print('$_signInInfo infooooooooooooooooooooosdddd');
+                          }
+                        } catch (e) {
                           _loginButtonController.reverse();
                           showDialog(
                               context: context,
@@ -314,39 +339,23 @@ class _SigninScreen0State extends State<SigninScreen0>
                                     title: Text(AppLocalizations.of(context)
                                         .loginFailed),
                                     content: Text(AppLocalizations.of(context)
-                                        .invalidCredentials),
+                                        .somethingWentWrong),
                                   ));
-
                           // ignore: avoid_print
-                          print('$_signInInfo invalid credentials');
-
-                          // ignore: avoid_print
-                          print('$_signInInfo infooooooooooooooooooooosdddd');
+                          print('$_signInInfo error bad request');
                         }
-                      } catch (e) {
-                        _loginButtonController.reverse();
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text(
-                                      AppLocalizations.of(context).loginFailed),
-                                  content: Text(AppLocalizations.of(context)
-                                      .somethingWentWrong),
-                                ));
-                        // ignore: avoid_print
-                        print('$_signInInfo error bad request');
-                      }
 
-                      Timer(const Duration(milliseconds: 150), () {
-                        setState(() {
-                          loading = false;
+                        Timer(const Duration(milliseconds: 150), () {
+                          setState(() {
+                            loading = false;
+                          });
                         });
-                      });
-                    }
-                  },
-                  label: AppLocalizations.of(context).signIn,
-                  loading: loading,
-                  width: buttonSqueezeAnimation.value,
+                      }
+                    },
+                    label: AppLocalizations.of(context).signIn,
+                    loading: loading,
+                    width: buttonSqueezeAnimation.value,
+                  ),
                 ),
                 UIHelper.verticalSpaceMedium(),
 
