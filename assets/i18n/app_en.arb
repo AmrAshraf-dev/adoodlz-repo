@@ -635,11 +635,12 @@
     "sendCodeForgetPassword": "Send Code",
     "@sendCodeForgetPassword": {
         "description": "Send Code"
-    }
-    "submitted": "Submitted",
+    },
+
+    "submitted": "submitted",
     "@submitted": {
         "description": "submitted"
-    }
+    },
 
      "expired": "expired",
     "@expired": {
