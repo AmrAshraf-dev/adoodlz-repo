@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>611780969641-lmuuqvt360u5n6poevgrrl3u2b00bjvd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.611780969641-lmuuqvt360u5n6poevgrrl3u2b00bjvd</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD8qk5ojt8Svlxb5H_9vuORMNUPKWV9cd0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>611780969641</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.adoodlz.app</string>
+	<key>PROJECT_ID</key>
+	<string>adoodlz</string>
+	<key>STORAGE_BUCKET</key>
+	<string>adoodlz.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:611780969641:ios:8f31939874f1780bd255b8</string>
+	<key>DATABASE_URL</key>
+	<string>https://adoodlz.firebaseio.com</string>
+</dict>
+</plist>

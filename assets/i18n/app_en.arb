@@ -1,0 +1,640 @@
+{
+    "@@locale": "en",
+    "appName": "Application name",
+    "@appName": {
+        "description": "Application name"
+    },
+    "greeting": "Hello, Adoodlz!",
+    "@greeting": {
+        "description": "A greeting used as application title"
+    },
+    "ar" : "العربية",
+    "@ar": {
+        "description": "Arabic locale used for translation button"
+    },
+    "en": "English",
+    "@en": {
+        "description": "English locale used for translation button"
+    },
+    "start": "Start",
+    "@start": {
+        "description": "Used for start button"
+    },
+    "loading": "Loading",
+    "@loading": {
+        "description": "A text to show when the app is loading"
+    },
+    "signIn": "Sign in",
+    "@signIn": {
+        "description": "Sign in prompt"
+    },
+    "mobileNumber": "Mobile Number",
+    "@mobileNumber": {
+        "description": "TextField label for mobile number"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "TextField label for password"
+    },
+    "forgotPassword": "Forgot Password?",
+    "@forgotPassword": {
+        "description": "Forgot password prompt"
+    },
+    "signUp": "Sign Up Now",
+    "@signUp": {
+        "description": "Sign up prompt"
+    },
+    "home": "Home",
+    "@home": {
+        "description": "Home page"
+    },
+    "fieldRequired": "This field is required",
+    "@fieldRequired": {
+        "description": "A validation message for required fields"
+    },
+    "invalidPhone": "Please enter a valid phone",
+    "@invalidPhone": {
+        "description": "A validation message for invalid phone"
+    },
+    "fieldMinimum": "{count, plural, other{This field can't be less than {count} letters}}",
+    "@fieldMinimum": {
+        "description": "A validation message for minimum letters field",
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "createAccount": "CREATE ACCOUNT\n\nRESET PASSWORD",
+    "@createAccount": {
+        "description": "Create account screen header"
+    },
+    "enterMobileNumber": "Enter Your Mobile Number To Create Account",
+    "@enterMobileNumber": {
+        "description": "Create account screen phone prompt"
+    },
+    "weWillSendOtp": "We Will Send You One Time Password",
+    "@weWillSendOtp": {
+        "description": "A description for what will happen after user enters phone"
+    },
+    "send": "Send",
+    "@send": {
+        "description": "Send prompt"
+    },
+    "verifyAccount": "VERIFY ACCOUNT",
+    "@verifyAccount": {
+        "description": "Create account screen header"
+    },
+    "mobileVerificationOngoing": "Confirm phone number",
+    "@mobileVerificationOngoing": {
+        "description": "A description of what's going on in verify account screen"
+    },
+    "otpWillBeSent": "Enter the 4-digit code that was sent to the number ",
+    "@otpWillBeSent": {
+        "description": "A description of what's going on in verify account screen",
+        "placeholders": {
+            "mobileNumber": {
+                "type": "String",
+                "example": "+20 12 7706 3688"
+            }
+        }
+    },
+    "otpNotReceived": "If You Didn't Receive a Code",
+    "@otpNotReceived": {
+        "description": "Prompt for if the user didn't receive the OTP code"
+    },
+    "resend": "Resend",
+    "@resend": {
+        "description": ""
+    },
+    "verify": "Confirm",
+    "@verify": {
+        "description": "Verify prompt"
+    },
+    "invalidOtp": "Please enter a valid OTP",
+    "@invalidOtp": {
+        "description": "A validation message for invalid OTP"
+    },
+    "putSearchWord": "Search...",
+    "@putSearchWord": {
+        "description": "Label for search field in posts view"
+    },
+    "categories": "Categories",
+    "@categories": {
+        "description": "The categories that classify posts"
+    },
+    "yourWallet": " Wallet",
+    "@yourWallet": {
+        "description": "The user wallet's header"
+    },
+    "totalPoints": "Available Points",
+    "@totalPoints": {
+        "description": "The total points in user's balance"
+    },
+    
+    "expectedValue": "Expected Value for available points",
+    "@expectedValue": {
+        "description": "Expected Value for available points"
+    },
+
+    "getItCash": "Get it as Cash",
+    "@getItCash": {
+        "description": "Going to getCash screen"
+    },
+
+    "getCashHere": "get cash here",
+    "@getCashHere": {
+        "description": "Get it as cash button prompt"
+    },
+
+    "from": "From",
+    "@from": {
+
+    },
+    "yourProfile": "Your Profile",
+    "@yourProfile": {
+        "description": "The user profile's header"
+    },
+    "inviteFriend": "Invite Friend",
+    "@inviteFriend": {
+        "description": "Invite a friend prompt"
+    },
+    "language": "Change Language",
+    "@language": {
+        "description": "Label for changing language button"
+    },
+    "editYourData": "Edit Your Data",
+    "@editYourData": {
+        "description": "Edit your data prompt"
+    },
+    "signout": "Signout",
+    "@signout": {
+        "description": "Signout prompt"
+    },
+    "inviteFriendIncentive": "Give A Friend 20 Points, And Get 20 Points When You invite Him",
+    "@inviteFriendIncentive": {
+        "description": "The incentive for inviting a friend"
+    },
+    "inviteContacts": "Invite Contacts",
+    "@inviteContacts": {
+        "description": "Invite contacts prompt"
+    },
+    "or": "or",
+    "@or": {
+        "description": "The word or"
+    },
+    "shareAccountLink": "Enter referral code and claim your points",
+    "@shareAccountLink": {
+        "description": "Share your account link prompt"
+    },
+    "noPosts": "No posts found",
+    "@noPosts": {
+        "description": "Text to show when there are no posts found"
+    },
+    "termsAndConditions": "Terms & Conditions",
+    "@termsAndConditions": {
+        "description": "Terms and conditions prompt"
+    },
+    "points": "Points",
+    "@points": {
+        "description": "short form for points"
+    },
+    "completeProcess": "Complete",
+    "@completeProcess": {
+        "description": "Complete gift process prompt"
+    },
+    "back": "Back",
+    "@back": {
+        "description": "The word back"
+    },
+    "share": "Share",
+    "@share": {
+        "description": "The word share"
+    },
+    "tags": "Tags",
+    "@tags": {
+        "description": "The word tags"
+    },
+    "status": "Status",
+    "@status": {
+        "description": "The word status"
+    },
+    "aboutUs": "About Us",
+    "@aboutUs": {
+        "description": "About us header and prompt"
+    },
+    "confirmPassword": "Confirm Password",
+    "@confirmPassword": {
+        "description": "TextField label for password confirmation"
+    },
+    "signupShort": "Sign up",
+    "@signupShort": {
+        "description": "Sign up prompt"
+    },
+    "aboutYou": "Introduce Yourself",
+    "@aboutYou": {
+        "description": "Introduction Field label"
+    },
+    "loginFailed": "Sign-in Failed",
+    "@loginFailed": {
+        "description": "Sign-in failed header"
+    },
+    "invalidCredentials": "Invalid credentials, check and try again",
+    "@invalidCredentials": {
+        "description": "Sign-in failed body"
+    },
+    "somethingWentWrong": "Something went wrong, please try again later",
+    "@somethingWentWrong": {
+        "description": "Sign-in failed body"
+    },
+    "cantAffiliateYourSelf": "Please enter your friend code who invited you, not your code",
+    "@cantAffiliateYourSelf": {
+        "description": "Sign-in failed body"
+    },
+    "processFailure": "Process failed",
+    "@processFailure": {
+        "description":  "Proccess failed header"
+    },
+    "insufficientBalance": "You don't have enough balance to complete the process",
+    "@insufficientBalance": {
+        "description": "Procces failed body for when balance is not enough"
+    },
+    "referralLinkCopied": "Referral link was copied successfully!",
+    "@referralLinkCopied": {
+        "description": "snackbar data for when referral link is copied"
+    },
+    "pointsAlreadyClaimed": "You have claimed the points already!",
+    "@pointsAlreadyClaimed": {
+        "description": "points already claimed "
+    },
+    "name": "Name",
+    "@name": {
+        "description": "name"
+    },
+    "availableInKSA": "Alpha version is only available in KSA",
+    "@availableInKSA": {},
+    "passwordMismatch": "Passwords have to match",
+    "@passwordMismatch": {},
+    "inviteFriendPrompt": "Download Adoodlz app from https://adoodlz.com and enter my code {code} so we can both earn 20 points which we can claim as gifts or money through the app!",
+    "@inviteFriendPrompt": {
+        "description": "The Prompt for inviting a friend",
+        "placeholders": {
+            "code": {
+                "type": "String",
+                "example": "fd1243kg12o"
+            }
+        }
+    },
+    "claimNow": "Redeem",
+    "@claimNow": {
+        "description": "Redeem it now prompt"
+    },
+    "aboutApp": "Get rewarded for sharing media & offers from brands you care about. You get paid for each shared media. Plus you also got paid for each verified visits to the brand page that comes from your shares up to $0.1, imagine how many visits you can get!",
+    "@aboutApp": {
+        "description": "About app text"
+    },
+    "confirm": "Confirm",
+    "@confirm": {
+        "description": "Confirm prompt"
+    },
+    "youCanViewIt": "You can view it",
+    "@youCanViewIt": {},
+    "clickingHere": "by clicking here",
+    "@clickingHere": {},
+    "profilePicture": "Profile picture",
+    "@profilePicture": {},
+    "pickPicture": "Pick a picture",
+    "@pickPicture": {},
+    "pictureSuccess": "Picture picked successfully",
+    "@pictureSuccess": {},
+    "pictureFailure": "Picture picking failed!",
+    "@pictureFailure": {},
+    "skip": "Skip",
+    "@skip": {},
+    "homeCoach": "You can checkout and share ads to get points and rewards!",
+    "@homeCoach": {},
+    "inviteFriendsCoach": "Through inviting your friends you can both get rewarded for each invitation you make!",
+    "@inviteFriendsCoach": {},
+    "yourWalletCoach": "You can check your balance and redeem your points as cash or gifts!",
+    "@yourWalletCoach": {},
+    "yourProfileCoach": "You can check out and edit your profile, change app settings and checkout our terms & conditions",
+    "@yourProfileCoach": {},
+    "processSuccess": "Process completed successfully",
+    "@processSuccess": {},
+    "giftUsageSucces": "Gift requested successfully, we will get back to you ass soon as possible",
+    "@giftUsageSucces": {},
+    "test2": "test2",
+    "@test2": {},
+    "update": "Update Available",
+    "@update": {
+        "description": "Update app"
+    },
+    "maybeLater": "Maybe Later",
+    "@maybeLater": {
+        "description": "cancel updating"
+    },
+    "updateAvailable": "Update",
+    "@updateAvailable": {
+        "description": "Update Available"
+    },
+    "dialogText": "You can now update this app to the new version",
+    "@dialogText": {
+        "description": "You can now update this app to the new version"
+    },
+    "registerMessage": "We will register your mobile number through whats app first , you cant use some features before that",
+    "@registerMessage": {
+        "description": "registiration message attention"
+    },
+    "notVerfied": "Your Account is not verfied please verify your account through here https://wa.me/966580495019?text=verify",
+    "@notVerfied": {
+        "description": "verify your account"
+    },
+
+     "changePassword": "Change Password",
+    "@changePassword": {
+        "description": "changing your password"
+    },
+
+     "newPassword": "new password",
+    "@newPassword": {
+        "description": "putting your new password"
+    },
+
+    "notVerfied2": "Your Account is not verfied to verify your account click here",
+    "@notVerfied2": {
+        "description": "Your Account is not verfied to verify your account click here"
+    },
+    
+    "accountVerification": "Account Verification",
+    "@accountVerification": {
+        "description": "Account Verification"
+    },
+    "verifyAccountAgain": "Verify",
+    "@verifyAccountAgain": {
+        "description": "Account Verification"
+    },
+
+    "account_not_verified": "This Account Not Verified",
+    "@account_not_verified": {
+        "description": "Account Verification"
+    },
+    "account_verified": "This Account  Verified",
+    "@account_verified": {
+        "description": "Account Verification"
+    },
+   
+   "waitingBalance": "Under process\n points",
+    "@waitingBalance": {
+        "description": "Under processing points"
+    },
+
+    "invitePersonCode": "Enter the code of the person who invited you",
+    "@invitePersonCode": {
+        "description": "Enter the code of the person who invited you"
+    },
+
+
+    "signOut": "Signing Out....",
+    "@signOut": {
+        "description": "Force Sign Out"
+    },
+
+    "suspended": "Your account has been frozen\nFor more information, you can contact customer service",
+    "@suspended": {
+        "description": "Your account is suspended please connect with customer service for activation"
+    },
+
+     "linkVisit": "You will get points for every new person visits the link",
+    "@linkVisit": {
+        "description": "You will get points for every new person visits the link"
+    },
+
+
+    "userName": "User Name",
+    "@userName": {
+        "description": "User Name"
+    },
+
+    "eMail": "EMail",
+    "@eMail": {
+        "description": "EMail"
+    },
+    "referralUser": "Referral User",
+    "@referralUser": {
+        "referralUser": "Referral User"
+    },
+    "mobilePhone": "Mobile Phone",
+    "@mobilePhone": {
+        "description": "mobilePhone"
+    },
+    "address": "Address",
+    "@address": {
+        "description": "address"
+    },
+    "agreeTerms": "You Should Agree to the terms and conditions",
+    "@agreeTerms": {
+        "description": "address"
+    },
+    "readTerms": "I have read the  ",
+    "@readTerms": {
+        "description": "address"
+    },
+    "agreeTheTerms": "and agree to them",
+    "@agreeTheTerms": {
+        "description": "address"
+    },
+    "haveAccount": "I Have An Account? ",
+    "@haveAccount": {
+        "description": "have Have Account"
+    },
+    "enterCode": "Enter your Code ",
+    "@enterCode": {
+        "description": "Enter your Code"
+    },
+    "sendCode": "Send",
+    "@sendCode": {
+        "description": "Send"
+    },
+
+    "shopNow": "Shop Now",
+    "@shopNow": {
+        "description": "Shop Now"
+    },
+    "edit": "EDIT",
+    "@edit": {
+        "description": "EDIT"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings"
+    },
+    "tasks": "Tasks",
+    "@tasks": {
+        "description": "Tasks"
+    },
+    "helpCenter": "Help Center",
+    "@helpCenter": {
+        "description": "Help Center"
+    },
+
+    "showTask": "Submit",
+    "@showTask": {
+        "description": "Show Task"
+    },
+
+     "chooseLanguage": "Choose your language",
+    "@chooseLanguage": {
+        "description": "Choose your language"
+    },
+
+     "dontHaveAccount": "Don't have an acoount?",
+    "@dontHaveAccount": {
+        "description": "Dont have an acoount?"
+    },
+
+    "resendCode": "Resend the code",
+    "@resendCode": {
+        "description": "Resend the code"
+    },
+
+    "sendCodeSuccess": "The code has been sent successfully",
+    "@sendCodeSuccess": {
+        "description": "The code has been sent successfully"
+    },
+    "upload": "Upload",
+    "@upload": {
+        "description": "Upload"
+    },
+
+    "returnPage": "Return",
+    "@returnPage": {
+        "description": "Return"
+    },
+    "imageOfProof": "Image of Proof",
+    "@imageOfProof": {
+        "description": "Image of Proof"
+    },
+    "referenceUrl": "Reference (URL)",
+    "@referenceUrl": {
+        "description": "Reference (URL)"
+    },
+    "socialMediaUrl": "Social Media (URL)",
+    "@socialMediaUrl": {
+        "description": "Social Media (URL)"
+    },
+    "note": "Note",
+    "@note": {
+        "description": "Note"
+    },
+    "submitTask": "Submit",
+    "@submitTask": {
+        "description": "Submit"
+    },
+
+    "hi": "Hi, ",
+    "@hi": {
+        "description": "hi"
+    },
+
+      "welcomeInAdoodlz": "Welcome in Adoodlz",
+    "@welcomeInAdoodlz": {
+        "description": "Welcome in adoodlz Text"
+    },
+
+    "description": "Description",
+    "@description": {
+        "description": "Description"
+    },
+
+    "showMore": "Show More",
+    "@showMore": {
+        "description": "Show More"
+    },
+
+    "showLess": "Show Less",
+    "@showLess": {
+        "description": "Show Less"
+    },
+
+    "noTasks": "No Tasks",
+    "@noTasks": {
+        "description": "No Tasks"
+    },
+
+    "second": "second",
+    "@second": {
+        "description": "Second"
+    },
+    "minute": "minute",
+    "@minute": {
+        "description": "minute"
+    },
+    "hour": "hour",
+    "@hour": {
+        "description": "hour"
+    },
+    "day": "day",
+    "@day": {
+        "description": "day"
+    },
+
+    "pointsTask": "Points :",
+    "@pointsTask": {
+        "description": "Points"
+    },
+
+    "taskEndTime": "End :",
+    "@taskEndTime": {
+        "description": "End After"
+    },
+
+    "tasksCoach": "You can submit tasks and earn more points and more",
+    "@tasksCoach": {
+        "description": "You can submit tasks and earn more points and more"
+    },
+
+
+     "share2": "Share",
+    "@share2": {
+        "description": "Share"
+    },
+
+    "points2": "5 Points",
+    "@points2": {
+        "description": "Points"
+    },
+
+    "app": "App",
+    "@app": {
+        "description": "App"},
+
+    "fieldsRequired": "Some fields required not completed",
+    "@fieldsRequired": {
+        "description": "Some fields required not completed"
+
+    },
+
+     "selectCountry": "Select Country",
+    "@selectCountry": {
+        "description": "Select Country"
+        },
+
+         "saudiArabia": "Saudi Arabia",
+         "@saudiArabia": {
+        "description": "Saudi Arabia"
+        },
+
+         "egypt": "Egypt",
+        "@egypt": {
+        "description": "Egypt"
+        },
+
+    "forgetPassword": "Enter The Phone Number To Reset Password",
+    "@forgetPassword": {
+        "description": "Enter The Phone Number To Reset Password"
+    },
+
+    "sendCodeForgetPassword": "Send Code",
+    "@sendCodeForgetPassword": {
+        "description": "Send Code"
+    }
+
+}

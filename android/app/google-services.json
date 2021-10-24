@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "611780969641",
+    "firebase_url": "https://adoodlz.firebaseio.com",
+    "project_id": "adoodlz",
+    "storage_bucket": "adoodlz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611780969641:android:0995eec42d7670a9d255b8",
+        "android_client_info": {
+          "package_name": "com.adoodlz.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611780969641-nfs8f3ffnd3tsa8kp3es1vg5uv939107.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_k2pFTXPMxEXWsQbf8FhDN0eSktrD6xk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611780969641-nfs8f3ffnd3tsa8kp3es1vg5uv939107.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
