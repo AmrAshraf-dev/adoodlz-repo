@@ -1,4 +1,5 @@
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
+import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
 import 'package:adoodlz/data/remote/apis/auth_api.dart';
 import 'package:adoodlz/helpers/ui/navigation_provider.dart';
 import 'package:adoodlz/helpers/ui/ui_helpers.dart';
@@ -15,6 +16,9 @@ import 'package:provider/provider.dart';
 class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final getCountry =
+        Provider.of<ChangeCountryIpProvider>(context, listen: false);
+
     final authProvider = Provider.of<AuthProvider>(
       context, /*listen: false*/
     );
@@ -120,29 +124,54 @@ class ProfileView extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                ListTile(
-                  onTap: () {
-                    final appNavProvider =
-                        context.read<AppNavigationProvider>();
-                    appNavProvider.pageController.animateToPage(1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut);
-                    appNavProvider.navigatorIndex = 2;
-                  },
-                  leading: const Icon(MyCustomIcons2.invite_friend_icon,
-                      color: Color(0xFFDE608F)),
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.grey,
-                    size: 20.0,
+                if (getCountry.countryName == 'SA')
+                  ListTile(
+                    onTap: () {
+                      final appNavProvider =
+                          context.read<AppNavigationProvider>();
+                      appNavProvider.pageController.animateToPage(2,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut);
+                      appNavProvider.navigatorIndex = 2;
+                    },
+                    leading: const Icon(MyCustomIcons2.invite_friend_icon,
+                        color: Color(0xFFDE608F)),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                      size: 20.0,
+                    ),
+                    dense: true,
+                    title: Text(AppLocalizations.of(context).inviteFriend,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontWeight: FontWeight.w400)),
                   ),
-                  dense: true,
-                  title: Text(AppLocalizations.of(context).inviteFriend,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5
-                          .copyWith(fontWeight: FontWeight.w400)),
-                ),
+                if (getCountry.countryName == 'EG')
+                  ListTile(
+                    onTap: () {
+                      final appNavProvider =
+                          context.read<AppNavigationProvider>();
+                      appNavProvider.pageController.animateToPage(1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut);
+                      appNavProvider.navigatorIndex = 2;
+                    },
+                    leading: const Icon(MyCustomIcons2.invite_friend_icon,
+                        color: Color(0xFFDE608F)),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                      size: 20.0,
+                    ),
+                    dense: true,
+                    title: Text(AppLocalizations.of(context).inviteFriend,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontWeight: FontWeight.w400)),
+                  ),
                 const Divider(
                   color: Color(0xFFCCDCDC),
                   thickness: 1.0,

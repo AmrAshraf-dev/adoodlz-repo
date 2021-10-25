@@ -277,7 +277,7 @@ class _SigninScreen0State extends State<SigninScreen0>
 
                           //ignore: avoid_print
                           print('$_signInInfo thisss isss ourrr successss');
-
+                          print(endpoints.baseUrl);
                           if (success == 'true') {
                             Provider.of<Dio>(context, listen: false).options =
                                 BaseOptions(headers: {
