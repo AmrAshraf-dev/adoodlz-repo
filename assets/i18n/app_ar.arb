@@ -152,5 +152,13 @@
     "saudiArabia": "السعودية",
     "egypt": "مصر",
     "forgetPassword": "ادخل رقم الهاتف لاستعاده كلمه السر",
-    "sendCodeForgetPassword": "ارسال الرمز"
+    "sendCodeForgetPassword": "ارسال الرمز",
+    "submitted":" تم",
+    "expired":" انتهت",
+    "changeYourPassword ":"قم بتغير كلمة السر  ",
+    "wrongOtp" :" خطا فى رمز الادخال"
 }
+
+
+
+

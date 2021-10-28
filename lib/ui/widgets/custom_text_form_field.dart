@@ -41,7 +41,8 @@ class CustomTextFormField extends StatelessWidget {
       this.textEditingController,
       this.readOnly,
       this.height,
-      this.textDirection,this.initialValue});
+      this.textDirection,
+      this.initialValue});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class CustomTextFormField extends StatelessWidget {
           readOnly: readOnly ?? false,
           controller: textEditingController,
           maxLines: maxLines,
-          style: const TextStyle(color: Colors.black,),
+          style: const TextStyle(color: Colors.black, fontSize: 22),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(
               top: 10,
@@ -84,7 +85,7 @@ class CustomTextFormField extends StatelessWidget {
             //contentPadding: EdgeInsets.all(15.0),
             border: InputBorder.none,
             filled: true,
-            fillColor: filledColor ??Theme.of(context).scaffoldBackgroundColor,
+            fillColor: filledColor ?? Theme.of(context).scaffoldBackgroundColor,
           ),
           // ignore: avoid_bool_literals_in_conditional_expressions
           obscureText: isPassword ? true : false,

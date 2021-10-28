@@ -1,3 +1,4 @@
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
@@ -8,6 +9,8 @@ import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/themes/theme.dart';
 import 'package:adoodlz/providers_setup.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +32,26 @@ Future<void> main() async {
       builder: (_, __) => MultiProvider(providers: providers, child: MyApp())));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void removeshared() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.remove(resetPasswordTokenKey);
+    await preferences.remove(resetPasswordIdKey);
+
+    print(preferences.getString(resetPasswordTokenKey));
+  }
+
+  void initState() {
+    removeshared();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,7 +59,7 @@ class MyApp extends StatelessWidget {
       title: 'Adoodlz App',
       theme: appTheme.copyWith(
           //highlightColor: Color(0xffffc600),
-        //scaffoldBackgroundColor: Colors.white,
+          //scaffoldBackgroundColor: Colors.white,
           textTheme: appTheme.textTheme.apply(
               fontFamily:
                   context.watch<LocalizationsProvider>().locale.languageCode ==

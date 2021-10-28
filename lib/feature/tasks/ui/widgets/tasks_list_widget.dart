@@ -328,7 +328,9 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                                           .width *
                                                                       .22,
                                                                   child: Text(
-                                                                    'Expired',
+                                                                    AppLocalizations.of(
+                                                                            context)
+                                                                        .expired,
                                                                     overflow:
                                                                         TextOverflow
                                                                             .ellipsis,
@@ -354,9 +356,10 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                                           .size
                                                                           .width *
                                                                       .25,
-                                                                  child:
-                                                                      const Text(
-                                                                    'Submitted',
+                                                                  child: Text(
+                                                                    AppLocalizations.of(
+                                                                            context)
+                                                                        .submitted,
                                                                     overflow:
                                                                         TextOverflow
                                                                             .ellipsis,
