@@ -107,6 +107,7 @@ class _SigninScreen0State extends State<SigninScreen0>
                   child: Flexible(
                     child: IntlPhoneField(
                       style: const TextStyle(fontSize: 22),
+
                       // onChanged: (value) => setState(() {
                       //   print("Country Code ${value.countryISOCode}");
                       //   print("Complete Number ${value.completeNumber}");
@@ -115,9 +116,11 @@ class _SigninScreen0State extends State<SigninScreen0>
                         _signInInfo['mobile'] = value.completeNumber;
                         countryISOCode = value.countryISOCode;
                       }),
-                      initialCountryCode: 'SA',
+                      initialCountryCode: 'EG',
                       autoValidate: false,
                       decoration: InputDecoration(
+                        hintText: '1xxxxxxxxx',
+                        hintStyle: TextStyle(color: Colors.grey.shade300),
                         contentPadding: const EdgeInsets.only(
                           top: 15,
                           bottom: 5,
@@ -147,8 +150,7 @@ class _SigninScreen0State extends State<SigninScreen0>
 
                 UIHelper.verticalSpaceMedium(),
                 Padding(
-                  padding: EdgeInsets.only(
-                      right: width * 0.6, bottom: height * 0.02),
+                  padding: EdgeInsets.only(bottom: height * 0.02),
                   child: Text(
                     AppLocalizations.of(context).password,
                     style: const TextStyle(
@@ -363,9 +365,11 @@ class _SigninScreen0State extends State<SigninScreen0>
                   future: PackageInfo.fromPlatform(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Text(
-                        'V ${snapshot.data.version}',
-                        style: Theme.of(context).textTheme.subtitle2,
+                      return Center(
+                        child: Text(
+                          'V ${snapshot.data.version}',
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
                       );
                     } else {
                       return Container();

@@ -4,8 +4,11 @@ import 'package:adoodlz/data/remote/dio_client.dart';
 import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
 import 'package:adoodlz/data/remote/interfaces/i_auth_api.dart';
 import 'package:adoodlz/exceptions/fetch_exception.dart';
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthApi implements IAuthApi {
   final DioClient _dioClient;
@@ -181,4 +184,101 @@ class AuthApi implements IAuthApi {
       rethrow;
     }
   }
+
+  // Future<String> resetPassword(String mobile) async {
+  //   try {
+  //     // formData.remove('password_confirmation');
+  //     // debugPrint('this our Data live ${formData.toString()}');
+  //     //final formDataToSend = FormData.fromMap(formData);
+
+  //     //debugPrint('this our Data ${formDataToSend.toString()}');
+
+  //     var response = await http.post(
+  //         Uri.parse('https://adoodlz.herokuapp.com/otp/forget/password'),
+  //         body: {'mobile': mobile});
+  //     print(endpoints.forgetPassword);
+  //     if (response.statusCode == 200) {
+  //       // print(jsonDecode(response.body));
+  //       final body = response.body;
+
+  //       // SharedPreferences pref = await SharedPreferences.getInstance();
+  //       // pref.setString(resetPasswordTokenKey, resetPasswordToken);
+
+  //       return body;
+  //     }
+  //     throw Error();
+
+  //     // if (response['sent'] != null && response['sent'] as bool) {
+  //     //   print('method Success');
+  //     //   print(response['_id'] as String);
+  //     //   return response['_id'] as String;
+  //     // } else {
+  //     //   throw NetworkErrorException();
+  //     // }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  // @override
+  // Future<String> reset(Map<String, dynamic> resetData) async {
+  //   // TODO: implement reset
+  //   try {
+  //     // formData.remove('password_confirmation');
+  //     // debugPrint('this our Data live ${formData.toString()}');
+  //     //final formDataToSend = FormData.fromMap(formData);
+
+  //     //debugPrint('this our Data ${formDataToSend.toString()}');
+  //     final formDataToSend = FormData.fromMap(resetData);
+
+  //     var response = await http.post(
+  //         Uri.parse('https://adoodlz.herokuapp.com/otp/forget/password'),
+  //         body: formDataToSend);
+  //     print(endpoints.forgetPassword);
+  //     if (response.statusCode == 200) {
+  //       // print(jsonDecode(response.body));
+  //       final body = response.body;
+
+  //       // SharedPreferences pref = await SharedPreferences.getInstance();
+  //       // pref.setString(resetPasswordTokenKey, resetPasswordToken);
+
+  //       return body;
+  //     }
+  //     throw Error();
+
+  //     // if (response['sent'] != null && response['sent'] as bool) {
+  //     //   print('method Success');
+  //     //   print(response['_id'] as String);
+  //     //   return response['_id'] as String;
+  //     // } else {
+  //     //   throw NetworkErrorException();
+  //     // }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+
+  // @override
+  // Future<String> reset(Map<String, dynamic> formData) async {
+  //   try {
+  //     formData.remove('password_confirmation');
+  //     debugPrint('this our Data live ${formData.toString()}');
+  //     final formDataToSend = FormData.fromMap(formData);
+
+  //     debugPrint('this our Data ${formDataToSend.toString()}');
+
+  //     final dynamic response =
+  //         await _dioClient.post(endpoints.generateOtp, data: formDataToSend);
+  //     print('our response Data${response.toString()}');
+  //     if (response['sent'] != null && response['sent'] as bool) {
+  //       print('method Success');
+  //       print(response['_id'] as String);
+  //       return response['_id'] as String;
+  //     } else {
+  //       throw NetworkErrorException();
+  //     }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
 }

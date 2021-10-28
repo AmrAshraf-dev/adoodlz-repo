@@ -414,6 +414,8 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                           ? () {}
                           : () async {
                               formData['mobile'] = widget.mobileNumber;
+                              formData['password'] = widget.password;
+                              formData['id'] = widget.id;
                               _startTimer();
                               try {
                                 final id = await Provider.of<AuthProvider>(
@@ -422,6 +424,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                     .resendOtpCode(formData);
                                 if (id != null || id.isEmpty) {
                                   print('send Success');
+                                  print(id);
                                 } else {
                                   showDialog(
                                       context: context,

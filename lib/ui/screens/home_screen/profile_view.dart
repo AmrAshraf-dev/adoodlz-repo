@@ -1,6 +1,7 @@
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
 import 'package:adoodlz/data/remote/apis/auth_api.dart';
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/helpers/ui/navigation_provider.dart';
 import 'package:adoodlz/helpers/ui/ui_helpers.dart';
 import 'package:adoodlz/routes/router.dart';
@@ -54,9 +55,22 @@ class ProfileView extends StatelessWidget {
               Center(
                 child: Consumer<AuthProvider>(
                   builder: (context, provider, _) => Text(
-                    provider.user.name ?? '',
+                    provider.user.name.capitalize() ?? '',
                     style: const TextStyle(
                         fontSize: 30.0, fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Center(
+                child: Consumer<AuthProvider>(
+                  builder: (context, provider, _) => Text(
+                    provider.user.mobile ?? '',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey.shade600),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -156,7 +170,7 @@ class ProfileView extends StatelessWidget {
                       appNavProvider.pageController.animateToPage(1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut);
-                      appNavProvider.navigatorIndex = 2;
+                      appNavProvider.navigatorIndex = 1;
                     },
                     leading: const Icon(MyCustomIcons2.invite_friend_icon,
                         color: Color(0xFFDE608F)),

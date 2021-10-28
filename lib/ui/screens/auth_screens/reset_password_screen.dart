@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
+import 'package:adoodlz/data/remote/apis/reset_password_api.dart';
 import 'package:adoodlz/feature/change_passwrod/providers/change_password_provider.dart';
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/helpers/ui/app_colors.dart';
 import 'package:adoodlz/helpers/ui/ui_helpers.dart';
 import 'package:adoodlz/ui/widgets/custom_raised_button.dart';
@@ -11,12 +13,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class ChangePasswordScreen extends StatefulWidget {
+class ResetPasswordScreen extends StatefulWidget {
+  final String otp;
+
+  const ResetPasswordScreen({Key key, @required this.otp}) : super(key: key);
   @override
-  _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
+  _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
 
-class _ChangePasswordScreenState extends State<ChangePasswordScreen>
+class _ResetPasswordScreenState extends State<ResetPasswordScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _changePasswordFormKey = GlobalKey<FormState>();
   bool loading;
@@ -96,8 +101,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
               children: [
                 /// new password
                 Text(
-                  AppLocalizations.of(context).changeYourPassword,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  AppLocalizations.of(context).changePassword,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 Container(
@@ -215,65 +221,83 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
                 ),
                 CustomRaisedButton(
                   onPressed: () async {
+                    print(_newPasswordController.text);
+                    print(resetPasswordToken);
+                    print(widget.otp);
+                    ResetPasswordApi reset = ResetPasswordApi();
                     if (_changePasswordFormKey.currentState.validate() &&
                         !loading) {
                       _changePasswordButtonController.forward();
                       setState(() {
                         loading = true;
                       });
-                      _changePasswordFormKey.currentState.save();
-
-                      try {
-                        final userId =
-                            Provider.of<AuthProvider>(context, listen: false)
-                                .user
-                                .id;
-                        final Map<String, dynamic> formData = {
-                          'id': userId,
-                          'password': _newPassword,
-                        };
-                        final success =
-                            await Provider.of<ChangePasswordProvider>(context,
-                                    listen: false)
-                                .changePassword(formData);
-
-                        print('this result $success');
-
-                        if (success) {
-                          Navigator.of(context).pop();
-                        } else {
-                          _changePasswordButtonController.reverse();
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text(AppLocalizations.of(context)
-                                        .processFailure),
-                                    content: Text(AppLocalizations.of(context)
-                                        .somethingWentWrong),
-                                  ));
-                        }
-                      } catch (e) {
-                        _changePasswordButtonController.reverse();
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text(AppLocalizations.of(context)
-                                      .processFailure),
-                                  content: Text(AppLocalizations.of(context)
-                                      .somethingWentWrong),
-                                ));
-                      }
-
-                      Timer(const Duration(milliseconds: 150), () {
-                        setState(() {
-                          loading = false;
-                        });
-                      });
-                    } else {
-                      setState(() {
-                        _autoValidate = true;
-                      });
                     }
+                    _changePasswordFormKey.currentState.save();
+
+                    reset.requestNewPassword(
+                        context: context,
+                        password: _newPasswordController.text,
+                        token: resetPasswordToken);
+
+                    // if (_changePasswordFormKey.currentState.validate() &&
+                    //     !loading) {
+                    //   _changePasswordButtonController.forward();
+                    //   setState(() {
+                    //     loading = true;
+                    //   });
+                    //   _changePasswordFormKey.currentState.save();
+
+                    //   try {
+                    //     final userId =
+                    //         Provider.of<AuthProvider>(context, listen: false)
+                    //             .user
+                    //             .id;
+                    //     final Map<String, dynamic> formData = {
+                    //       'id': userId,
+                    //       'password': _newPassword,
+                    //     };
+                    //     final success =
+                    //         await Provider.of<ChangePasswordProvider>(context,
+                    //                 listen: false)
+                    //             .changePassword(formData);
+
+                    //     print('this result $success');
+
+                    //     if (success) {
+                    //       Navigator.of(context).pop();
+                    //     } else {
+                    //       _changePasswordButtonController.reverse();
+                    //       showDialog(
+                    //           context: context,
+                    //           builder: (context) => AlertDialog(
+                    //                 title: Text(AppLocalizations.of(context)
+                    //                     .processFailure),
+                    //                 content: Text(AppLocalizations.of(context)
+                    //                     .somethingWentWrong),
+                    //               ));
+                    //     }
+                    //   } catch (e) {
+                    //     _changePasswordButtonController.reverse();
+                    //     showDialog(
+                    //         context: context,
+                    //         builder: (context) => AlertDialog(
+                    //               title: Text(AppLocalizations.of(context)
+                    //                   .processFailure),
+                    //               content: Text(AppLocalizations.of(context)
+                    //                   .somethingWentWrong),
+                    //             ));
+                    //   }
+
+                    //   Timer(const Duration(milliseconds: 150), () {
+                    //     setState(() {
+                    //       loading = false;
+                    //     });
+                    //   });
+                    // } else {
+                    //   setState(() {
+                    //     _autoValidate = true;
+                    //   });
+                    // }
                   },
                   label: AppLocalizations.of(context).confirm,
                   loading: loading,

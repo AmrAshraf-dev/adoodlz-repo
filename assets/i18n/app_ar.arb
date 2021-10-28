@@ -154,7 +154,11 @@
     "forgetPassword": "ادخل رقم الهاتف لاستعاده كلمه السر",
     "sendCodeForgetPassword": "ارسال الرمز",
     "submitted":" تم",
-    "expired":" انتهت"
-
-
+    "expired":" انتهت",
+    "changeYourPassword ":"قم بتغير كلمة السر  ",
+    "wrongOtp" :" خطا فى رمز الادخال"
 }
+
+
+
+
