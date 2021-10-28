@@ -138,21 +138,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   margin: const EdgeInsets.symmetric(vertical: 30.0),
                   child: CustomRaisedButton(
                     onPressed: () async {
-                      ResetPasswordApi rest = ResetPasswordApi();
-                      rest.reset(mobile: mobileNumber, context: context);
-                      print('====================================');
-                      print(_countryCode);
-                      SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-
-                      //print(pref.getString(resetPasswordTokenKey));
-                      resetPasswordToken =
-                          pref.getString(resetPasswordTokenKey);
-
-                      resetPasswordId = pref.getInt(resetPasswordIdKey).toInt();
-                      print(resetPasswordId);
-                      print(resetPasswordToken);
-
                       // print(resetPasswordToken);
                       // String id = await Provider.of<AuthProvider>(context,
                       //         listen: false)
@@ -181,6 +166,22 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                     listen: false)
                                 .changeToEgypt();
                           }
+                          ResetPasswordApi rest = ResetPasswordApi();
+                          rest.reset(mobile: mobileNumber, context: context);
+                          print('====================================');
+                          print(_countryCode);
+                          SharedPreferences pref =
+                              await SharedPreferences.getInstance();
+
+                          //print(pref.getString(resetPasswordTokenKey));
+                          resetPasswordToken =
+                              pref.getString(resetPasswordTokenKey);
+
+                          resetPasswordId =
+                              pref.getInt(resetPasswordIdKey).toInt();
+                          print(resetPasswordId);
+                          print(resetPasswordToken);
+
                           String id = await Provider.of<AuthProvider>(context,
                                   listen: false)
                               .toString();

@@ -82,8 +82,7 @@ class ResetPasswordApi {
 
       //debugPrint('this our Data ${formDataToSend.toString()}');
 
-      var response = await http.post(
-          Uri.parse('https://adoodlz-eg-dev.herokuapp.com/otp/change/password'),
+      var response = await http.post(Uri.parse(endpoints.verifyResetPassword),
           body: {"password": password},
           headers: {"Authorization": 'Bearer $token'});
       print('================================================================');
