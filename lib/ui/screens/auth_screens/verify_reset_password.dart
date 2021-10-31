@@ -178,43 +178,116 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                           //         setState(() {
                           //           loading = true;
                           //         });
-                          if (!loading &&
-                              _pinController.text.isNotEmpty &&
-                              _pinController.text.length == 4) {
-                            setState(() {
-                              loading = true;
-                            });
-                          }
-                          final pin = _pinController.text;
-                          final successOtp =
-                              await Provider.of<AuthApi>(context, listen: false)
-                                  .verifyOtp(widget.mobileNumber, pin);
-                          print(
-                              '=================================================');
-                          print(successOtp);
-                          print(
-                              '=================================================');
-                          if (successOtp) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (builder) => ResetPasswordScreen(
-                                  otp: _pinController.text,
-                                ),
-                              ),
-                            );
-                          } else {
-                            setState(() {
-                              loading = false;
-                            });
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: Text(AppLocalizations.of(context)
-                                          .processFailure),
-                                      content: Text(AppLocalizations.of(context)
-                                          .wrongOtp),
-                                    ));
+                          // if (!loading &&
+                          //     _pinController.text.isNotEmpty &&
+                          //     _pinController.text.length == 4) {
+                          //   setState(() {
+                          //     loading = true;
+                          //   });
+                          // }
+                          // final pin = _pinController.text;
+                          // final successOtp =
+                          //     await Provider.of<AuthApi>(context, listen: false)
+                          //         .verifyOtp(widget.mobileNumber, pin);
+                          // print(
+                          //     '=================================================');
+                          // print(successOtp);
+                          // print(
+                          //     '=================================================');
+                          // if (successOtp) {
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (builder) => ResetPasswordScreen(
+                          //         otp: _pinController.text,
+                          //       ),
+                          //     ),
+                          //   );
+                          // } else {
+                          //   setState(() {
+                          //     loading = false;
+                          //   });
+                          //   showDialog(
+                          //       context: context,
+                          //       builder: (context) => AlertDialog(
+                          //             title: Text(AppLocalizations.of(context)
+                          //                 .processFailure),
+                          //             content: Text(AppLocalizations.of(context)
+                          //                 .wrongOtp),
+                          //           ));
+                          // }
+
+                          {
+                            if (!loading &&
+                                _pinController.text.isNotEmpty &&
+                                _pinController.text.length == 4) {
+                              setState(() {
+                                loading = true;
+                              });
+
+                              try {
+                                final pin = _pinController.text;
+                                final successOtp = await Provider.of<AuthApi>(
+                                        context,
+                                        listen: false)
+                                    .verifyOtp(widget.mobileNumber, pin);
+
+                                if (successOtp) {
+                                  print('hey');
+
+                                  print('we get pass');
+                                  try {
+                                    Navigator.of(context).pushReplacementNamed(
+                                        Routes.resetPasswordScreen);
+                                    //print("After Sign in");
+
+                                  } catch (e) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: Text(
+                                                  AppLocalizations.of(context)
+                                                      .loginFailed),
+                                              content: Text(
+                                                  AppLocalizations.of(context)
+                                                      .wrongOtp),
+                                            ));
+                                    //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
+                                  }
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: Text(
+                                                AppLocalizations.of(context)
+                                                    .processFailure),
+                                            content: Text(
+                                                AppLocalizations.of(context)
+                                                    .somethingWentWrong),
+                                          ));
+                                }
+                              } catch (e) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          title: Text(
+                                              AppLocalizations.of(context)
+                                                  .processFailure),
+                                          content: Text(
+                                              AppLocalizations.of(context)
+                                                  .somethingWentWrong),
+                                        ));
+                              } finally {
+                                setState(() {
+                                  loading = false;
+                                });
+                              }
+                            } else {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    AppLocalizations.of(context).invalidOtp),
+                              ));
+                            }
                           }
                         },
                         label: AppLocalizations.of(context).verify,

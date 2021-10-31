@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/ui/screens/language_selection_screen_0.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -116,10 +117,13 @@ class _SigninScreen0State extends State<SigninScreen0>
                         _signInInfo['mobile'] = value.completeNumber;
                         countryISOCode = value.countryISOCode;
                       }),
-                      initialCountryCode: 'EG',
+                      initialCountryCode:
+                          countryCodeLocation == 'Saudi Arabia' ? 'SA' : 'EG',
                       autoValidate: false,
                       decoration: InputDecoration(
-                        hintText: '1xxxxxxxxx',
+                        hintText: countryCodeLocation == 'Saudi Arabia'
+                            ? '5x xxx xxxx'
+                            : '1xx xxx xxxx',
                         hintStyle: TextStyle(color: Colors.grey.shade300),
                         contentPadding: const EdgeInsets.only(
                           top: 15,

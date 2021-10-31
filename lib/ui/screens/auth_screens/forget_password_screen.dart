@@ -23,7 +23,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   OutlineInputBorder outLineBorder = const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(5.0)),
       borderSide: BorderSide(width: 0.2));
-
   final GlobalKey<FormState> _forgetPasswordFormKey = GlobalKey<FormState>();
   String mobileNumber = '';
   bool loading = false;
@@ -36,7 +35,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     _countryCode = '';
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -103,12 +101,17 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             mobileNumber = value.completeNumber;
                             //resetPassword['mobile'] = value.completeNumber;
                           }),
-                          initialCountryCode: 'EG',
+                          initialCountryCode:
+                              countryCodeLocation == 'Saudi Arabia'
+                                  ? 'SA'
+                                  : 'EG',
                           autoValidate: false,
                           style: const TextStyle(
                               color: Colors.black, fontSize: 22),
                           decoration: InputDecoration(
-                            hintText: '1xxxxxxxxx',
+                            hintText: countryCodeLocation == 'Saudi Arabia'
+                                ? '5x xxx xxxx'
+                                : '1xx xxx xxxx',
                             hintStyle: TextStyle(color: Colors.grey.shade300),
                             contentPadding: const EdgeInsets.only(
                               top: 15,
@@ -138,16 +141,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   margin: const EdgeInsets.symmetric(vertical: 30.0),
                   child: CustomRaisedButton(
                     onPressed: () async {
-                      // print(resetPasswordToken);
-                      // String id = await Provider.of<AuthProvider>(context,
-                      //         listen: false)
-                      //     .toString();
                       print('====================================');
                       if (_forgetPasswordFormKey.currentState.validate() &&
                           !loading) {
                         _forgetPasswordFormKey.currentState.save();
                         FocusManager.instance.primaryFocus.unfocus();
-
                         setState(() {
                           loading = true;
                         });
@@ -168,41 +166,17 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           }
                           ResetPasswordApi rest = ResetPasswordApi();
                           rest.reset(mobile: mobileNumber, context: context);
-                          print('====================================');
-                          print(_countryCode);
-                          SharedPreferences pref =
-                              await SharedPreferences.getInstance();
-
-                          //print(pref.getString(resetPasswordTokenKey));
-                          resetPasswordToken =
-                              pref.getString(resetPasswordTokenKey);
-
-                          resetPasswordId =
-                              pref.getInt(resetPasswordIdKey).toInt();
-                          print(resetPasswordId);
-                          print(resetPasswordToken);
 
                           String id = await Provider.of<AuthProvider>(context,
                                   listen: false)
                               .toString();
-                          if (loading) {
-                            Navigator.of(context).pushReplacementNamed(
-                                Routes.verifyResetPasswordPage,
-                                arguments: <String, dynamic>{
-                                  'number': mobileNumber,
-                                  '_id': id,
-                                  'resetPassword': true,
-                                });
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: Text(AppLocalizations.of(context)
-                                          .processFailure),
-                                      content: Text(AppLocalizations.of(context)
-                                          .somethingWentWrong),
-                                    ));
-                          }
+                          Navigator.of(context).pushReplacementNamed(
+                              Routes.verifyResetPasswordPage,
+                              arguments: <String, dynamic>{
+                                'number': mobileNumber,
+                                '_id': id,
+                                'resetPassword': true,
+                              });
                         } catch (e) {
                           debugPrint((e as DioError).response.data.toString());
                           debugPrint("Error Here Catch");

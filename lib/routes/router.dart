@@ -10,6 +10,7 @@ import 'package:adoodlz/ui/screens/about_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/create_account_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/edit_account_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/forget_password_screen.dart';
+import 'package:adoodlz/ui/screens/auth_screens/reset_password_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/signin_screen_0.dart';
 import 'package:adoodlz/ui/screens/auth_screens/signup_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/signup_screen_new.dart';
@@ -41,6 +42,7 @@ class Routes {
   static const String getcash = '/getcash';
   static const String verifyProfilePage = '/verifyProfilePage';
   static const String verifyResetPasswordPage = '/verifyResetPassword';
+  static const String resetPasswordScreen = '/resetPasswordScreen';
 
   /// //////////////////
   static const String changePasswordScreen = '/change_password';
@@ -73,6 +75,7 @@ class Routes {
   };
 }
 
+// ignore: avoid_classes_with_only_static_members
 class CustomRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -124,6 +127,8 @@ class CustomRouter {
             builder: (_) => PostDetailsScreen(post: args['post'] as Post));
       case Routes.aboutScreen:
         return MaterialPageRoute(builder: (_) => const AboutScreen());
+      case Routes.resetPasswordScreen:
+        return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
       case Routes.termsScreen:
         return MaterialPageRoute(builder: (_) => const TermsScreen());
       case Routes.signupScreen:

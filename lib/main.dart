@@ -1,15 +1,16 @@
+import 'package:adoodlz/helpers/localizations_provider.dart';
 import 'package:adoodlz/helpers/shared_preferences_keys.dart';
+import 'package:adoodlz/providers_setup.dart';
+import 'package:adoodlz/routes/router.dart';
+import 'package:adoodlz/themes/theme.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:adoodlz/helpers/localizations_provider.dart';
-import 'package:adoodlz/routes/router.dart';
-import 'package:adoodlz/themes/theme.dart';
-import 'package:adoodlz/providers_setup.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
@@ -43,12 +44,25 @@ class _MyAppState extends State<MyApp> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.remove(resetPasswordTokenKey);
     await preferences.remove(resetPasswordIdKey);
-
     print(preferences.getString(resetPasswordTokenKey));
+  }
+
+  Future<String> getCountryName() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    debugPrint('location: ${position.latitude}');
+    final coordinates = new Coordinates(position.latitude, position.longitude);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = addresses.first;
+    countryCodeLocation = first.countryName;
+    print(first.countryName);
+    return first.countryName; // this will return country name
   }
 
   void initState() {
     removeshared();
+    getCountryName();
     super.initState();
   }
 

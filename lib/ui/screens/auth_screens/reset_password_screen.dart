@@ -14,9 +14,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  final String otp;
-
-  const ResetPasswordScreen({Key key, @required this.otp}) : super(key: key);
   @override
   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
@@ -223,7 +220,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                   onPressed: () async {
                     print(_newPasswordController.text);
                     print(resetPasswordToken);
-                    print(widget.otp);
                     ResetPasswordApi reset = ResetPasswordApi();
                     if (_changePasswordFormKey.currentState.validate() &&
                         !loading) {

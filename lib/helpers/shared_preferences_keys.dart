@@ -10,6 +10,7 @@ const String resetPasswordIdKey = 'RPID-Key';
 dynamic userId;
 String resetPasswordToken = '';
 int resetPasswordId;
+dynamic countryCodeLocation;
 
 extension StringExtension on String {
   String capitalize() {

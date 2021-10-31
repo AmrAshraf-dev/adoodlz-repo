@@ -319,57 +319,72 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                               ),
                                                               const SizedBox(
                                                                   width: 5),
-                                                              if (checkEndTaskNum(
-                                                                  checkExpDate))
-                                                                Container(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      .22,
-                                                                  child: Text(
-                                                                    AppLocalizations.of(
-                                                                            context)
-                                                                        .expired,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color: Colors
-                                                                          .grey
-                                                                          .shade500,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              if (provider
-                                                                      .tasks[
-                                                                          index]
-                                                                      .submitCount >
-                                                                  0)
-                                                                SizedBox(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      .25,
-                                                                  child: Text(
-                                                                    AppLocalizations.of(
-                                                                            context)
-                                                                        .submitted,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color(
-                                                                          0xffE16E43),
-                                                                    ),
-                                                                  ),
-                                                                ),
+                                                              // if (provider
+                                                              //             .tasks[
+                                                              //                 index]
+                                                              //             .submitCount >
+                                                              //         0 &&
+                                                              //     checkEndTaskNum(
+                                                              //         checkExpDate))
+                                                              // Text('data'),
+                                                              (provider.tasks[index].submitCount >
+                                                                          0 &&
+                                                                      checkEndTaskNum(
+                                                                          checkExpDate))
+                                                                  ? Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          .22,
+                                                                      child:
+                                                                          Text(
+                                                                        AppLocalizations.of(context)
+                                                                            .submitted,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          color: Colors
+                                                                              .grey
+                                                                              .shade500,
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  : (provider.tasks[index]
+                                                                              .submitCount >
+                                                                          0)
+                                                                      ? Container(
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width * .22,
+                                                                          child:
+                                                                              Text(
+                                                                            AppLocalizations.of(context).submitted,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: Colors.grey.shade500,
+                                                                            ),
+                                                                          ),
+                                                                        )
+                                                                      : Container(
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width * .22,
+                                                                          child:
+                                                                              Text(
+                                                                            AppLocalizations.of(context).expired,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: Colors.grey.shade500,
+                                                                            ),
+                                                                          ),
+                                                                        ),
                                                             ],
                                                           ),
                                                         ),

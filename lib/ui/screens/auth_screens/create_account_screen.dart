@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
 import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 
 import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/ui/widgets/custom_raised_button.dart';
@@ -254,14 +255,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 // print("Country Code ${value.countryISOCode}");
                                 // print("Complete Number ${value.completeNumber}");
                               }),
-                              initialCountryCode: 'EG',
+                              initialCountryCode:
+                                  countryCodeLocation == 'Saudi Arabia'
+                                      ? 'SA'
+                                      : 'EG',
                               autoValidate: false,
                               style: const TextStyle(
                                 fontSize: 22,
                                 color: Colors.black,
                               ),
                               decoration: InputDecoration(
-                                hintText: '1xxxxxxxxx',
+                                hintText: countryCodeLocation == 'Saudi Arabia'
+                                    ? '5x xxx xxxx'
+                                    : '1xx xxx xxxx',
                                 hintStyle:
                                     TextStyle(color: Colors.grey.shade300),
                                 contentPadding: const EdgeInsets.only(
