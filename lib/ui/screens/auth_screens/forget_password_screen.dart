@@ -19,7 +19,8 @@ class ForgetPasswordScreen extends StatefulWidget {
   _ForgetPasswordScreenState createState() => _ForgetPasswordScreenState();
 }
 
-class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
+    with SingleTickerProviderStateMixin {
   OutlineInputBorder outLineBorder = const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(5.0)),
       borderSide: BorderSide(width: 0.2));
@@ -28,11 +29,28 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   bool loading = false;
   Map<String, dynamic> resetPassword;
   String _countryCode;
+  AnimationController _loginButtonController;
+  Animation<double> buttonSqueezeAnimation;
 
   @override
   void initState() {
     // TODO: implement initState
     _countryCode = '';
+    _loginButtonController = AnimationController(
+        duration: const Duration(milliseconds: 300), vsync: this);
+    buttonSqueezeAnimation = Tween(
+      begin: 320.0,
+      end: 70.0,
+    ).animate(
+      CurvedAnimation(
+        parent: _loginButtonController,
+        curve: Curves.easeIn,
+      ),
+    );
+
+    _loginButtonController.addListener(() {
+      setState(() {});
+    });
   }
 
   Widget build(BuildContext context) {
@@ -141,14 +159,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   margin: const EdgeInsets.symmetric(vertical: 30.0),
                   child: CustomRaisedButton(
                     onPressed: () async {
+                      print(!loading);
                       print('====================================');
                       if (_forgetPasswordFormKey.currentState.validate() &&
                           !loading) {
-                        _forgetPasswordFormKey.currentState.save();
-                        FocusManager.instance.primaryFocus.unfocus();
+                        _loginButtonController.forward();
                         setState(() {
                           loading = true;
                         });
+                        _forgetPasswordFormKey.currentState.save();
+                        FocusManager.instance.primaryFocus.unfocus();
 
                         try {
                           if (_countryCode == 'EG') {
@@ -167,16 +187,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           ResetPasswordApi rest = ResetPasswordApi();
                           rest.reset(mobile: mobileNumber, context: context);
 
-                          String id = await Provider.of<AuthProvider>(context,
-                                  listen: false)
-                              .toString();
-                          Navigator.of(context).pushReplacementNamed(
-                              Routes.verifyResetPasswordPage,
-                              arguments: <String, dynamic>{
-                                'number': mobileNumber,
-                                '_id': id,
-                                'resetPassword': true,
-                              });
+                          // String id = await Provider.of<AuthProvider>(context,
+                          //         listen: false)
+                          //     .toString();
+                          // Navigator.of(context).pushReplacementNamed(
+                          //     Routes.verifyResetPasswordPage,
+                          //     arguments: <String, dynamic>{
+                          //       'number': mobileNumber,
+                          //       '_id': id,
+                          //       'resetPassword': true,
+                          //     });
                         } catch (e) {
                           debugPrint((e as DioError).response.data.toString());
                           debugPrint("Error Here Catch");

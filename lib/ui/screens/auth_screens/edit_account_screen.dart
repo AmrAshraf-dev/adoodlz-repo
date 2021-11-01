@@ -28,6 +28,7 @@ class _EditAccountScreenState extends State<EditAccountScreen>
   Map<String, dynamic> _editAccountInfo;
   AnimationController _editAccountButtonController;
   Animation<double> buttonSqueezeAnimation;
+
   File image;
 
   @override
@@ -124,20 +125,23 @@ class _EditAccountScreenState extends State<EditAccountScreen>
                       width: 100.0,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(70.0),
-                          child: Provider.of<AuthProvider>(context,
-                              listen: false)
-                              .user
-                              .image!=null? Image.network(
-                            // 'assets/images/user_profile.png',
-                            Provider.of<AuthProvider>(context,
-                                listen: false)
-                                .user
-                                .image,
-                            fit: BoxFit.cover,
-                          ):Image.asset(
-                             'assets/images/user_profile.png',
-                            fit: BoxFit.cover,
-                          )),
+                          child:
+                              Provider.of<AuthProvider>(context, listen: false)
+                                          .user
+                                          .image !=
+                                      null
+                                  ? Image.network(
+                                      // 'assets/images/user_profile.png',
+                                      Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .user
+                                          .image,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(
+                                      'assets/images/user_profile.png',
+                                      fit: BoxFit.cover,
+                                    )),
                     ),
                   ),
                 )
@@ -221,6 +225,35 @@ class _EditAccountScreenState extends State<EditAccountScreen>
                                 }
                                 return null;
                               },
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 5.0, left: 10.0, right: 10.0),
+                              child: Text(
+                                AppLocalizations.of(context).mobilePhone,
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            CustomTextFormField(
+                              enable: false,
+                              initialValue:
+                                  '+${Provider.of<AuthProvider>(context, listen: false).user.mobile}',
+                              filledColor: Colors.grey.shade100,
+                              textInputType: TextInputType.name,
                             ),
                           ],
                         ),

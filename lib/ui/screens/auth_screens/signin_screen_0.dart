@@ -55,9 +55,11 @@ class _SigninScreen0State extends State<SigninScreen0>
       ),
     );
 
-    _loginButtonController.addListener(() {
-      setState(() {});
-    });
+    _loginButtonController.addListener(
+      () {
+        setState(() {});
+      },
+    );
 
     loading = false;
     obscurePassword = true;

@@ -33,7 +33,7 @@ class VerifyResetPasswordScreen extends StatefulWidget {
 class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
   final TextEditingController _pinController = TextEditingController();
   bool loading;
-  int _counter = 30;
+  int _counter = 60;
   Timer _timer;
   Map<String, dynamic> formData = {};
 
@@ -41,6 +41,7 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
   void initState() {
     loading = false;
     _startTimer();
+
     super.initState();
   }
 
@@ -50,13 +51,13 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
       _timer.cancel();
     }
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_counter > 0) {
+      if (_counter > 0) {
+        setState(() {
           _counter--;
-        } else {
-          _timer.cancel();
-        }
-      });
+        });
+      } else {
+        _timer.cancel();
+      }
     });
   }
 
@@ -162,6 +163,81 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                               ),
                               backgroundColor:
                                   Theme.of(context).scaffoldBackgroundColor,
+                              onSubmitted: (value) async {
+                                if (!loading &&
+                                    _pinController.text.isNotEmpty &&
+                                    _pinController.text.length == 4) {
+                                  setState(() {
+                                    loading = true;
+                                  });
+
+                                  try {
+                                    final pin = _pinController.text;
+                                    final successOtp = await Provider.of<
+                                            AuthApi>(context, listen: false)
+                                        .verifyOtp(widget.mobileNumber, pin);
+
+                                    if (successOtp) {
+                                      print('hey');
+
+                                      print('we get pass');
+                                      try {
+                                        Navigator.pop(context);
+                                        Navigator.of(context)
+                                            .pushReplacementNamed(
+                                                Routes.resetPasswordScreen);
+                                        //print("After Sign in");
+
+                                      } catch (e) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                                  title: Text(
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .loginFailed),
+                                                  content: Text(
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .wrongOtp),
+                                                ));
+                                        //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
+                                      }
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: Text(
+                                                    AppLocalizations.of(context)
+                                                        .processFailure),
+                                                content: Text(
+                                                    AppLocalizations.of(context)
+                                                        .somethingWentWrong),
+                                              ));
+                                    }
+                                  } catch (e) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: Text(
+                                                  AppLocalizations.of(context)
+                                                      .processFailure),
+                                              content: Text(
+                                                  AppLocalizations.of(context)
+                                                      .somethingWentWrong),
+                                            ));
+                                  } finally {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                  }
+                                } else {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(AppLocalizations.of(context)
+                                        .invalidOtp),
+                                  ));
+                                }
+                              },
                               onChanged: (value) async {}),
                         ),
                       ),
@@ -172,101 +248,44 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                     Builder(
                       builder: (context) => CustomRaisedButton(
                         onPressed: () async {
-                          //  if (!loading &&
-                          //           _pinController.text.isNotEmpty &&
-                          //           _pinController.text.length == 4) {
-                          //         setState(() {
-                          //           loading = true;
-                          //         });
-                          // if (!loading &&
-                          //     _pinController.text.isNotEmpty &&
-                          //     _pinController.text.length == 4) {
-                          //   setState(() {
-                          //     loading = true;
-                          //   });
-                          // }
-                          // final pin = _pinController.text;
-                          // final successOtp =
-                          //     await Provider.of<AuthApi>(context, listen: false)
-                          //         .verifyOtp(widget.mobileNumber, pin);
-                          // print(
-                          //     '=================================================');
-                          // print(successOtp);
-                          // print(
-                          //     '=================================================');
-                          // if (successOtp) {
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (builder) => ResetPasswordScreen(
-                          //         otp: _pinController.text,
-                          //       ),
-                          //     ),
-                          //   );
-                          // } else {
-                          //   setState(() {
-                          //     loading = false;
-                          //   });
-                          //   showDialog(
-                          //       context: context,
-                          //       builder: (context) => AlertDialog(
-                          //             title: Text(AppLocalizations.of(context)
-                          //                 .processFailure),
-                          //             content: Text(AppLocalizations.of(context)
-                          //                 .wrongOtp),
-                          //           ));
-                          // }
+                          if (!loading &&
+                              _pinController.text.isNotEmpty &&
+                              _pinController.text.length == 4) {
+                            setState(() {
+                              loading = true;
+                            });
 
-                          {
-                            if (!loading &&
-                                _pinController.text.isNotEmpty &&
-                                _pinController.text.length == 4) {
-                              setState(() {
-                                loading = true;
-                              });
+                            try {
+                              final pin = _pinController.text;
+                              final successOtp = await Provider.of<AuthApi>(
+                                      context,
+                                      listen: false)
+                                  .verifyOtp(widget.mobileNumber, pin);
 
-                              try {
-                                final pin = _pinController.text;
-                                final successOtp = await Provider.of<AuthApi>(
-                                        context,
-                                        listen: false)
-                                    .verifyOtp(widget.mobileNumber, pin);
+                              if (successOtp) {
+                                print('hey');
 
-                                if (successOtp) {
-                                  print('hey');
+                                print('we get pass');
+                                try {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).pushReplacementNamed(
+                                      Routes.resetPasswordScreen);
+                                  //print("After Sign in");
 
-                                  print('we get pass');
-                                  try {
-                                    Navigator.of(context).pushReplacementNamed(
-                                        Routes.resetPasswordScreen);
-                                    //print("After Sign in");
-
-                                  } catch (e) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                              title: Text(
-                                                  AppLocalizations.of(context)
-                                                      .loginFailed),
-                                              content: Text(
-                                                  AppLocalizations.of(context)
-                                                      .wrongOtp),
-                                            ));
-                                    //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
-                                  }
-                                } else {
+                                } catch (e) {
                                   showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
                                             title: Text(
                                                 AppLocalizations.of(context)
-                                                    .processFailure),
+                                                    .loginFailed),
                                             content: Text(
                                                 AppLocalizations.of(context)
-                                                    .somethingWentWrong),
+                                                    .wrongOtp),
                                           ));
+                                  //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
                                 }
-                              } catch (e) {
+                              } else {
                                 showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
@@ -277,17 +296,27 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                                               AppLocalizations.of(context)
                                                   .somethingWentWrong),
                                         ));
-                              } finally {
-                                setState(() {
-                                  loading = false;
-                                });
                               }
-                            } else {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    AppLocalizations.of(context).invalidOtp),
-                              ));
+                            } catch (e) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: Text(AppLocalizations.of(context)
+                                            .processFailure),
+                                        content: Text(
+                                            AppLocalizations.of(context)
+                                                .somethingWentWrong),
+                                      ));
+                            } finally {
+                              setState(() {
+                                loading = false;
+                              });
                             }
+                          } else {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content:
+                                  Text(AppLocalizations.of(context).invalidOtp),
+                            ));
                           }
                         },
                         label: AppLocalizations.of(context).verify,

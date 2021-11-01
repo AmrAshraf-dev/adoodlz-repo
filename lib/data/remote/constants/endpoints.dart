@@ -49,7 +49,7 @@ final String getTasks = '$baseUrl/task';
 
 final String taskSubmit = '$baseUrl/taskSubmit';
 const String forgetPassword =
-    'https://adoodlz-eg-dev.herokuapp.com/otp/forget/password';
+    'https://adoodlz.herokuapp.com/otp/forget/password';
 
 final String verifyResetPassword = '$_otpEndpoint/change/password';
 
