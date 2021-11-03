@@ -1,8 +1,8 @@
 import 'package:adoodlz/feature/tasks/ui/widgets/tasks_list_widget.dart';
 import 'package:adoodlz/feature/tasks/ui/widgets/tasks_widget.dart';
+import 'package:adoodlz/ui/widgets/floating_support_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class TasksScreen extends StatefulWidget {
   @override
@@ -10,7 +10,6 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

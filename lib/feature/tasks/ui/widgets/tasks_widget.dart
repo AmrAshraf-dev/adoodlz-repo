@@ -1,5 +1,6 @@
 import 'package:adoodlz/feature/tasks/ui/widgets/submitted_tasks_list.dart';
 import 'package:adoodlz/feature/tasks/ui/widgets/tasks_list_widget.dart';
+import 'package:adoodlz/ui/widgets/floating_support_button.dart';
 import 'package:flutter/material.dart';
 
 class TasksWidget extends StatefulWidget {

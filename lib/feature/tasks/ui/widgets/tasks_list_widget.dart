@@ -36,6 +36,12 @@ class _TasksListWidgetState extends State<TasksListWidget> {
     }
   }
 
+  int test = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<TaskProvider>(
@@ -90,7 +96,9 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                   //                         checkExpDate))?:
 
                                   checkEndTaskNum(checkExpDate) ||
-                                          provider.tasks[index].submitCount > 0
+                                          provider.tasks[index].submitCount >=
+                                              provider
+                                                  .tasks[index].maxUserSubmit
                                       //=====================================================================================
                                       //disabled widget
                                       ? IgnorePointer(
@@ -331,8 +339,11 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                               //     checkEndTaskNum(
                                                               //         checkExpDate))
                                                               // Text('data'),
-                                                              (provider.tasks[index].submitCount >
-                                                                          0 &&
+                                                              (provider.tasks[index].submitCount >=
+                                                                          provider
+                                                                              .tasks[
+                                                                                  index]
+                                                                              .maxUserSubmit &&
                                                                       checkEndTaskNum(
                                                                           checkExpDate))
                                                                   ? SizedBox(
@@ -358,9 +369,10 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                                         ),
                                                                       ),
                                                                     )
-                                                                  : (provider.tasks[index]
-                                                                              .submitCount >
-                                                                          0)
+                                                                  : (provider.tasks[index].submitCount >=
+                                                                          provider
+                                                                              .tasks[index]
+                                                                              .maxUserSubmit)
                                                                       ? SizedBox(
                                                                           width:
                                                                               MediaQuery.of(context).size.width * .22,
@@ -611,7 +623,9 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                             ),
                                                             const Spacer(),
                                                             Text(
-                                                              '${AppLocalizations.of(context).taskEndTime}',
+                                                              AppLocalizations.of(
+                                                                      context)
+                                                                  .taskEndTime,
                                                               style:
                                                                   const TextStyle(
                                                                 color: Color(

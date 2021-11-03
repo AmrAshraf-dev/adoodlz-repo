@@ -7,6 +7,7 @@ import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
 import 'package:adoodlz/exceptions/fetch_exception.dart';
 import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/routes/router.dart';
+import 'package:adoodlz/ui/screens/auth_screens/forget_password_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/signin_screen_0.dart';
 import 'package:adoodlz/ui/screens/auth_screens/verify_reset_password.dart';
 import 'package:dio/dio.dart';

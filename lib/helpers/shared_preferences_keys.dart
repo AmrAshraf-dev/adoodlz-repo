@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const String savedLocaleKey = 'saved_locale';
 const String savedTokenDataKey = 'saved_token_data';
 const String savedUserKey = 'saved_user';
@@ -11,9 +13,31 @@ dynamic userId;
 String resetPasswordToken = '';
 int resetPasswordId;
 dynamic countryCodeLocation;
+bool forgetPasswordloading = false;
 
 extension StringExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${this.substring(1)}";
   }
+}
+
+void onLoading({@required BuildContext context}) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return Dialog(
+        child: new Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            new CircularProgressIndicator(),
+            new Text("Loading"),
+          ],
+        ),
+      );
+    },
+  );
+  new Future.delayed(new Duration(seconds: 3), () {
+    Navigator.pop(context); //pop dialog
+  });
 }

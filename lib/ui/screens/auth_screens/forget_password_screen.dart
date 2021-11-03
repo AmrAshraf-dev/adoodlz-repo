@@ -26,7 +26,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
       borderSide: BorderSide(width: 0.2));
   final GlobalKey<FormState> _forgetPasswordFormKey = GlobalKey<FormState>();
   String mobileNumber = '';
-  bool loading = false;
   Map<String, dynamic> resetPassword;
   String _countryCode;
   AnimationController _loginButtonController;
@@ -159,14 +158,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                   margin: const EdgeInsets.symmetric(vertical: 30.0),
                   child: CustomRaisedButton(
                     onPressed: () async {
-                      print(!loading);
                       print('====================================');
                       if (_forgetPasswordFormKey.currentState.validate() &&
-                          !loading) {
+                          !forgetPasswordloading) {
                         _loginButtonController.forward();
-                        setState(() {
-                          loading = true;
-                        });
+                        // setState(() {
+                        //   forgetPasswordloading = true;
+                        // });
+
                         _forgetPasswordFormKey.currentState.save();
                         FocusManager.instance.primaryFocus.unfocus();
 
@@ -184,8 +183,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                                     listen: false)
                                 .changeToEgypt();
                           }
-                          ResetPasswordApi rest = ResetPasswordApi();
-                          rest.reset(mobile: mobileNumber, context: context);
 
                           // String id = await Provider.of<AuthProvider>(context,
                           //         listen: false)
@@ -211,17 +208,23 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                           );
                         }
 
+                        ResetPasswordApi rest = ResetPasswordApi();
+                        rest.reset(mobile: mobileNumber, context: context);
+                        // setState(() {
+                        //   loading = false;
+                        // });
+                      } else {
                         setState(() {
-                          loading = false;
+                          forgetPasswordloading = false;
                         });
-                      } else {}
+                      }
 
                       print('====================================');
                       print(_countryCode);
                       print('====================================');
                       print(endpoints.baseUrl);
                     },
-                    loading: loading,
+                    loading: forgetPasswordloading,
                     label: AppLocalizations.of(context).sendCodeForgetPassword,
                     lightFont: true,
                   ),

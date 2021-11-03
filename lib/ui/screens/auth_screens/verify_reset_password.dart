@@ -399,7 +399,7 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
   @override
   void dispose() {
     super.dispose();
-    _pinController.dispose();
+    //_pinController.dispose();
     _timer.cancel();
   }
 }

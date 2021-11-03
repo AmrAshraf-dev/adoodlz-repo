@@ -6,6 +6,7 @@ import 'package:adoodlz/feature/tasks/ui/widgets/tasks_list_widget.dart';
 import 'package:adoodlz/feature/tasks/ui/widgets/tasks_widget.dart';
 import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/ui/screens/home_screen/wallet_view_new.dart';
+import 'package:adoodlz/ui/widgets/floating_support_button.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
     _fcm.requestPermission();
 
     onMessageSubscription = FirebaseMessaging.onMessage.listen((event) {
@@ -187,7 +189,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final getCountry= Provider.of<ChangeCountryIpProvider>(context, listen: false);
+    final getCountry =
+        Provider.of<ChangeCountryIpProvider>(context, listen: false);
     return WillPopScope(
       onWillPop: () async {
         final appNavProvider = context.read<AppNavigationProvider>();
@@ -202,90 +205,91 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         }
       },
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: PageView(
-            controller: context.select<AppNavigationProvider, PageController>(
-                (provider) => provider.pageController),
-            physics: const NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              if(getCountry.countryName=='SA')
-              const PostsView0(),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0,left: 10.0,right: 10.0),
-                child: TasksWidget(),
-              ),
-              const InviteFriendView(),
-              WalletViewNew(),
-              ProfileView(),
-            ],
-          ),
-          bottomNavigationBar: const CustomBottomNavBar(),
-          // floatingActionButton: Selector<AppNavigationProvider, int>(
-          //     selector: (_, provider) => provider.navigatorIndex,
-          //     builder: (context, index, _) {
-          //       return index != 0
-          //           ? FloatingActionButton(
-          //               onPressed: () async {
-          //                 //await checkForUpdate();
-          //                 //  performUpdate();
-          //                 //const whatsAppUrl = 'https://api.whatsapp.com/send/?phone=966580495019&text=%D8%A7%D8%B1%D8%BA%D8%A8+%D8%A8%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9+%D9%81%D9%8A+%D8%AA%D8%B7%D8%A8%D9%8A%D9%82+%D8%A7%D8%AF%D9%88%D9%88%D8%AF%D9%84%D8%B2&app_absent=0';
-          //                 const whatsAppUrl =
-          //                     'https://api.whatsapp.com/send/?phone=201274913123&text=%D8%A7%D8%B1%D8%BA%D8%A8+%D8%A8%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9+%D9%81%D9%8A+%D8%AA%D8%B7%D8%A8%D9%8A%D9%82+%D8%A7%D8%AF%D9%88%D9%88%D8%AF%D9%84%D8%B2&app_absent=0';
-          //                 const tawkUrl = 'https://tawk.to/adoodlz';
-          //                 showDialog(
-          //                     context: context,
-          //                     builder: (context) => Dialog(
-          //                           shape: RoundedRectangleBorder(
-          //                               borderRadius:
-          //                                   BorderRadius.circular(16)),
-          //                           elevation: 3,
-          //                           child: Padding(
-          //                             padding: const EdgeInsets.symmetric(
-          //                                 vertical: 8.0),
-          //                             child: Row(
-          //                               mainAxisSize: MainAxisSize.min,
-          //                               children: [
-          //                                 const SizedBox(
-          //                                   width: 36,
-          //                                 ),
-          //                                 IconButton(
-          //                                   icon: const Icon(
-          //                                       FontAwesomeIcons.whatsapp),
-          //                                   color: Colors.green,
-          //                                   iconSize: 48,
-          //                                   onPressed: () async {
-          //                                     if (await canLaunch(
-          //                                         whatsAppUrl)) {
-          //                                       launch(whatsAppUrl);
-          //                                     }
-          //                                   },
-          //                                 ),
-          //                                 const Spacer(),
-          //                                 IconButton(
-          //                                   icon: const Icon(
-          //                                       FontAwesomeIcons.commentDots),
-          //                                   color: Colors.blue,
-          //                                   iconSize: 48,
-          //                                   onPressed: () async {
-          //                                     if (await canLaunch(tawkUrl)) {
-          //                                       launch(tawkUrl);
-          //                                     }
-          //                                   },
-          //                                 ),
-          //                                 const SizedBox(
-          //                                   width: 36,
-          //                                 ),
-          //                               ],
-          //                             ),
-          //                           ),
-          //                         ));
-          //               },
-          //               child: const Icon(Icons.support_agent),
-          //             )
-          //           : const SizedBox();
-          //     }),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.startFloat),
+        floatingActionButton: SupportButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+        resizeToAvoidBottomInset: false,
+        body: PageView(
+          controller: context.select<AppNavigationProvider, PageController>(
+              (provider) => provider.pageController),
+          physics: const NeverScrollableScrollPhysics(),
+          children: <Widget>[
+            if (getCountry.countryName == 'SA') const PostsView0(),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+              child: TasksWidget(),
+            ),
+            const InviteFriendView(),
+            WalletViewNew(),
+            ProfileView(),
+          ],
+        ),
+        bottomNavigationBar: const CustomBottomNavBar(),
+        // floatingActionButton: Selector<AppNavigationProvider, int>(
+        //     selector: (_, provider) => provider.navigatorIndex,
+        //     builder: (context, index, _) {
+        //       return index != 0
+        //           ? FloatingActionButton(
+        //               onPressed: () async {
+        //                 //await checkForUpdate();
+        //                 //  performUpdate();
+        //                 //const whatsAppUrl = 'https://api.whatsapp.com/send/?phone=966580495019&text=%D8%A7%D8%B1%D8%BA%D8%A8+%D8%A8%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9+%D9%81%D9%8A+%D8%AA%D8%B7%D8%A8%D9%8A%D9%82+%D8%A7%D8%AF%D9%88%D9%88%D8%AF%D9%84%D8%B2&app_absent=0';
+        //                 const whatsAppUrl =
+        //                     'https://api.whatsapp.com/send/?phone=201274913123&text=%D8%A7%D8%B1%D8%BA%D8%A8+%D8%A8%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9+%D9%81%D9%8A+%D8%AA%D8%B7%D8%A8%D9%8A%D9%82+%D8%A7%D8%AF%D9%88%D9%88%D8%AF%D9%84%D8%B2&app_absent=0';
+        //                 const tawkUrl = 'https://tawk.to/adoodlz';
+        //                 showDialog(
+        //                     context: context,
+        //                     builder: (context) => Dialog(
+        //                           shape: RoundedRectangleBorder(
+        //                               borderRadius:
+        //                                   BorderRadius.circular(16)),
+        //                           elevation: 3,
+        //                           child: Padding(
+        //                             padding: const EdgeInsets.symmetric(
+        //                                 vertical: 8.0),
+        //                             child: Row(
+        //                               mainAxisSize: MainAxisSize.min,
+        //                               children: [
+        //                                 const SizedBox(
+        //                                   width: 36,
+        //                                 ),
+        //                                 IconButton(
+        //                                   icon: const Icon(
+        //                                       FontAwesomeIcons.whatsapp),
+        //                                   color: Colors.green,
+        //                                   iconSize: 48,
+        //                                   onPressed: () async {
+        //                                     if (await canLaunch(
+        //                                         whatsAppUrl)) {
+        //                                       launch(whatsAppUrl);
+        //                                     }
+        //                                   },
+        //                                 ),
+        //                                 const Spacer(),
+        //                                 IconButton(
+        //                                   icon: const Icon(
+        //                                       FontAwesomeIcons.commentDots),
+        //                                   color: Colors.blue,
+        //                                   iconSize: 48,
+        //                                   onPressed: () async {
+        //                                     if (await canLaunch(tawkUrl)) {
+        //                                       launch(tawkUrl);
+        //                                     }
+        //                                   },
+        //                                 ),
+        //                                 const SizedBox(
+        //                                   width: 36,
+        //                                 ),
+        //                               ],
+        //                             ),
+        //                           ),
+        //                         ));
+        //               },
+        //               child: const Icon(Icons.support_agent),
+        //             )
+        //           : const SizedBox();
+        //     }),
+      ),
     );
   }
 

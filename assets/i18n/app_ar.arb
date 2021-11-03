@@ -156,8 +156,9 @@
     "submitted":" تم",
     "expired":" انتهت",
     "changeYourPassword ":"قم بتغير كلمة السر  ",
-    "wrongOtp" :" خطا فى رمز الادخال"
-}
+    "wrongOtp":" خطا فى رمز الادخال",
+    "invitationCode":"كود الدعوة الخاص بك"
+    }
 
 
 

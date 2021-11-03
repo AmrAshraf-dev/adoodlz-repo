@@ -169,29 +169,33 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                     else
                       Wrap(
                         children: <Widget>[
+                          // Linkable(
+                          //   text: flag
+                          //       ? ("$firstHalf...")
+                          //       : (firstHalf + secondHalf),
+                          // ),
                           Linkable(
-                            text: flag
-                                ? ("$firstHalf...")
-                                : (firstHalf + secondHalf),
+                            text: (firstHalf + secondHalf),
                           ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                flag = !flag;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  flag
-                                      ? AppLocalizations.of(context).showMore
-                                      : AppLocalizations.of(context).showLess,
-                                  style: const TextStyle(color: Colors.red),
-                                ),
-                              ],
-                            ),
-                          ),
+
+                          // InkWell(
+                          //   onTap: () {
+                          //     setState(() {
+                          //       flag = !flag;
+                          //     });
+                          //   },
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.end,
+                          //     children: <Widget>[
+                          //       Text(
+                          //         flag
+                          //             ? AppLocalizations.of(context).showMore
+                          //             : AppLocalizations.of(context).showLess,
+                          //         style: const TextStyle(color: Colors.red),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     if (userFieldSetting != null)

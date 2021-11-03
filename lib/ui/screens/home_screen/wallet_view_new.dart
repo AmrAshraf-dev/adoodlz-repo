@@ -115,6 +115,9 @@ class _WalletViewNewState extends State<WalletViewNew> {
                             CircularStepProgressIndicator(
                           totalSteps: 500,
                           stepSize: 5,
+                          currentStep: (provider.user.waitBalance != null)
+                              ? provider.user.waitBalance
+                              : 0,
                           unselectedColor: Colors.grey[200],
                           padding: 0,
                           width: 100,

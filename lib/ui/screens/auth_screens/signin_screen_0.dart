@@ -251,6 +251,7 @@ class _SigninScreen0State extends State<SigninScreen0>
                           loading = true;
                         });
                         _signInFormkey.currentState.save();
+
                         _signInInfo['mobile'] = _signInInfo['mobile'].trim();
                         if (_signInInfo['mobile'].length == 14) {
                           _signInInfo['mobile'] =
