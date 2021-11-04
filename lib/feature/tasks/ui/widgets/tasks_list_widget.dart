@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_if_elements_to_conditional_expressions
+
 import 'package:adoodlz/feature/tasks/providers/task_provider.dart';
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/routes/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -31,6 +34,12 @@ class _TasksListWidgetState extends State<TasksListWidget> {
     } else {
       return '${startDate.difference(endDate).inDays.abs()} ${AppLocalizations.of(context).day}';
     }
+  }
+
+  int test = 0;
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -87,7 +96,9 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                   //                         checkExpDate))?:
 
                                   checkEndTaskNum(checkExpDate) ||
-                                          provider.tasks[index].submitCount > 0
+                                          provider.tasks[index].submitCount >=
+                                              provider
+                                                  .tasks[index].maxUserSubmit
                                       //=====================================================================================
                                       //disabled widget
                                       ? IgnorePointer(
@@ -107,37 +118,48 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                 children: [
                                                   // ignore: sized_box_for_whitespace
                                                   Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.29,
-                                                    height: 150.0,
-                                                    child: true
-                                                        ? ClipRRect(
-                                                            borderRadius: AppLocalizations.of(
-                                                                            context)
-                                                                        .localeName ==
-                                                                    'ar'
-                                                                ? const BorderRadius
-                                                                    .only(
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            10.0),
-                                                                    bottomRight:
-                                                                        Radius.circular(
-                                                                            10.0),
-                                                                  )
-                                                                : const BorderRadius
-                                                                    .only(
-                                                                    bottomLeft:
-                                                                        Radius.circular(
-                                                                            10.0),
-                                                                    topLeft: Radius
-                                                                        .circular(
-                                                                            10.0),
-                                                                  ),
-                                                            child: provider
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.29,
+                                                      // height: 150.0,
+                                                      child: ClipRRect(
+                                                        borderRadius: AppLocalizations.of(
+                                                                        context)
+                                                                    .localeName ==
+                                                                'ar'
+                                                            ? const BorderRadius
+                                                                .only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        10.0),
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        10.0),
+                                                              )
+                                                            : const BorderRadius
+                                                                .only(
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        10.0),
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        10.0),
+                                                              ),
+                                                        child: provider
+                                                                    .tasks[
+                                                                        index]
+                                                                    .image !=
+                                                                null
+                                                            ? Image.network(
+                                                                provider
+                                                                    .tasks[
+                                                                        index]
+                                                                    .image,
+                                                                fit: BoxFit
+                                                                    .cover)
+                                                            : provider
                                                                         .tasks[
                                                                             index]
                                                                         .icon !=
@@ -153,41 +175,31 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                                     ),
                                                                     size: 70.0,
                                                                   )
-                                                                : provider
-                                                                            .tasks[
-                                                                                index]
-                                                                            .image !=
-                                                                        null
-                                                                    ? Image.network(
-                                                                        provider
-                                                                            .tasks[
-                                                                                index]
-                                                                            .image,
-                                                                        fit: BoxFit
-                                                                            .cover)
-                                                                    : Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.symmetric(horizontal: 10.0),
-                                                                        child: Image
-                                                                            .asset(
-                                                                          'assets/images/logo.png',
-                                                                          fit: BoxFit
-                                                                              .contain,
-                                                                        ),
-                                                                      ),
-                                                          )
-                                                        : const Icon(
-                                                            IconData(
-                                                              0xf099,
-                                                              fontFamily:
-                                                                  'FontAwesomeBrands',
-                                                              fontPackage:
-                                                                  'font_awesome_flutter',
-                                                            ),
-                                                            color: Colors.blue,
-                                                            size: 60.0,
-                                                          ),
-                                                  ),
+                                                                : Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            10.0),
+                                                                    child: Image
+                                                                        .asset(
+                                                                      'assets/images/logo.png',
+                                                                      fit: BoxFit
+                                                                          .contain,
+                                                                    ),
+                                                                  ),
+                                                      )
+                                                      // : const Icon(
+                                                      //     IconData(
+                                                      //       0xf099,
+                                                      //       fontFamily:
+                                                      //           'FontAwesomeBrands',
+                                                      //       fontPackage:
+                                                      //           'font_awesome_flutter',
+                                                      //     ),
+                                                      //     color: Colors.blue,
+                                                      //     size: 60.0,
+                                                      //   ),
+                                                      ),
                                                   const SizedBox(
                                                     width: 10.0,
                                                   ),
@@ -328,12 +340,15 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                               //         checkExpDate))
                                                               // Text('data'),
 
-                                                              // ignore: prefer_if_elements_to_conditional_expressions
-                                                              (provider.tasks[index].submitCount >
-                                                                          0 &&
+                                                              (provider.tasks[index].submitCount >=
+                                                                          provider
+                                                                              .tasks[
+                                                                                  index]
+                                                                              .maxUserSubmit &&
+
                                                                       checkEndTaskNum(
                                                                           checkExpDate))
-                                                                  ? Container(
+                                                                  ? SizedBox(
                                                                       width: MediaQuery.of(context)
                                                                               .size
                                                                               .width *
@@ -341,7 +356,9 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                                       child:
                                                                           Text(
                                                                         AppLocalizations.of(context)
-                                                                            .submitted,
+                                                                            .submitted
+                                                                            .capitalize()
+                                                                            .toString(),
                                                                         overflow:
                                                                             TextOverflow.ellipsis,
                                                                         style:
@@ -354,15 +371,16 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                                         ),
                                                                       ),
                                                                     )
-                                                                  : (provider.tasks[index]
-                                                                              .submitCount >
-                                                                          0)
-                                                                      ? Container(
+                                                                  : (provider.tasks[index].submitCount >=
+                                                                          provider
+                                                                              .tasks[index]
+                                                                              .maxUserSubmit)
+                                                                      ? SizedBox(
                                                                           width:
                                                                               MediaQuery.of(context).size.width * .22,
                                                                           child:
                                                                               Text(
-                                                                            AppLocalizations.of(context).submitted,
+                                                                            AppLocalizations.of(context).submitted.capitalize(),
                                                                             overflow:
                                                                                 TextOverflow.ellipsis,
                                                                             style:
@@ -372,7 +390,7 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                                             ),
                                                                           ),
                                                                         )
-                                                                      : Container(
+                                                                      : SizedBox(
                                                                           width:
                                                                               MediaQuery.of(context).size.width * .22,
                                                                           child:
@@ -415,36 +433,49 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                               children: [
                                                 // ignore: sized_box_for_whitespace
                                                 Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.29,
-                                                  height: 150.0,
-                                                  child: true
-                                                      ? ClipRRect(
-                                                          borderRadius: AppLocalizations.of(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.29,
+                                                    //height: 150.0,
+                                                    child: ClipRRect(
+                                                      borderRadius: AppLocalizations
+                                                                      .of(
                                                                           context)
-                                                                      .localeName ==
-                                                                  'ar'
-                                                              ? const BorderRadius
-                                                                  .only(
-                                                                  topRight: Radius
+                                                                  .localeName ==
+                                                              'ar'
+                                                          ? const BorderRadius
+                                                              .only(
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      10.0),
+                                                              bottomRight:
+                                                                  Radius
                                                                       .circular(
                                                                           10.0),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          10.0),
-                                                                )
-                                                              : const BorderRadius
-                                                                  .only(
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          10.0),
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          10.0),
-                                                                ),
-                                                          child: provider
+                                                            )
+                                                          : const BorderRadius
+                                                              .only(
+                                                              bottomLeft: Radius
+                                                                  .circular(
+                                                                      10.0),
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                      10.0),
+                                                            ),
+                                                      child: provider
+                                                                  .tasks[index]
+                                                                  .image !=
+                                                              null
+                                                          ? Image.network(
+                                                              provider
+                                                                  .tasks[index]
+                                                                  .image,
+                                                              fit: BoxFit
+                                                                  .contain,
+                                                            )
+                                                          : provider
                                                                       .tasks[
                                                                           index]
                                                                       .icon !=
@@ -460,43 +491,31 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                                   ),
                                                                   size: 70.0,
                                                                 )
-                                                              : provider
-                                                                          .tasks[
-                                                                              index]
-                                                                          .image !=
-                                                                      null
-                                                                  ? Image.network(
-                                                                      provider
-                                                                          .tasks[
-                                                                              index]
-                                                                          .image,
-                                                                      fit: BoxFit
-                                                                          .cover)
-                                                                  : Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .symmetric(
-                                                                          horizontal:
-                                                                              10.0),
-                                                                      child: Image
-                                                                          .asset(
-                                                                        'assets/images/logo.png',
-                                                                        fit: BoxFit
-                                                                            .contain,
-                                                                      ),
-                                                                    ),
-                                                        )
-                                                      : const Icon(
-                                                          IconData(
-                                                            0xf099,
-                                                            fontFamily:
-                                                                'FontAwesomeBrands',
-                                                            fontPackage:
-                                                                'font_awesome_flutter',
-                                                          ),
-                                                          color: Colors.blue,
-                                                          size: 60.0,
-                                                        ),
-                                                ),
+                                                              : Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          10.0),
+                                                                  child: Image
+                                                                      .asset(
+                                                                    'assets/images/logo.png',
+                                                                    fit: BoxFit
+                                                                        .contain,
+                                                                  ),
+                                                                ),
+                                                    )
+                                                    // : const Icon(
+                                                    //     IconData(
+                                                    //       0xf099,
+                                                    //       fontFamily:
+                                                    //           'FontAwesomeBrands',
+                                                    //       fontPackage:
+                                                    //           'font_awesome_flutter',
+                                                    //     ),
+                                                    //     color: Colors.blue,
+                                                    //     size: 60.0,
+                                                    //   ),
+                                                    ),
                                                 const SizedBox(
                                                   width: 10.0,
                                                 ),
@@ -606,7 +625,9 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                             ),
                                                             const Spacer(),
                                                             Text(
-                                                              '${AppLocalizations.of(context).taskEndTime}',
+                                                              AppLocalizations.of(
+                                                                      context)
+                                                                  .taskEndTime,
                                                               style:
                                                                   const TextStyle(
                                                                 color: Color(

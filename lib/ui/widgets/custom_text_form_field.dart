@@ -21,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   final double height;
   final TextDirection textDirection;
   final String initialValue;
+  final bool enable;
 
   const CustomTextFormField(
       {this.hintText,
@@ -42,7 +43,8 @@ class CustomTextFormField extends StatelessWidget {
       this.readOnly,
       this.height,
       this.textDirection,
-      this.initialValue});
+      this.initialValue,
+      this.enable});
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class CustomTextFormField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: TextFormField(
+          enabled: enable,
           initialValue: initialValue,
           textDirection: textDirection,
           //expands: true,

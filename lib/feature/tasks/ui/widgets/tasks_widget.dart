@@ -1,5 +1,6 @@
 import 'package:adoodlz/feature/tasks/ui/widgets/submitted_tasks_list.dart';
 import 'package:adoodlz/feature/tasks/ui/widgets/tasks_list_widget.dart';
+import 'package:adoodlz/ui/widgets/floating_support_button.dart';
 import 'package:flutter/material.dart';
 
 class TasksWidget extends StatefulWidget {
@@ -29,6 +30,9 @@ class _TasksWidgetState extends State<TasksWidget>
     return DefaultTabController(
       length: tasksBar.length,
       child: Scaffold(
+        floatingActionButton: SupportButton(),
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniStartFloat,
         // appBar: PreferredSize(
         //   preferredSize: const Size.fromHeight(50.0),
         //   child: AppBar(

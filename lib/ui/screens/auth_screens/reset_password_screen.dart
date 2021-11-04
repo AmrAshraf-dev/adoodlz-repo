@@ -218,8 +218,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                 ),
                 CustomRaisedButton(
                   onPressed: () async {
-                    print(_newPasswordController.text);
-                    print(resetPasswordToken);
                     ResetPasswordApi reset = ResetPasswordApi();
                     if (_changePasswordFormKey.currentState.validate() &&
                         !loading) {

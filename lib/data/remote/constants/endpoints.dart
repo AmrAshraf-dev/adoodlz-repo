@@ -48,9 +48,8 @@ final String addPonts = '$baseUrl/corps/points/add';
 final String getTasks = '$baseUrl/task';
 
 final String taskSubmit = '$baseUrl/taskSubmit';
-const String forgetPasswordDev =
-    'https://adoodlz-eg-dev.herokuapp.com/otp/forget/password';
-const String forgetPassword = '$baseUrlEgypt/otp/forget/password';
+
+final String forgetPassword = '$_otpEndpoint/forget/password';
 
 final String verifyResetPassword = '$_otpEndpoint/change/password';
 

@@ -63,22 +63,7 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
-              Center(
-                child: Consumer<AuthProvider>(
-                  builder: (context, provider, _) => Text(
-                    provider.user.mobile ?? '',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey.shade600),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
             ],
-          ),
-          const SizedBox(
-            height: 5,
           ),
 
           /// show account verified or not verified //////////

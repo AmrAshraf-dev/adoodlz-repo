@@ -475,7 +475,9 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   @override
   void dispose() {
     super.dispose();
-    _pinController.dispose();
-    _timer.cancel();
+    setState(() {
+      // _pinController.dispose();
+      _timer.cancel();
+    });
   }
 }

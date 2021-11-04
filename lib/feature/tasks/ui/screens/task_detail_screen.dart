@@ -4,6 +4,8 @@ import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/feature/tasks/data/models/field_setting_model.dart';
 import 'package:adoodlz/feature/tasks/data/models/task_model.dart';
 import 'package:adoodlz/feature/tasks/providers/task_provider.dart';
+import 'package:adoodlz/feature/tasks/ui/screens/tasks_screen.dart';
+import 'package:adoodlz/ui/screens/home_screen/home_screen.dart';
 import 'package:adoodlz/ui/widgets/success_dialog.dart';
 import 'package:linkable/linkable.dart';
 import 'package:path/path.dart';
@@ -34,7 +36,6 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   MultipartFile _multipartFile;
   bool _autoValidate = false;
   bool loading;
-
 
   String text;
 
@@ -168,29 +169,33 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                     else
                       Wrap(
                         children: <Widget>[
+                          // Linkable(
+                          //   text: flag
+                          //       ? ("$firstHalf...")
+                          //       : (firstHalf + secondHalf),
+                          // ),
                           Linkable(
-                            text: flag
-                                ? ("$firstHalf...")
-                                : (firstHalf + secondHalf),
+                            text: (firstHalf + secondHalf),
                           ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                flag = !flag;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  flag
-                                      ? AppLocalizations.of(context).showMore
-                                      : AppLocalizations.of(context).showLess,
-                                  style: const TextStyle(color: Colors.red),
-                                ),
-                              ],
-                            ),
-                          ),
+
+                          // InkWell(
+                          //   onTap: () {
+                          //     setState(() {
+                          //       flag = !flag;
+                          //     });
+                          //   },
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.end,
+                          //     children: <Widget>[
+                          //       Text(
+                          //         flag
+                          //             ? AppLocalizations.of(context).showMore
+                          //             : AppLocalizations.of(context).showLess,
+                          //         style: const TextStyle(color: Colors.red),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     if (userFieldSetting != null)
@@ -509,8 +514,8 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                       margin: const EdgeInsets.symmetric(vertical: 40.0),
                       child: CustomRaisedButton(
                         onPressed: () async {
-
-                          if (_taskDetailFormKey.currentState.validate() && image!=null &&
+                          if (_taskDetailFormKey.currentState.validate() &&
+                              image != null &&
                               !loading) {
                             _taskDetailFormKey.currentState.save();
                             FocusManager.instance.primaryFocus.unfocus();
@@ -529,16 +534,24 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                               'fields': _listOfFields,
                             };
 
-                            try{
+                            try {
                               final finishSubmitTask =
-                              await Provider.of<TaskProvider>(context,
-                                  listen: false)
-                                  .submitTask(_taskInfo);
+                                  await Provider.of<TaskProvider>(context,
+                                          listen: false)
+                                      .submitTask(_taskInfo);
 
                               if (finishSubmitTask) {
-                                Timer timer = Timer(const Duration(seconds: 1), (){
-                                  Navigator.of(context, rootNavigator: true).pop();
+                                Timer timer =
+                                    Timer(const Duration(seconds: 1), () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
                                   Navigator.pop(context);
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (builder) => HomeScreen(),
+                                    ),
+                                  );
                                 });
                                 showDialog(
                                     barrierDismissible: false,
@@ -552,33 +565,30 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                 });
                               } else {
                                 Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      AppLocalizations.of(context).processFailure),
+                                  content: Text(AppLocalizations.of(context)
+                                      .processFailure),
                                 ));
                               }
-                            }catch (e) {
-                              debugPrint((e as DioError)
-                                  .response
-                                  .data
-                                  .toString());
+                            } catch (e) {
+                              debugPrint(
+                                  (e as DioError).response.data.toString());
                               debugPrint("Error Here Catch");
                               showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: Text(
-                                        AppLocalizations.of(context)
+                                        title: Text(AppLocalizations.of(context)
                                             .processFailure),
-                                    content: Text(
-                                        AppLocalizations.of(context)
-                                            .somethingWentWrong),
-                                  ));
+                                        content: Text(
+                                            AppLocalizations.of(context)
+                                                .somethingWentWrong),
+                                      ));
                             }
                             setState(() {
                               loading = false;
                             });
-                          }else{
+                          } else {
                             setState(() {
-                              _autoValidate=true;
+                              _autoValidate = true;
                             });
                             Scaffold.of(context).showSnackBar(SnackBar(
                               content: Text(
@@ -590,7 +600,6 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         label: AppLocalizations.of(context).submitTask,
                       ),
                     ),
-
                   ],
                 ),
               ),

@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:adoodlz/blocs/models/post.dart';
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/data/remote/apis/hits_api.dart';
@@ -54,9 +56,70 @@ class _InviteFriendViewState extends State<InviteFriendView> {
                     const SizedBox(
                       height: 40,
                     ),
-                    Text(
-                      AppLocalizations.of(context).inviteContacts.toUpperCase(),
-                      style: Theme.of(context).textTheme.headline5,
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)
+                                .inviteContacts
+                                .toUpperCase(),
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          const SizedBox(
+                            width: 18,
+                          ),
+                          Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              Image.asset(
+                                'assets/images/badge3.png',
+                                height: 110,
+                              ),
+                              CircleAvatar(
+                                radius: 40,
+                                backgroundColor: Colors.transparent,
+                                child: Container(
+                                  child: Consumer<AuthProvider>(
+                                    builder: (context, provider, _) => Center(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            height: 28,
+                                          ),
+                                          const Text(
+                                            'Your code',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            provider.user.id.toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4
+                                                .copyWith(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30)),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -105,6 +168,9 @@ class _InviteFriendViewState extends State<InviteFriendView> {
                                       decoration: TextDecoration.underline,
                                       color: Colors.blue),
                             ),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           const SizedBox(
                             height: 20,

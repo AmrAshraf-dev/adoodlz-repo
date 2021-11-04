@@ -159,7 +159,7 @@ class _GiftDetailsScreenState extends State<GiftDetailsScreen> {
                                                             .primaryColor),
                                               ),
                                               TextSpan(
-                                                text: '  R.S',
+                                                text: ' EGP',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1
