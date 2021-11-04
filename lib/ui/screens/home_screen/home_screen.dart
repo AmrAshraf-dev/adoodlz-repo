@@ -205,8 +205,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         }
       },
       child: Scaffold(
-        floatingActionButton: SupportButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
         resizeToAvoidBottomInset: false,
         body: PageView(
           controller: context.select<AppNavigationProvider, PageController>(

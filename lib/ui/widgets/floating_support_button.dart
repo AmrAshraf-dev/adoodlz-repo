@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SupportButton extends StatefulWidget {
   @override
@@ -31,26 +32,29 @@ class _SupportButtonState extends State<SupportButton> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    ' Have a problem ?',
+                  Text(
+                    AppLocalizations.of(context).haveProblem.toString(),
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Center(
-                    child: Container(
-                      child: Text(
-                        ' Don’t hesitate to contact us if you have any questions ',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Container(
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .problemDescribtion
+                              .toString(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            height: 1.5,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),

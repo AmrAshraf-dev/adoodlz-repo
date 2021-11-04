@@ -57,9 +57,13 @@ class ResetPasswordApi {
                 VerifyResetPasswordScreen(mobile, body['id'].toString(), true),
           ),
         );
-      } else if (response.statusCode == 404) {
+      } else if (response.statusCode == 404 ||
+          response.statusCode == 403 ||
+          response.statusCode == 402 ||
+          response.statusCode == 401) {
         if (body['message'] == 'invalid phone number' ||
-            body['message'] == 'user not found') {
+            body['message'] == 'user not found' ||
+            body['message'] == 'user registeration is not completed') {
           print(jsonDecode(response.body));
           showDialog(
             context: context,
@@ -125,6 +129,50 @@ class ResetPasswordApi {
       } else {
         throw NetworkErrorException();
       }
+
+      // if (response['sent'] != null && response['sent'] as bool) {
+      //   print('method Success');
+      //   print(response['_id'] as String);
+      //   return response['_id'] as String;
+      // } else {
+      //   throw NetworkErrorException();
+      // }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> resendOtp(
+      {@required String mobile, @required BuildContext context}) async {
+    // TODO: implement reset
+    try {
+      // formData.remove('password_confirmation');
+      // debugPrint('this our Data live ${formData.toString()}');
+      //final formDataToSend = FormData.fromMap(formData);
+
+      //debugPrint('this our Data ${formDataToSend.toString()}');
+      final getCountry =
+          Provider.of<ChangeCountryIpProvider>(context, listen: false);
+      var response = await http
+          .post(Uri.parse(endpoints.forgetPassword), body: {"mobile": mobile});
+
+      print('htttttttttttttttttttttttttttttp');
+      print(response.statusCode);
+      print(response.body);
+      print(endpoints.forgetPassword);
+      var body = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        resetPasswordToken = body['token'] as String;
+        resetPasswordId = body['id'] as int;
+        print(body['id']);
+        //  print(resetPasswordToken);
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        pref.setString(resetPasswordTokenKey, resetPasswordToken.toString());
+        pref.setInt(resetPasswordIdKey, resetPasswordId);
+        resetPasswordToken = pref.getString(resetPasswordTokenKey);
+        resetPasswordId = pref.getInt(resetPasswordIdKey);
+      }
+      return response.body;
 
       // if (response['sent'] != null && response['sent'] as bool) {
       //   print('method Success');

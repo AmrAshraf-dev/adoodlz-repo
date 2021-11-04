@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/validators/signin_request_body.dart';
 import 'package:adoodlz/data/remote/apis/auth_api.dart';
+import 'package:adoodlz/data/remote/apis/reset_password_api.dart';
 import 'package:adoodlz/feature/change_passwrod/ui/screens/change_passwprd_screen.dart';
 import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/ui/screens/auth_screens/forget_password_screen.dart';
@@ -341,41 +342,46 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                               formData['password'] = widget.password;
                               formData['id'] = widget.id;
                               _startTimer();
-                              try {
-                                final id = await Provider.of<AuthProvider>(
-                                        context,
-                                        listen: false)
-                                    .resendOtpCode(formData);
-                                if (id != null || id.isEmpty) {
-                                  print('send Success');
-                                  print(id);
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                            title: Text(
-                                                AppLocalizations.of(context)
-                                                    .processFailure),
-                                            content: Text(
-                                                AppLocalizations.of(context)
-                                                    .somethingWentWrong),
-                                          ));
-                                }
-                              } catch (e) {
-                                debugPrint(
-                                    (e as DioError).response.data.toString());
-                                debugPrint("Error Here Catch");
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                          title: Text(
-                                              AppLocalizations.of(context)
-                                                  .processFailure),
-                                          content: Text(
-                                              AppLocalizations.of(context)
-                                                  .somethingWentWrong),
-                                        ));
-                              }
+                              ResetPasswordApi rest = ResetPasswordApi();
+                              rest.resendOtp(
+                                  mobile: widget.mobileNumber,
+                                  context: context);
+                              print(widget.mobileNumber);
+                              // try {
+
+                              //   final id = await Provider.of<AuthProvider>(
+                              //           context,
+                              //           listen: false)
+                              //       .resendOtpCode(formData);
+                              //   if (id != null || id.isEmpty) {
+                              //     print('send Success');
+                              //     print(id);
+                              //   } else {
+                              //     // showDialog(
+                              //     //     context: context,
+                              //     //     builder: (context) => AlertDialog(
+                              //     //           title: Text(
+                              //     //               AppLocalizations.of(context)
+                              //     //                   .processFailure),
+                              //     //           content: Text(
+                              //     //               AppLocalizations.of(context)
+                              //     //                   .somethingWentWrong),
+                              //     //         ));
+                              //   }
+                              // } catch (e) {
+                              //   // debugPrint(
+                              //   //     (e as DioError).response.data.toString());
+                              //   // debugPrint("Error Here Catch");
+                              //   // showDialog(
+                              //   //   context: context,
+                              //   //   builder: (context) => AlertDialog(
+                              //   //     title: Text(AppLocalizations.of(context)
+                              //   //         .processFailure),
+                              //   //     content: Text(AppLocalizations.of(context)
+                              //   //         .somethingWentWrong),
+                              //   //   ),
+                              //   // );
+                              // }
                             },
                       child: Text(
                         AppLocalizations.of(context).resendCode,

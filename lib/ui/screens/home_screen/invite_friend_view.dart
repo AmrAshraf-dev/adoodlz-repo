@@ -73,11 +73,11 @@ class _InviteFriendViewState extends State<InviteFriendView> {
                             alignment: Alignment.topCenter,
                             children: [
                               Image.asset(
-                                'assets/images/badge2.png',
-                                height: 140,
+                                'assets/images/badge3.png',
+                                height: 110,
                               ),
                               CircleAvatar(
-                                radius: 35,
+                                radius: 40,
                                 backgroundColor: Colors.transparent,
                                 child: Container(
                                   child: Consumer<AuthProvider>(
@@ -89,13 +89,14 @@ class _InviteFriendViewState extends State<InviteFriendView> {
                                             MainAxisAlignment.center,
                                         children: [
                                           const SizedBox(
-                                            height: 15,
+                                            height: 28,
                                           ),
                                           const Text(
                                             'Your code',
                                             style: TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 13),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                           Text(
                                             provider.user.id.toString(),

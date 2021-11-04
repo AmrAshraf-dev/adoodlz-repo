@@ -30,6 +30,9 @@ class _TasksWidgetState extends State<TasksWidget>
     return DefaultTabController(
       length: tasksBar.length,
       child: Scaffold(
+        floatingActionButton: SupportButton(),
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniStartFloat,
         // appBar: PreferredSize(
         //   preferredSize: const Size.fromHeight(50.0),
         //   child: AppBar(

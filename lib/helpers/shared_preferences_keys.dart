@@ -27,11 +27,11 @@ void onLoading({@required BuildContext context}) {
     barrierDismissible: false,
     builder: (BuildContext context) {
       return Dialog(
-        child: new Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            new CircularProgressIndicator(),
-            new Text("Loading"),
+            CircularProgressIndicator(),
+            Text("Loading"),
           ],
         ),
       );

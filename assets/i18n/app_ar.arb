@@ -157,7 +157,9 @@
     "expired":" انتهت",
     "changeYourPassword ":"قم بتغير كلمة السر  ",
     "wrongOtp":" خطا فى رمز الادخال",
-    "invitationCode":"كود الدعوة الخاص بك"
+    "invitationCode":"كود الدعوة الخاص بك",
+    "haveProblem":"لديك مشكلة ؟",
+    "problemDescribtion":"لا تتردد في الاتصال بنا إذا كان لديك أي أسئلة"
     }
 
 
