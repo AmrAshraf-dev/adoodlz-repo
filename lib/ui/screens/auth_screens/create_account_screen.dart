@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
 import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 
 import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/ui/widgets/custom_raised_button.dart';
@@ -51,6 +52,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     _countryCode = '';
     obscurePassword = true;
     obscurePassword2 = true;
+
     super.initState();
   }
 
@@ -165,7 +167,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             child: Text(
                               AppLocalizations.of(context).userName,
                               style: const TextStyle(
-                                fontSize: 16.0,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -237,7 +239,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             child: Text(
                               AppLocalizations.of(context).mobilePhone,
                               style: const TextStyle(
-                                fontSize: 16.0,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -253,12 +255,21 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 // print("Country Code ${value.countryISOCode}");
                                 // print("Complete Number ${value.completeNumber}");
                               }),
-                              initialCountryCode: 'SA',
+                              initialCountryCode:
+                                  countryCodeLocation == 'Saudi Arabia'
+                                      ? 'SA'
+                                      : 'EG',
                               autoValidate: false,
                               style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                                fontSize: 22,
+                                color: Colors.black,
+                              ),
                               decoration: InputDecoration(
+                                hintText: countryCodeLocation == 'Saudi Arabia'
+                                    ? '5x xxx xxxx'
+                                    : '1xx xxx xxxx',
+                                hintStyle:
+                                    TextStyle(color: Colors.grey.shade300),
                                 contentPadding: const EdgeInsets.only(
                                   top: 15,
                                   bottom: 5,
@@ -330,7 +341,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             child: Text(
                               AppLocalizations.of(context).password,
                               style: const TextStyle(
-                                fontSize: 16.0,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -385,7 +396,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             child: Text(
                               AppLocalizations.of(context).confirmPassword,
                               style: const TextStyle(
-                                fontSize: 16.0,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -609,11 +620,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                       AppLocalizations.of(context).haveAccount,
                                   style: const TextStyle(color: Colors.grey)),
                               TextSpan(
-                                  text: AppLocalizations.of(context).signIn,
-                                  style: const TextStyle(
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                  )),
+                                text: AppLocalizations.of(context).signIn,
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
                             ],
                           ),
                           overflow: TextOverflow.ellipsis,

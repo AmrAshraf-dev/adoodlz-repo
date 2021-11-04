@@ -20,9 +20,7 @@ class AuthProvider extends ChangeNotifier {
 
   bool get updatingUser => _updatingUser;
 
-
   bool _finish;
-
 
   set loading(bool loading) {
     _loading = loading;
@@ -179,6 +177,21 @@ class AuthProvider extends ChangeNotifier {
       loading = false;
     }
   }
+
+  // Future<String> resetPassword({String id, String mobile}) async {
+  //   try {
+  //     loading = true;
+
+  //     final id = await _authApi.reset(mobile);
+  //     loading = false;
+  //     return id;
+  //   } catch (e) {
+  //     loading = false;
+  //     rethrow;
+  //   } finally {
+  //     loading = false;
+  //   }
+  // }
 
   /// ///////////////////////
 

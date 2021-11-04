@@ -1,12 +1,18 @@
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
+import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
+import 'package:adoodlz/data/remote/apis/auth_api.dart';
+import 'package:adoodlz/data/remote/apis/reset_password_api.dart';
 import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/routes/router.dart';
+import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
+
 import 'package:adoodlz/ui/widgets/custom_raised_button.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   @override
@@ -17,12 +23,18 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   OutlineInputBorder outLineBorder = const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(5.0)),
       borderSide: BorderSide(width: 0.2));
-
   final GlobalKey<FormState> _forgetPasswordFormKey = GlobalKey<FormState>();
   String mobileNumber = '';
   bool loading = false;
+  Map<String, dynamic> resetPassword;
+  String _countryCode;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    _countryCode = '';
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -81,15 +93,26 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             mobileNumber = value.completeNumber;
                           }),
                           onChanged: (value) => setState(() {
+                            _countryCode = value.countryISOCode;
+
                             //_countryCode = value.countryISOCode;
                             // print("Country Code ${value.countryISOCode}");
                             // print("Complete Number ${value.completeNumber}");
+                            mobileNumber = value.completeNumber;
+                            //resetPassword['mobile'] = value.completeNumber;
                           }),
-                          initialCountryCode: 'SA',
+                          initialCountryCode:
+                              countryCodeLocation == 'Saudi Arabia'
+                                  ? 'SA'
+                                  : 'EG',
                           autoValidate: false,
                           style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
+                              color: Colors.black, fontSize: 22),
                           decoration: InputDecoration(
+                            hintText: countryCodeLocation == 'Saudi Arabia'
+                                ? '5x xxx xxxx'
+                                : '1xx xxx xxxx',
+                            hintStyle: TextStyle(color: Colors.grey.shade300),
                             contentPadding: const EdgeInsets.only(
                               top: 15,
                               bottom: 5,
@@ -118,54 +141,65 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   margin: const EdgeInsets.symmetric(vertical: 30.0),
                   child: CustomRaisedButton(
                     onPressed: () async {
+                      print('====================================');
                       if (_forgetPasswordFormKey.currentState.validate() &&
                           !loading) {
                         _forgetPasswordFormKey.currentState.save();
                         FocusManager.instance.primaryFocus.unfocus();
-
                         setState(() {
                           loading = true;
                         });
 
                         try {
+                          if (_countryCode == 'EG') {
+                            await Provider.of<ChangeCountryIpProvider>(context,
+                                    listen: false)
+                                .changeToEgypt();
+                          } else if (_countryCode == 'SA') {
+                            await Provider.of<ChangeCountryIpProvider>(context,
+                                    listen: false)
+                                .changeToSaudi();
+                          } else {
+                            await Provider.of<ChangeCountryIpProvider>(context,
+                                    listen: false)
+                                .changeToEgypt();
+                          }
+                          ResetPasswordApi rest = ResetPasswordApi();
+                          rest.reset(mobile: mobileNumber, context: context);
+
                           String id = await Provider.of<AuthProvider>(context,
                                   listen: false)
                               .toString();
-                          if (loading) {
-                            Navigator.of(context).pushReplacementNamed(
-                                Routes.verifyAccountScreen,
-                                arguments: <String, dynamic>{
-                                  'number': mobileNumber,
-                                  '_id': id,
-                                  'resetPassword': true,
-                                });
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: Text(AppLocalizations.of(context)
-                                          .processFailure),
-                                      content: Text(AppLocalizations.of(context)
-                                          .somethingWentWrong),
-                                    ));
-                          }
+                          Navigator.of(context).pushReplacementNamed(
+                              Routes.verifyResetPasswordPage,
+                              arguments: <String, dynamic>{
+                                'number': mobileNumber,
+                                '_id': id,
+                                'resetPassword': true,
+                              });
                         } catch (e) {
                           debugPrint((e as DioError).response.data.toString());
                           debugPrint("Error Here Catch");
                           showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text(AppLocalizations.of(context)
-                                        .processFailure),
-                                    content: Text(AppLocalizations.of(context)
-                                        .somethingWentWrong),
-                                  ));
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                  AppLocalizations.of(context).processFailure),
+                              content: Text(AppLocalizations.of(context)
+                                  .somethingWentWrong),
+                            ),
+                          );
                         }
 
                         setState(() {
                           loading = false;
                         });
                       } else {}
+
+                      print('====================================');
+                      print(_countryCode);
+                      print('====================================');
+                      print(endpoints.baseUrl);
                     },
                     loading: loading,
                     label: AppLocalizations.of(context).sendCodeForgetPassword,

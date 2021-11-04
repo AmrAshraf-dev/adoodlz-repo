@@ -3,6 +3,8 @@
 
 const baseUrlSaudi = 'http://api.adoodlz.com/v1';
 const baseUrlEgypt = 'https://adoodlz.herokuapp.com';
+//const baseUrlEgypt = 'https://adoodlz-eg-dev.herokuapp.com';
+
 String baseUrl = 'http://api.adoodlz.com/v1';
 
 const int receiveTimeout = 5000;
@@ -46,5 +48,10 @@ final String addPonts = '$baseUrl/corps/points/add';
 final String getTasks = '$baseUrl/task';
 
 final String taskSubmit = '$baseUrl/taskSubmit';
+const String forgetPasswordDev =
+    'https://adoodlz-eg-dev.herokuapp.com/otp/forget/password';
+const String forgetPassword = '$baseUrlEgypt/otp/forget/password';
+
+final String verifyResetPassword = '$_otpEndpoint/change/password';
 
 const ipUrl = 'http://ip-api.com/json';

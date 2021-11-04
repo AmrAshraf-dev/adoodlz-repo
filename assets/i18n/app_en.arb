@@ -157,8 +157,9 @@
     "@inviteFriend": {
         "description": "Invite a friend prompt"
     },
+
     "language": "Change Language",
-    "@language": {
+        "@language": {
         "description": "Label for changing language button"
     },
     "editYourData": "Edit Your Data",
@@ -635,6 +636,26 @@
     "sendCodeForgetPassword": "Send Code",
     "@sendCodeForgetPassword": {
         "description": "Send Code"
+    },
+
+    "submitted": "submitted",
+    "@submitted": {
+        "description": "Submitted"
+    },
+
+     "expired": "expired",
+    "@expired": {
+        "description": "expired"
+    },
+
+    "changeYourPassword": "Change Your Password",
+    "@changeYourPassword": {
+        "description": "Change Your Password"
+    },
+
+    "wrongOtp": "Your OTP is wrong",
+    "@wrongOtp": {
+        "description": " Your Otp is wrong "
     }
 
 }

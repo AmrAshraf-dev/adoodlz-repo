@@ -14,4 +14,6 @@ abstract class IAuthApi {
   Future<User> addFireBaseMessageToken(String token, String userId);
 
   Future<String> signUp(Map<String, dynamic> formData);
+
+  // Future<String> reset(String mobile);
 }

@@ -504,7 +504,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   Future<void> _afterLayout(_) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final getCountry = Provider.of<ChangeCountryIpProvider>(context, listen: false);
+    final getCountry =
+        Provider.of<ChangeCountryIpProvider>(context, listen: false);
     if (!prefs.containsKey(savedShowCoachKey) ||
         prefs.getBool(savedShowCoachKey)) {
       getCountry.countryName == "SA" ? initTargets() : initTargets2();

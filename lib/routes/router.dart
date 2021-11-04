@@ -10,10 +10,12 @@ import 'package:adoodlz/ui/screens/about_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/create_account_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/edit_account_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/forget_password_screen.dart';
+import 'package:adoodlz/ui/screens/auth_screens/reset_password_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/signin_screen_0.dart';
 import 'package:adoodlz/ui/screens/auth_screens/signup_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/signup_screen_new.dart';
 import 'package:adoodlz/ui/screens/auth_screens/verify_account_screen.dart';
+import 'package:adoodlz/ui/screens/auth_screens/verify_reset_password.dart';
 import 'package:adoodlz/ui/screens/gift_details_screen.dart';
 import 'package:adoodlz/ui/screens/post_details_screen.dart';
 import 'package:adoodlz/ui/screens/setting_screen.dart';
@@ -23,7 +25,6 @@ import 'package:flutter/material.dart';
 import 'package:adoodlz/ui/screens/home_screen/home_screen.dart';
 import 'package:adoodlz/ui/screens/language_selection_screen_0.dart';
 import 'package:adoodlz/ui/screens/splash_screen_0.dart';
-
 
 class Routes {
   static const String splashScreen0 = '/';
@@ -40,6 +41,8 @@ class Routes {
   static const String editAccountScreen = '/edit-account';
   static const String getcash = '/getcash';
   static const String verifyProfilePage = '/verifyProfilePage';
+  static const String verifyResetPasswordPage = '/verifyResetPassword';
+  static const String resetPasswordScreen = '/resetPasswordScreen';
 
   /// //////////////////
   static const String changePasswordScreen = '/change_password';
@@ -49,7 +52,6 @@ class Routes {
   static const String tasksScreen = '/tasks';
   static const String taskDetailScreen = '/task_detail';
   static const String forgetPasswordScreen = '/forget_password';
-
 
   static const all = <String>{
     splashScreen0,
@@ -69,9 +71,11 @@ class Routes {
     verifyProfilePage,
     tasksScreen,
     forgetPasswordScreen,
+    verifyResetPasswordPage
   };
 }
 
+// ignore: avoid_classes_with_only_static_members
 class CustomRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -101,6 +105,15 @@ class CustomRouter {
               args['_id'] as String, args['resetPassword'] as bool,
               password: args['password'] as String),
         );
+
+      case Routes.verifyResetPasswordPage:
+        final Map<String, dynamic> args =
+            settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => VerifyResetPasswordScreen(args['number'] as String,
+              args['_id'] as String, args['resetPassword'] as bool,
+              password: args['password'] as String),
+        );
       case Routes.giftDetailsScreen:
         final Gift args = settings.arguments as Gift;
         return MaterialPageRoute(
@@ -114,6 +127,8 @@ class CustomRouter {
             builder: (_) => PostDetailsScreen(post: args['post'] as Post));
       case Routes.aboutScreen:
         return MaterialPageRoute(builder: (_) => const AboutScreen());
+      case Routes.resetPasswordScreen:
+        return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
       case Routes.termsScreen:
         return MaterialPageRoute(builder: (_) => const TermsScreen());
       case Routes.signupScreen:
@@ -146,9 +161,11 @@ class CustomRouter {
       case Routes.tasksScreen:
         return MaterialPageRoute(builder: (_) => TasksScreen());
       case Routes.taskDetailScreen:
-        final TaskModel args =
-        settings.arguments as TaskModel;
-        return MaterialPageRoute(builder: (_) => TaskDetailScreen(task: args,));
+        final TaskModel args = settings.arguments as TaskModel;
+        return MaterialPageRoute(
+            builder: (_) => TaskDetailScreen(
+                  task: args,
+                ));
       case Routes.forgetPasswordScreen:
         return MaterialPageRoute(builder: (_) => ForgetPasswordScreen());
       default:
