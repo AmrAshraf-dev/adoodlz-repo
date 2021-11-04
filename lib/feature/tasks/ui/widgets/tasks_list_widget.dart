@@ -327,6 +327,8 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                               //     checkEndTaskNum(
                                                               //         checkExpDate))
                                                               // Text('data'),
+
+                                                              // ignore: prefer_if_elements_to_conditional_expressions
                                                               (provider.tasks[index].submitCount >
                                                                           0 &&
                                                                       checkEndTaskNum(
