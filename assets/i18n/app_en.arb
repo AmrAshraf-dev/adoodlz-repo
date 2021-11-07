@@ -676,6 +676,16 @@
     "wrongOtp": "Your OTP is wrong",
     "@wrongOtp": {
         "description": " Your Otp is wrong "
+    },
+    
+    "haveProblem": "Have a problem ?",
+    "@Have a problem": {
+        "description": "Have a problem ?"
+    },
+
+    "problemDescribtion": "Don’t hesitate to contact us if you have any questions",
+    "@Don’t hesitate to contact us if you have any questions": {
+        "description": "Don’t hesitate to contact us if you have any questions ?"
     }
 
 }
