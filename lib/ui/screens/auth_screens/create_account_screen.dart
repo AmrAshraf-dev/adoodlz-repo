@@ -542,19 +542,34 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                             ));
                                   }
                                 } catch (e) {
-                                  debugPrint(
-                                      (e as DioError).response.data.toString());
-                                  debugPrint("Error Here Catch");
-                                  showDialog(
+                                  if ((e as DioError)
+                                          .response
+                                          .data['message']
+                                          .toString() ==
+                                      'user is already registered') {
+                                    showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
-                                            title: Text(
-                                                AppLocalizations.of(context)
-                                                    .processFailure),
-                                            content: Text(
-                                                AppLocalizations.of(context)
-                                                    .somethingWentWrong),
-                                          ));
+                                        title: Text(AppLocalizations.of(context)
+                                            .processFailure),
+                                        content: Text(
+                                            AppLocalizations.of(context)
+                                                .phoneExists),
+                                      ),
+                                    );
+                                  } else {
+                                    debugPrint("Error Here Catch");
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: Text(
+                                                  AppLocalizations.of(context)
+                                                      .processFailure),
+                                              content: Text(
+                                                  AppLocalizations.of(context)
+                                                      .somethingWentWrong),
+                                            ));
+                                  }
                                 }
 
                                 setState(() {

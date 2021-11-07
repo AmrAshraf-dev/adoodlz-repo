@@ -12,6 +12,7 @@ description: Adoodlz App
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
+
 version: 2.1.2+43
 
 environment:

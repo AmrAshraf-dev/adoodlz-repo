@@ -564,10 +564,12 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                   timer = null;
                                 });
                               } else {
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text(AppLocalizations.of(context)
-                                      .processFailure),
-                                ));
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(AppLocalizations.of(context)
+                                        .processFailure),
+                                  ),
+                                );
                               }
                             } catch (e) {
                               debugPrint(

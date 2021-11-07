@@ -663,11 +663,16 @@
         "description": "Have a problem ?"
     },
 
+
     "problemDescribtion": "Don’t hesitate to contact us if you have any questions",
     "@Don’t hesitate to contact us if you have any questions": {
         "description": "Don’t hesitate to contact us if you have any questions ?"
     },
 
+    "phoneExists":"Mobile Number is already exists",
+    "@Mobile Number is already exists": {
+        "description": "Mobile Number is already exists?"
+    },
     "wrongOtp": "Your OTP is wrong",
     "@wrongOtp": {
         "description": " Your Otp is wrong "

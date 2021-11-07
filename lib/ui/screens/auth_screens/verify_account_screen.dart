@@ -203,21 +203,25 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                                       Routes.homeScreen);
                                             } else {
                                               showDialog(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      AlertDialog(
-                                                        title: Text(
-                                                            AppLocalizations.of(
-                                                                    context)
-                                                                .processFailure),
-                                                        content: Text(
-                                                            AppLocalizations.of(
-                                                                    context)
-                                                                .invalidCredentials),
-                                                      ));
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                  title: Text(
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .processFailure),
+                                                  content: Text(
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .somethingWentWrong),
+                                                ),
+                                              );
                                               //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
                                             }
                                           } catch (e) {
+                                            print(
+                                                (e as DioError).response.data);
+
                                             showDialog(
                                                 context: context,
                                                 builder: (context) =>
@@ -248,7 +252,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                                   content: Text(
                                                       AppLocalizations.of(
                                                               context)
-                                                          .somethingWentWrong),
+                                                          .wrongOtp),
                                                 ));
                                       }
                                     } catch (e) {
@@ -267,12 +271,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                         loading = false;
                                       });
                                     }
-                                  } else {
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text(AppLocalizations.of(context)
-                                          .invalidOtp),
-                                    ));
-                                  }
+                                  } else {}
                                 }
                               }),
                         ),
