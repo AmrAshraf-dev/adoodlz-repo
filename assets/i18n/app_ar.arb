@@ -159,6 +159,8 @@
     "wrongOtp":" خطا فى رمز الادخال",
     "invitationCode":"كود الدعوة الخاص بك",
     "haveProblem":"لديك مشكلة ؟",
+    "problemDescribtion":"لا تتردد في الاتصال بنا إذا كان لديك أي أسئلة",
+    "haveProblem":"لديك مشكلة ؟",
     "problemDescribtion":"لا تتردد في الاتصال بنا إذا كان لديك أي أسئلة"
     }
 
