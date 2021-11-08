@@ -35,6 +35,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   Map<String, dynamic> _taskInfo = {};
   MultipartFile _multipartFile;
   bool _autoValidate = false;
+  var userName;
   bool loading;
 
   String text;
@@ -230,6 +231,8 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                 filledColor: Colors.white,
                                 textInputType: TextInputType.name,
                                 onSaved: (value) => setState(() {
+                                  userName = value;
+
                                   _listOfFields.add(
                                       {'field_id': 'username', 'value': value});
                                 }),
@@ -481,14 +484,22 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                   CustomRaisedButton(
                                     colors: const Color(0xFFDE608F),
                                     onPressed: () async {
+                                      //_multipartFile = null;
                                       final error = await pickImage();
                                       Scaffold.of(context)
                                           .showSnackBar(SnackBar(
-                                        content: Text(error
-                                            ? AppLocalizations.of(context)
-                                                .pictureFailure
-                                            : AppLocalizations.of(context)
-                                                .pictureSuccess),
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                          error
+                                              ? AppLocalizations.of(context)
+                                                  .pictureFailure
+                                              : AppLocalizations.of(context)
+                                                  .pictureSuccess,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
                                       ));
                                     },
                                     label: AppLocalizations.of(context).upload,
@@ -522,12 +533,15 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                             setState(() {
                               loading = true;
                             });
+                            print('=====================================');
+                            print(userName);
                             _taskInfo = {
                               'userId': Provider.of<AuthProvider>(context,
                                       listen: false)
                                   .user
                                   .id,
                               'taskId': widget.task.id,
+                              'username': userName,
                               // 'status': 'pending',
                               // 'createdAt':DateTime.now().toIso8601String(),
                               'image': _multipartFile,
@@ -541,6 +555,8 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                       .submitTask(_taskInfo);
 
                               if (finishSubmitTask) {
+                                print('==================================');
+                                print(_multipartFile);
                                 Timer timer =
                                     Timer(const Duration(seconds: 1), () {
                                   Navigator.of(context, rootNavigator: true)
@@ -564,16 +580,20 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                   timer = null;
                                 });
                               } else {
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(AppLocalizations.of(context)
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text(AppLocalizations.of(context)
                                         .processFailure),
+                                    content: const Text(
+                                        "This user already submmited this task with this name ,try with another name"),
                                   ),
                                 );
                               }
                             } catch (e) {
-                              debugPrint(
-                                  (e as DioError).response.data.toString());
+                              print(
+                                  '=========================================');
+                              print((e as DioError).response.data.toString());
                               debugPrint("Error Here Catch");
                               showDialog(
                                   context: context,
