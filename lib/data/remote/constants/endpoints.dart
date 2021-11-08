@@ -2,8 +2,8 @@
 //const baseUrl = 'http://api.adoodlz.com/v1';
 
 const baseUrlSaudi = 'http://api.adoodlz.com/v1';
-const baseUrlEgypt = 'https://adoodlz.herokuapp.com';
-//const baseUrlEgypt = 'https://adoodlz-eg-dev.herokuapp.com';
+//const baseUrlEgypt = 'https://adoodlz.herokuapp.com';
+const baseUrlEgypt = 'https://adoodlz-eg-dev.herokuapp.com';
 
 String baseUrl = 'http://api.adoodlz.com/v1';
 
