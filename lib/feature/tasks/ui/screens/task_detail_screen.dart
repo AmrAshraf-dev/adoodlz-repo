@@ -5,7 +5,9 @@ import 'package:adoodlz/feature/tasks/data/models/field_setting_model.dart';
 import 'package:adoodlz/feature/tasks/data/models/task_model.dart';
 import 'package:adoodlz/feature/tasks/providers/task_provider.dart';
 import 'package:adoodlz/feature/tasks/ui/screens/tasks_screen.dart';
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/ui/screens/home_screen/home_screen.dart';
+import 'package:adoodlz/ui/screens/task_example.dart';
 import 'package:adoodlz/ui/widgets/success_dialog.dart';
 import 'package:linkable/linkable.dart';
 import 'package:path/path.dart';
@@ -45,7 +47,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
 
   String firstHalf;
   String secondHalf;
-
+  String example;
   bool flag = true;
 
   FieldSettingModel userFieldSetting;
@@ -84,6 +86,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    example = widget.task.example;
     text = AppLocalizations.of(context).localeName == 'ar'
         ? widget.task.content.ar.description
         : widget.task.content.en.description;
@@ -179,7 +182,25 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                             text: (firstHalf + secondHalf),
                           ),
 
-                          // InkWell(
+                          Center(
+                            child: CustomRaisedButton(
+                                width: 90,
+                                height: 35,
+                                colors: const Color(0xFFDE608F),
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (builder) => ExampleScreen(
+                                  //       image: example,
+                                  //     ),
+                                  //   ),
+                                  // );
+                                  displayDialog(context, example);
+                                },
+                                label:
+                                    AppLocalizations.of(context).taskExample),
+                          ) // InkWell(
                           //   onTap: () {
                           //     setState(() {
                           //       flag = !flag;

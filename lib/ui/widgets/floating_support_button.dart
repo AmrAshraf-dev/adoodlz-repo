@@ -1,3 +1,5 @@
+import 'package:adoodlz/data/remote/apis/application_setting_api.dart';
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,11 +14,15 @@ class SupportButton extends StatefulWidget {
 class _SupportButtonState extends State<SupportButton> {
   @override
   Widget build(BuildContext context) {
+    ApplicationSetting app = ApplicationSetting();
+
     return FloatingActionButton(
       onPressed: () {
-        const whatsAppUrl =
-            'https://api.whatsapp.com/send/?phone=201274913123&text=%D8%A7%D8%B1%D8%BA%D8%A8+%D8%A8%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9+%D9%81%D9%8A+%D8%AA%D8%B7%D8%A8%D9%8A%D9%82+%D8%A7%D8%AF%D9%88%D9%88%D8%AF%D9%84%D8%B2&app_absent=0';
+        final whatsAppUrl =
+            'https://api.whatsapp.com/send/?phone=$whatsappNumber&text=%D8%A7%D8%B1%D8%BA%D8%A8+%D8%A8%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9+%D9%81%D9%8A+%D8%AA%D8%B7%D8%A8%D9%8A%D9%82+%D8%A7%D8%AF%D9%88%D9%88%D8%AF%D9%84%D8%B2&app_absent=0';
         const tawkUrl = 'https://tawk.to/adoodlz';
+
+        print(whatsAppUrl);
         showDialog(
           context: context,
           builder: (context) => Dialog(
@@ -34,7 +40,8 @@ class _SupportButtonState extends State<SupportButton> {
                   ),
                   Text(
                     AppLocalizations.of(context).haveProblem.toString(),
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                        fontSize: 22, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
                     height: 10,
@@ -80,6 +87,7 @@ class _SupportButtonState extends State<SupportButton> {
                           color: Colors.blue,
                           iconSize: 40,
                           onPressed: () async {
+                            print(tawkUrl);
                             if (await canLaunch(tawkUrl)) {
                               launch(tawkUrl);
                             }

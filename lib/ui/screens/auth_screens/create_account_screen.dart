@@ -16,6 +16,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:validators/validators.dart' as validator;
 
@@ -480,14 +481,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ],
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 30.0),
+                      margin: const EdgeInsets.only(top: 30, bottom: 15.0),
                       child: CustomRaisedButton(
                         onPressed: () async {
+                          print(registerVersion);
                           if (agree) {
                             if (_signupFormKey.currentState.validate() &&
                                 !loading) {
                               _signupFormKey.currentState.save();
+
                               FocusManager.instance.primaryFocus.unfocus();
+
                               if (_signupInfo['password'] ==
                                   _signupInfo['password_confirmation']) {
                                 // if (_countryCode == 'SA') {
@@ -496,7 +500,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 });
 
                                 /// ///////////
-
+                                print('==========================');
+                                _signupInfo['version'] = registerVersion;
+                                print(_signupInfo);
                                 try {
                                   /// change ip country
                                   if (_countryCode == 'EG') {
@@ -619,6 +625,29 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         label: AppLocalizations.of(context).signupShort,
                         lightFont: true,
                       ),
+                    ),
+                    FutureBuilder<PackageInfo>(
+                      future: PackageInfo.fromPlatform(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          registerVersion = snapshot.data.version.toString();
+
+                          return Center(
+                            child: Text(
+                              'V ${snapshot.data.version}',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.0,
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     GestureDetector(
                       onTap: () {

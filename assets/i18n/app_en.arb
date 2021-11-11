@@ -673,6 +673,11 @@
     "@Mobile Number is already exists": {
         "description": "Mobile Number is already exists?"
     },
+    
+    "taskExample":"Example",
+    "@Example": {
+        "description": "Example"
+    },
     "wrongOtp": "Your OTP is wrong",
     "@wrongOtp": {
         "description": " Your Otp is wrong "
