@@ -160,6 +160,7 @@
     "invitationCode":"كود الدعوة الخاص بك",
     "haveProblem":"لديك مشكلة ؟",
     "phoneExists":" رقم الهاتف موجود بالفعل",
+    "taskExample":"مثال",
     "problemDescribtion":"لا تتردد في الاتصال بنا إذا كان لديك أي أسئلة"
     }
 

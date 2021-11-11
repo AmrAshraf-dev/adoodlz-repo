@@ -6,8 +6,9 @@ part 'signin_request_body.g.dart';
 class SigninRequestBody {
   final String mobile;
   final String password;
+  final String version;
 
-  SigninRequestBody({this.mobile, this.password});
+  SigninRequestBody({this.mobile, this.password, this.version});
 
   factory SigninRequestBody.fromJson(Map<String, dynamic> json) =>
       _$SigninRequestBodyFromJson(json);

@@ -38,27 +38,29 @@ class TaskModel {
   bool submitted;
   @JsonKey(name: 'submit_count')
   int submitCount;
+  @JsonKey(name: 'example')
+  String example;
 
-  TaskModel({
-    this.id,
-    this.content,
-    this.image,
-    this.icon,
-    this.corpId,
-    this.pointsIn,
-    this.pointsOut,
-    this.status,
-    this.def,
-    this.fieldSetting,
-    this.approvalGuide,
-    this.expireAt,
-    this.maxAppSubmit,
-    this.maxUserSubmit,
-    this.totalAppSubmit,
-    this.totalUserSubmit,
-    this.submitted,
-    this.submitCount,
-  });
+  TaskModel(
+      {this.id,
+      this.content,
+      this.image,
+      this.icon,
+      this.corpId,
+      this.pointsIn,
+      this.pointsOut,
+      this.status,
+      this.def,
+      this.fieldSetting,
+      this.approvalGuide,
+      this.expireAt,
+      this.maxAppSubmit,
+      this.maxUserSubmit,
+      this.totalAppSubmit,
+      this.totalUserSubmit,
+      this.submitted,
+      this.submitCount,
+      this.example});
 
   factory TaskModel.fromJson(Map<String, dynamic> json) =>
       _$TaskModelFromJson(json);

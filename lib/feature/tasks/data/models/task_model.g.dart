@@ -21,6 +21,7 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
     pointsOut: json['points_out'] as num,
     status: json['status'] as String,
     def: json['default'] as String,
+    example: json['example'] as String,
     fieldSetting: (json['fields_settings'] as List)
         ?.map((e) => e == null
             ? null
@@ -58,4 +59,5 @@ Map<String, dynamic> _$TaskModelToJson(TaskModel instance) => <String, dynamic>{
       'fields_settings': instance.fieldSetting,
       'submitted': instance.submitted,
       'submit_count': instance.submitCount,
+      'example': instance.example,
     };

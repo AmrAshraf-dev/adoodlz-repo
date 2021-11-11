@@ -10,6 +10,7 @@ SigninRequestBody _$SigninRequestBodyFromJson(Map<String, dynamic> json) {
   return SigninRequestBody(
     mobile: json['mobile'] as String,
     password: json['password'] as String,
+    version: json['version'] as String,
   );
 }
 
@@ -17,4 +18,5 @@ Map<String, dynamic> _$SigninRequestBodyToJson(SigninRequestBody instance) =>
     <String, dynamic>{
       'mobile': instance.mobile,
       'password': instance.password,
+      'version': instance.version,
     };

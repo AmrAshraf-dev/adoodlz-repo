@@ -245,11 +245,13 @@ class _SigninScreen0State extends State<SigninScreen0>
                 Center(
                   child: CustomRaisedButton(
                     onPressed: () async {
+                      print(_signInInfo);
                       if (_signInFormkey.currentState.validate() && !loading) {
                         _loginButtonController.forward();
                         setState(() {
                           loading = true;
                         });
+
                         _signInFormkey.currentState.save();
 
                         _signInInfo['mobile'] = _signInInfo['mobile'].trim();
@@ -257,6 +259,7 @@ class _SigninScreen0State extends State<SigninScreen0>
                           _signInInfo['mobile'] =
                               _signInInfo['mobile'].replaceFirst('0', '');
                         }
+                        _signInInfo['version'] = version;
 
                         /// change ip country
 
@@ -265,8 +268,8 @@ class _SigninScreen0State extends State<SigninScreen0>
                             SigninRequestBody.fromJson(_signInInfo);
                         final authProvider =
                             Provider.of<AuthProvider>(context, listen: false);
-
-                        print(endpoints.generateOtp);
+                        print('moooooooooooooooooooooooooooooooooooooooooo');
+                        print(_signInInfo);
                         try {
                           if (countryISOCode == 'EG') {
                             await Provider.of<ChangeCountryIpProvider>(context,
@@ -367,11 +370,12 @@ class _SigninScreen0State extends State<SigninScreen0>
                   ),
                 ),
                 UIHelper.verticalSpaceMedium(),
-
                 FutureBuilder<PackageInfo>(
                   future: PackageInfo.fromPlatform(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
+                      version = snapshot.data.version.toString();
+
                       return Center(
                         child: Text(
                           'V ${snapshot.data.version}',

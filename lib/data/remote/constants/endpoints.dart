@@ -46,6 +46,7 @@ final String createPin = '$baseUrl/pins';
 final String addPonts = '$baseUrl/corps/points/add';
 
 final String getTasks = '$baseUrl/task';
+const String getAppConfig = 'https://adoodlz.herokuapp.com/config';
 
 final String taskSubmit = '$baseUrl/taskSubmit';
 final String forgetPassword = '$_otpEndpoint/forget/password';

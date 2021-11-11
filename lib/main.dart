@@ -1,3 +1,4 @@
+import 'package:adoodlz/data/remote/apis/application_setting_api.dart';
 import 'package:adoodlz/helpers/localizations_provider.dart';
 import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/providers_setup.dart';
@@ -60,10 +61,12 @@ class _MyAppState extends State<MyApp> {
     return first.countryName; // this will return country name
   }
 
+  ApplicationSetting app = ApplicationSetting();
   void initState() {
     removeshared();
     getCountryName();
     super.initState();
+    app.getApplicationSetting();
   }
 
   @override

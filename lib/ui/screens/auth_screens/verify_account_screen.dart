@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/validators/signin_request_body.dart';
 import 'package:adoodlz/data/remote/apis/auth_api.dart';
+import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/routes/router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:adoodlz/helpers/ui/ui_helpers.dart';
 import 'package:adoodlz/ui/widgets/custom_raised_button.dart';
+import 'package:package_info/package_info.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
@@ -181,6 +183,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                                 SigninRequestBody.fromJson({
                                               'mobile': widget.mobileNumber,
                                               'password': widget.password,
+                                              'version': version.toString(),
                                             });
                                             final success =
                                                 await Provider.of<AuthProvider>(
@@ -308,6 +311,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                           SigninRequestBody.fromJson({
                                         'mobile': widget.mobileNumber,
                                         'password': widget.password,
+                                        'version': version.toString()
                                       });
                                       final success =
                                           await Provider.of<AuthProvider>(
@@ -415,6 +419,8 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                               formData['mobile'] = widget.mobileNumber;
                               formData['password'] = widget.password;
                               formData['id'] = widget.id;
+                              formData['version'] = version.toString();
+
                               _startTimer();
                               try {
                                 final id = await Provider.of<AuthProvider>(
@@ -460,6 +466,28 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                             color: _counter > 0 ? Colors.grey : Colors.blue),
                         textAlign: TextAlign.center,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    FutureBuilder<PackageInfo>(
+                      future: PackageInfo.fromPlatform(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          version = snapshot.data.version;
+                          return Center(
+                            child: Text(
+                              'V ${snapshot.data.version}',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                   ],
                 ),
