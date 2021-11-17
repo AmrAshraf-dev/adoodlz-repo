@@ -1,3 +1,4 @@
+import 'package:geocoder/geocoder.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'signin_request_body.g.dart';
@@ -7,8 +8,17 @@ class SigninRequestBody {
   final String mobile;
   final String password;
   final String version;
+  final String coordinates;
+  final String address;
+  final String firebaseToken;
 
-  SigninRequestBody({this.mobile, this.password, this.version});
+  SigninRequestBody(
+      {this.mobile,
+      this.password,
+      this.version,
+      this.coordinates,
+      this.firebaseToken,
+      this.address});
 
   factory SigninRequestBody.fromJson(Map<String, dynamic> json) =>
       _$SigninRequestBodyFromJson(json);

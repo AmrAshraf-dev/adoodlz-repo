@@ -5,10 +5,12 @@ import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
 import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 
 import 'package:adoodlz/routes/router.dart';
+import 'package:adoodlz/ui/screens/pending_screen.dart';
 import 'package:adoodlz/ui/widgets/custom_raised_button.dart';
 import 'package:adoodlz/ui/widgets/custom_text_form_field.dart';
 import 'package:adoodlz/ui/widgets/picked_image.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,6 +20,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart' as validator;
 
 class CreateAccountScreen extends StatefulWidget {
@@ -45,6 +48,18 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   File image;
   final _passwordController = TextEditingController();
   String _countryCode;
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+
+  Future<void> getTokenFireBasee() async {
+    firebasetoken = await _fcm.getToken();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString(firebasetokenKey, firebasetoken);
+    print('------------------------------------------');
+    print(pref.getString(firebasetokenKey));
+    firebasetoken = pref.getString(firebasetokenKey);
+
+    print(firebasetoken);
+  }
 
   @override
   void initState() {
@@ -53,7 +68,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     _countryCode = '';
     obscurePassword = true;
     obscurePassword2 = true;
-
+    getTokenFireBasee();
+    print(firebasetoken);
     super.initState();
   }
 
@@ -484,6 +500,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       margin: const EdgeInsets.only(top: 30, bottom: 15.0),
                       child: CustomRaisedButton(
                         onPressed: () async {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (builder) => PenddingScreen(),
+                          //   ),
+                          // );
                           print(registerVersion);
                           if (agree) {
                             if (_signupFormKey.currentState.validate() &&
@@ -502,6 +524,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 /// ///////////
                                 print('==========================');
                                 _signupInfo['version'] = registerVersion;
+                                _signupInfo['cordinates'] = userCoordinates;
+                                _signupInfo['address'] = city;
+                                _signupInfo['firebase_token'] =
+                                    firebasetoken.toString();
+
                                 print(_signupInfo);
                                 try {
                                   /// change ip country
@@ -526,43 +553,129 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                           listen: false)
                                       //.toString();
                                       .signUpUser(_signupInfo);
+                                  // bool sign = true;
+                                  // if (sign == true) {
+                                  //   Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (builder) => PenddingScreen(),
+                                  //     ),
+                                  //   );
+                                  //   // showDialog(
+                                  //   //     context: context,
+                                  //   //     builder: (context) => AlertDialog(
+                                  //   //           title: Text(
+                                  //   //               AppLocalizations.of(context)
+                                  //   //                   .processFailure),
+                                  //   //           content: Text('we will back'),
+                                  //   //         ));
+                                  // }
+                                  //else
                                   if (id != null || id.isEmpty) {
-                                    Navigator.of(context).pushReplacementNamed(
-                                        Routes.verifyAccountScreen,
-                                        arguments: <String, dynamic>{
-                                          'number': _signupInfo['mobile'],
-                                          'password': _signupInfo['password'],
-                                          '_id': id,
-                                          'resetPassword': false,
-                                        });
+                                    if (!registerStatus) {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (builder) =>
+                                              const PenddingScreen(),
+                                        ),
+                                      );
+                                    } else {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              Routes.verifyAccountScreen,
+                                              arguments: <String, dynamic>{
+                                            'number': _signupInfo['mobile'],
+                                            'password': _signupInfo['password'],
+                                            '_id': id,
+                                            'resetPassword': false,
+                                          });
+                                    }
+
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) => AlertDialog(
+                                    //           title: Text(
+                                    //               AppLocalizations.of(context)
+                                    //                   .processFailure),
+                                    //           content: Text('we will back'),
+                                    //         ));
                                   } else {
                                     showDialog(
                                         context: context,
                                         builder: (context) => AlertDialog(
-                                              title: Text(
-                                                  AppLocalizations.of(context)
+                                              title: Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.warning,
+                                                    color: Colors.red,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(AppLocalizations.of(
+                                                          context)
                                                       .processFailure),
+                                                ],
+                                              ),
                                               content: Text(
                                                   AppLocalizations.of(context)
                                                       .somethingWentWrong),
                                             ));
                                   }
                                 } catch (e) {
-                                  if ((e as DioError)
-                                          .response
-                                          .data['message']
-                                          .toString() ==
-                                      'user is already registered') {
+                                  print(
+                                      'errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrror');
+                                  print((e as DioError).response.toString());
+                                  if ((e as DioError).response.toString() ==
+                                      'otp already sent') {
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
                                         title: Text(AppLocalizations.of(context)
                                             .processFailure),
-                                        content: Text(
-                                            AppLocalizations.of(context)
-                                                .phoneExists),
+                                        content: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.warning,
+                                              color: Colors.red,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(AppLocalizations.of(context)
+                                                .sentOtp),
+                                          ],
+                                        ),
                                       ),
                                     );
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                  } else if ((e as DioError)
+                                          .response
+                                          .toString() ==
+                                      'you are in waiting list') {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.warning,
+                                                    color: Colors.red,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(AppLocalizations.of(
+                                                          context)
+                                                      .processFailure),
+                                                ],
+                                              ),
+                                              content: Text(
+                                                  AppLocalizations.of(context)
+                                                      .waitingList),
+                                            ));
                                   } else {
                                     debugPrint("Error Here Catch");
                                     showDialog(
