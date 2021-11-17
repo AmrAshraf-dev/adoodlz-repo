@@ -339,11 +339,13 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                                                               //     checkEndTaskNum(
                                                               //         checkExpDate))
                                                               // Text('data'),
+
                                                               (provider.tasks[index].submitCount >=
                                                                           provider
                                                                               .tasks[
                                                                                   index]
                                                                               .maxUserSubmit &&
+
                                                                       checkEndTaskNum(
                                                                           checkExpDate))
                                                                   ? SizedBox(
