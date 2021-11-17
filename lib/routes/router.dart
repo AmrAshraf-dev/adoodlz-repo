@@ -16,6 +16,7 @@ import 'package:adoodlz/ui/screens/auth_screens/signup_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/signup_screen_new.dart';
 import 'package:adoodlz/ui/screens/auth_screens/verify_account_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/verify_reset_password.dart';
+import 'package:adoodlz/ui/screens/auth_screens/verify_user_insidethe_app.dart';
 import 'package:adoodlz/ui/screens/gift_details_screen.dart';
 import 'package:adoodlz/ui/screens/post_details_screen.dart';
 import 'package:adoodlz/ui/screens/setting_screen.dart';
@@ -42,6 +43,8 @@ class Routes {
   static const String getcash = '/getcash';
   static const String verifyProfilePage = '/verifyProfilePage';
   static const String verifyResetPasswordPage = '/verifyResetPassword';
+  static const String verifyInsideApp = '/verifyInsideApp';
+
   static const String resetPasswordScreen = '/resetPasswordScreen';
 
   /// //////////////////
@@ -71,7 +74,8 @@ class Routes {
     verifyProfilePage,
     tasksScreen,
     forgetPasswordScreen,
-    verifyResetPasswordPage
+    verifyResetPasswordPage,
+    verifyInsideApp
   };
 }
 
@@ -114,6 +118,18 @@ class CustomRouter {
               args['_id'] as String, args['resetPassword'] as bool,
               password: args['password'] as String),
         );
+
+      case Routes.verifyInsideApp:
+        final Map<String, dynamic> args =
+            settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => VerifyUserInsideApp(
+            args['number'] as String,
+            // args['_id'] as String, args['resetPassword'] as bool,
+            // password: args['password'] as String
+          ),
+        );
+
       case Routes.giftDetailsScreen:
         final Gift args = settings.arguments as Gift;
         return MaterialPageRoute(

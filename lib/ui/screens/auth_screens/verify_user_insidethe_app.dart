@@ -5,9 +5,11 @@ import 'package:adoodlz/blocs/validators/signin_request_body.dart';
 import 'package:adoodlz/data/remote/apis/auth_api.dart';
 import 'package:adoodlz/data/remote/apis/reset_password_api.dart';
 import 'package:adoodlz/feature/change_passwrod/ui/screens/change_passwprd_screen.dart';
+import 'package:adoodlz/helpers/ui/navigation_provider.dart';
 import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/ui/screens/auth_screens/forget_password_screen.dart';
 import 'package:adoodlz/ui/screens/auth_screens/reset_password_screen.dart';
+import 'package:adoodlz/ui/screens/home_screen/home_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,22 +19,23 @@ import 'package:package_info/package_info.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
-class VerifyResetPasswordScreen extends StatefulWidget {
+class VerifyUserInsideApp extends StatefulWidget {
   // ignore: avoid_positional_boolean_parameters
-  const VerifyResetPasswordScreen(
-      this.mobileNumber, this.id, this.resetPassword,
-      {this.password});
+  const VerifyUserInsideApp(
+    this.mobileNumber,
+    // this.id, this.resetPassword,
+    // {this.password}
+  );
   final String mobileNumber;
-  final String id;
-  final bool resetPassword;
-  final String password;
+  // final String id;
+  // final bool resetPassword;
+  // final String password;
 
   @override
-  _VerifyResetPasswordScreenState createState() =>
-      _VerifyResetPasswordScreenState();
+  _VerifyUserInsideAppState createState() => _VerifyUserInsideAppState();
 }
 
-class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
+class _VerifyUserInsideAppState extends State<VerifyUserInsideApp> {
   final TextEditingController _pinController = TextEditingController();
   bool loading;
   int _counter = 120;
@@ -71,30 +74,6 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // const SizedBox(
-              //   height: 36,
-              // ),
-              // Text(
-              //   AppLocalizations.of(context).verifyAccount,
-              //   style: Theme.of(context).textTheme.headline4,
-              // ),
-
-              // Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Align(
-              //     alignment: Alignment.centerLeft,
-              //     child: IconButton(
-              //       icon: const Icon(
-              //         Icons.arrow_back_ios_outlined,
-              //         color: Colors.black,
-              //         size: 24.0,
-              //       ),
-              //       onPressed: () {
-              //         Navigator.of(context).pop();
-              //       },
-              //     ),
-              //   ),
-              // ),
               const SizedBox(
                 height: 100,
               ),
@@ -184,10 +163,10 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
 
                                       print('we get pass');
                                       try {
-                                        Navigator.pop(context);
+                                        // Navigator.pop(context);
                                         Navigator.of(context)
                                             .pushReplacementNamed(
-                                                Routes.resetPasswordScreen);
+                                                Routes.homeScreen);
                                         //print("After Sign in");
 
                                       } catch (e) {
@@ -240,7 +219,58 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                                   ));
                                 }
                               },
-                              onChanged: (value) async {}),
+                              onChanged: (value) async {
+                                if (!loading &&
+                                    _pinController.text.isNotEmpty &&
+                                    _pinController.text.length == 4) {
+                                  setState(() {
+                                    loading = true;
+                                  });
+
+                                  final pin = _pinController.text;
+                                  final successOtp = await Provider.of<AuthApi>(
+                                          context,
+                                          listen: false)
+                                      .verifyOtp(widget.mobileNumber, pin);
+
+                                  if (successOtp) {
+                                    Navigator.pop(context);
+                                    Provider.of<AppNavigationProvider>(context,
+                                            listen: false)
+                                        .navigatorIndex = 0;
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (builder) => HomeScreen(),
+                                      ),
+                                    );
+                                    setState(() {
+                                      loading = false;
+                                    });
+
+                                    print(successOtp);
+                                  } else {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: Text(
+                                                  AppLocalizations.of(context)
+                                                      .loginFailed),
+                                              content: Text(
+                                                  AppLocalizations.of(context)
+                                                      .wrongOtp),
+                                            ));
+                                  }
+                                } else {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(AppLocalizations.of(context)
+                                        .invalidOtp),
+                                  ));
+                                }
+                              }),
                         ),
                       ),
                     ),
@@ -257,90 +287,51 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                               loading = true;
                             });
 
-                            try {
-                              final pin = _pinController.text;
-                              final successOtp = await Provider.of<AuthApi>(
-                                      context,
+                            final pin = _pinController.text;
+                            final successOtp = await Provider.of<AuthApi>(
+                                    context,
+                                    listen: false)
+                                .verifyOtp(widget.mobileNumber, pin);
+
+                            if (successOtp) {
+                              Navigator.pop(context);
+                              Provider.of<AppNavigationProvider>(context,
                                       listen: false)
-                                  .verifyOtp(widget.mobileNumber, pin);
-
-                              if (successOtp) {
-                                print('hey');
-
-                                print('we get pass');
-                                try {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).pushReplacementNamed(
-                                      Routes.resetPasswordScreen);
-                                  //print("After Sign in");
-
-                                } catch (e) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                            title: Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.warning,
-                                                  color: Colors.red,
-                                                ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                    AppLocalizations.of(context)
-                                                        .loginFailed),
-                                              ],
-                                            ),
-                                            content: Text(
-                                                AppLocalizations.of(context)
-                                                    .wrongOtp),
-                                          ));
-                                  //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
-                                }
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                          title: Row(
-                                            children: [
-                                              const Icon(
-                                                Icons.warning,
-                                                color: Colors.red,
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(AppLocalizations.of(context)
-                                                  .processFailure),
-                                            ],
-                                          ),
-                                          content: Text(
-                                              AppLocalizations.of(context)
-                                                  .somethingWentWrong),
-                                        ));
-                              }
-                            } catch (e) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: Text(AppLocalizations.of(context)
-                                            .processFailure),
-                                        content: Text(
-                                            AppLocalizations.of(context)
-                                                .somethingWentWrong),
-                                      ));
-                            } finally {
+                                  .navigatorIndex = 0;
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (builder) => HomeScreen(),
+                                ),
+                              );
                               setState(() {
                                 loading = false;
                               });
+
+                              print(successOtp);
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.warning,
+                                              color: Colors.red,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(AppLocalizations.of(context)
+                                                .processFailure),
+                                          ],
+                                        ),
+                                        content: Text(
+                                            AppLocalizations.of(context)
+                                                .wrongOtp),
+                                      ));
                             }
-                          } else {
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text(AppLocalizations.of(context).invalidOtp),
-                            ));
-                          }
+                          } else {}
                         },
                         label: AppLocalizations.of(context).verify,
                         loading: loading,
@@ -361,8 +352,8 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                     //       ? () {}
                     //       : () async {
                     //           formData['mobile'] = widget.mobileNumber;
-                    //           formData['password'] = widget.password;
-                    //           formData['id'] = widget.id;
+                    //          // formData['password'] = widget.password;
+                    //           //formData['id'] = widget.id;
                     //           _startTimer();
                     //           ResetPasswordApi rest = ResetPasswordApi();
                     //           rest.resendOtp(
@@ -414,7 +405,7 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                     //     textAlign: TextAlign.center,
                     //   ),
                     // ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     FutureBuilder<PackageInfo>(

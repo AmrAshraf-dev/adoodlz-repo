@@ -40,6 +40,7 @@ class ResetPasswordApi {
       print(response.body);
       print(endpoints.forgetPassword);
       var body = jsonDecode(response.body);
+
       if (response.statusCode == 200) {
         resetPasswordToken = body['token'] as String;
         resetPasswordId = body['id'] as int;
@@ -61,15 +62,36 @@ class ResetPasswordApi {
           response.statusCode == 403 ||
           response.statusCode == 402 ||
           response.statusCode == 401) {
-        if (body['message'] == 'invalid phone number' ||
-            body['message'] == 'user not found' ||
-            body['message'] == 'user registeration is not completed') {
-          print(jsonDecode(response.body));
+        if (body['message'] == 'invalid phone number') {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
               title: Text(AppLocalizations.of(context).processFailure),
               content: Text(AppLocalizations.of(context).invalidCredentials),
+            ),
+          );
+        } else if (body['message'] == 'user not found') {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(AppLocalizations.of(context).processFailure),
+              content: Text(AppLocalizations.of(context).invalidPhone),
+            ),
+          );
+        } else if (body['message'] == 'user registeration is not completed') {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(AppLocalizations.of(context).processFailure),
+              content: Text(AppLocalizations.of(context).verifyAccountAgain),
+            ),
+          );
+        } else if (body['message'] == 'otp already sent') {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(AppLocalizations.of(context).processFailure),
+              content: Text(AppLocalizations.of(context).sentOtp),
             ),
           );
         }

@@ -1,4 +1,7 @@
+import 'package:adoodlz/blocs/providers/auth_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 const String savedLocaleKey = 'saved_locale';
 const String savedTokenDataKey = 'saved_token_data';
@@ -9,6 +12,8 @@ const String countryIp = 'country_ip';
 const String country = 'country';
 const String resetPasswordIdKey = 'RPID-Key';
 String whatsappNumber = '';
+bool registerStatus;
+const String registerStatusKey = 'register_Token_key ';
 const String whatsappNumberKey = 'whatsapp_Token_key ';
 String version;
 String registerVersion;
@@ -17,6 +22,11 @@ dynamic userId;
 String resetPasswordToken = '';
 int resetPasswordId;
 dynamic countryCodeLocation;
+String userCoordinates;
+String city;
+String firebasetoken = '';
+const String firebasetokenKey = 'firebase_token_key ';
+
 bool forgetPasswordloading = false;
 
 extension StringExtension on String {
@@ -127,3 +137,20 @@ displayDialog(BuildContext context, image) {
     },
   );
 }
+
+// Future<void> getTokenFireBasee() async {
+//   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+
+//   final String test2 = await _fcm.getToken();
+//   print('gimyyyyyyyyyy $test2');
+//   return test2;
+//   // final bool success = await Provider.of<AuthProvider>(context, listen: false)
+//   //     .addUserFireBaseToken(test2);
+//   // if (success) {
+//   //   // ignore: avoid_print
+//   //   print('trueee');
+//   // } else {
+//   //   // ignore: avoid_print
+//   //   print('falseeeeeee');
+//   // }
+// }

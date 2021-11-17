@@ -167,7 +167,9 @@ class AuthProvider extends ChangeNotifier {
     try {
       loading = true;
 
-      final id = await _authApi.signUp(formData);
+      final id = await _authApi.signUp(
+        formData,
+      );
       loading = false;
       return id;
     } catch (e) {

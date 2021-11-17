@@ -256,7 +256,7 @@ class _InviteFriendViewState extends State<InviteFriendView> {
                                             child: TextFormField(
                                               inputFormatters: [
                                                 LengthLimitingTextInputFormatter(
-                                                    4),
+                                                    10),
                                               ],
                                               maxLines: 1,
                                               controller: _controller,

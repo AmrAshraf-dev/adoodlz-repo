@@ -6,7 +6,6 @@ import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/themes/theme.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geocoder/geocoder.dart';
@@ -52,12 +51,17 @@ class _MyAppState extends State<MyApp> {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     debugPrint('location: ${position.latitude}');
-    final coordinates = new Coordinates(position.latitude, position.longitude);
-    var addresses =
+    final coordinates = Coordinates(position.latitude, position.longitude);
+    final addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first;
+    final first = addresses.first;
     countryCodeLocation = first.countryName;
-    print(first.countryName);
+    city = first.adminArea ?? '';
+    userCoordinates = first.coordinates.toString() ?? '';
+    print('/////////////////////////////////////////////');
+    print(city);
+    print(userCoordinates);
+    //print(first.addressLine);
     return first.countryName; // this will return country name
   }
 

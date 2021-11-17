@@ -255,50 +255,61 @@ class ProfileView extends StatelessWidget {
                 if (authProvider.user.status != 'verified')
                   ListTile(
                     onTap: () async {
-                      /// verify inside app again //////
-                      try {
-                        final id =
-                            await Provider.of<AuthApi>(context, listen: false)
-                                .sendOtp(authProvider.user.mobile);
-                        if (id != null || id.isEmpty) {
-                          Navigator.of(context).pushNamed(
-                              Routes.verifyAccountScreen,
-                              arguments: <String, dynamic>{
-                                'number': authProvider.user.mobile,
-                                '_id': id,
-                                'resetPassword': false,
-                              }).then((value) {
-                            authProvider.updateUserData();
+                      Navigator.of(context).pushNamed(Routes.verifyInsideApp,
+                          arguments: <String, dynamic>{
+                            'number': authProvider.user.mobile,
                           });
-                          // Navigator.of(context).pushReplacementNamed(
-                          //     Routes.signupScreen,
-                          //     arguments: <String, dynamic>{
-                          //       'mobile': authProvider.user.mobile,
-                          //       '_id': id,
-                          //       'resetPassword': false,
-                          //     });
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text(AppLocalizations.of(context)
-                                        .processFailure),
-                                    content: Text(AppLocalizations.of(context)
-                                        .somethingWentWrong),
-                                  ));
-                        }
-                      } catch (e) {
-                        debugPrint((e as DioError).response.data.toString());
-                        debugPrint("Error Here Catch");
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text(AppLocalizations.of(context)
-                                      .processFailure),
-                                  content: Text(AppLocalizations.of(context)
-                                      .somethingWentWrong),
-                                ));
-                      }
+                      // /// verify inside app again //////
+                      // ///
+                      // ///
+                      // try {
+                      //   print(authProvider.user.mobile);
+                      //   // final id =
+                      //   //     await Provider.of<AuthApi>(context, listen: false)
+                      //   //         .verifyOtp(authProvider.user.mobile,);
+                      //   print('*******************************************');
+                      //   // print(id);
+                      //   // if (id != null || id.isEmpty) {
+                      //   //   .then((value) {
+                      //   //     authProvider.updateUserData();
+                      //   //   });
+                      //   //   // Navigator.of(context).pushReplacementNamed(
+                      //   //   //     Routes.signupScreen,
+                      //   //   //     arguments: <String, dynamic>{
+                      //   //   //       'mobile': authProvider.user.mobile,
+                      //   //   //       '_id': id,
+                      //   //   //       'resetPassword': false,
+                      //   //   //     });
+                      //   // } else {
+                      //   //   showDialog(
+                      //   //       context: context,
+                      //   //       builder: (context) => AlertDialog(
+                      //   //             title: Text(AppLocalizations.of(context)
+                      //   //                 .processFailure),
+                      //   //             content: Text(AppLocalizations.of(context)
+                      //   //                 .somethingWentWrong),
+                      //   //           ));
+                      //   // }
+                      //   Navigator.of(context).pushNamed(Routes.verifyInsideApp,
+                      //       arguments: <String, dynamic>{
+                      //         'number': authProvider.user.mobile,
+                      //       });
+                      // } catch (e) {
+                      //   debugPrint((e as DioError).response.data.toString());
+                      //   debugPrint("Error Here Catch");
+                      //   if ((e as DioError).response.data.toString() ==
+                      //       'otp already sent') {
+                      //     showDialog(
+                      //       context: context,
+                      //       builder: (context) => AlertDialog(
+                      //         title: Text(
+                      //             AppLocalizations.of(context).processFailure),
+                      //         content:
+                      //             Text(AppLocalizations.of(context).sentOtp),
+                      //       ),
+                      //     );
+                      //   }
+                      // }
                     },
                     leading: const Icon(Icons.account_circle,
                         color: Color(0xFFDE608F)),

@@ -183,7 +183,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                                     listen: false)
                                 .changeToEgypt();
                           }
-
+                          ResetPasswordApi rest = ResetPasswordApi();
+                          rest.reset(mobile: mobileNumber, context: context);
                           // String id = await Provider.of<AuthProvider>(context,
                           //         listen: false)
                           //     .toString();
@@ -197,19 +198,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                         } catch (e) {
                           debugPrint((e as DioError).response.data.toString());
                           debugPrint("Error Here Catch");
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text(
-                                  AppLocalizations.of(context).processFailure),
-                              content: Text(AppLocalizations.of(context)
-                                  .somethingWentWrong),
-                            ),
-                          );
+                          if ((e as DioError).response.data.toString() ==
+                              'otp already sent') {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(AppLocalizations.of(context)
+                                    .processFailure),
+                                content:
+                                    Text(AppLocalizations.of(context).sentOtp),
+                              ),
+                            );
+                          }
                         }
 
-                        ResetPasswordApi rest = ResetPasswordApi();
-                        rest.reset(mobile: mobileNumber, context: context);
                         // setState(() {
                         //   loading = false;
                         // });

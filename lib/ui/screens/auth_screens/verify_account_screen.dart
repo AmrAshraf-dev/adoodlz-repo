@@ -30,7 +30,7 @@ class VerifyAccountScreen extends StatefulWidget {
 class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   final TextEditingController _pinController = TextEditingController();
   bool loading;
-  int _counter = 30;
+  int _counter = 120;
   Timer _timer;
   Map<String, dynamic> formData = {};
 
@@ -42,7 +42,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   }
 
   void _startTimer() {
-    _counter = 60;
+    _counter = 120;
     if (_timer != null) {
       _timer.cancel();
     }
@@ -311,7 +311,11 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                           SigninRequestBody.fromJson({
                                         'mobile': widget.mobileNumber,
                                         'password': widget.password,
-                                        'version': version.toString()
+                                        'version': version.toString(),
+                                        'cord': userCoordinates.toString(),
+                                        'address': city.toString(),
+
+                                        //firebasetoken.toString(),
                                       });
                                       final success =
                                           await Provider.of<AuthProvider>(
@@ -412,61 +416,61 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                       textAlign: TextAlign.center,
                     ),
                     UIHelper.verticalSpaceMedium(),
-                    GestureDetector(
-                      onTap: _counter > 0
-                          ? () {}
-                          : () async {
-                              formData['mobile'] = widget.mobileNumber;
-                              formData['password'] = widget.password;
-                              formData['id'] = widget.id;
-                              formData['version'] = version.toString();
+                    // GestureDetector(
+                    //   onTap: _counter > 0
+                    //       ? () {}
+                    //       : () async {
+                    //           formData['mobile'] = widget.mobileNumber;
+                    //           formData['password'] = widget.password;
+                    //           formData['id'] = widget.id;
+                    //           formData['version'] = version.toString();
 
-                              _startTimer();
-                              try {
-                                final id = await Provider.of<AuthProvider>(
-                                        context,
-                                        listen: false)
-                                    .resendOtpCode(formData);
-                                if (id != null || id.isEmpty) {
-                                  print('send Success');
-                                  print(id);
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                            title: Text(
-                                                AppLocalizations.of(context)
-                                                    .processFailure),
-                                            content: Text(
-                                                AppLocalizations.of(context)
-                                                    .somethingWentWrong),
-                                          ));
-                                }
-                              } catch (e) {
-                                debugPrint(
-                                    (e as DioError).response.data.toString());
-                                debugPrint("Error Here Catch");
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                          title: Text(
-                                              AppLocalizations.of(context)
-                                                  .processFailure),
-                                          content: Text(
-                                              AppLocalizations.of(context)
-                                                  .somethingWentWrong),
-                                        ));
-                              }
-                            },
-                      child: Text(
-                        AppLocalizations.of(context).resendCode,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15.0,
-                            color: _counter > 0 ? Colors.grey : Colors.blue),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    //           _startTimer();
+                    //           try {
+                    //             final id = await Provider.of<AuthProvider>(
+                    //                     context,
+                    //                     listen: false)
+                    //                 .resendOtpCode(formData);
+                    //             if (id != null || id.isEmpty) {
+                    //               print('send Success');
+                    //               print(id);
+                    //             } else {
+                    //               showDialog(
+                    //                   context: context,
+                    //                   builder: (context) => AlertDialog(
+                    //                         title: Text(
+                    //                             AppLocalizations.of(context)
+                    //                                 .processFailure),
+                    //                         content: Text(
+                    //                             AppLocalizations.of(context)
+                    //                                 .somethingWentWrong),
+                    //                       ));
+                    //             }
+                    //           } catch (e) {
+                    //             debugPrint(
+                    //                 (e as DioError).response.data.toString());
+                    //             debugPrint("Error Here Catch");
+                    //             showDialog(
+                    //                 context: context,
+                    //                 builder: (context) => AlertDialog(
+                    //                       title: Text(
+                    //                           AppLocalizations.of(context)
+                    //                               .processFailure),
+                    //                       content: Text(
+                    //                           AppLocalizations.of(context)
+                    //                               .somethingWentWrong),
+                    //                     ));
+                    //           }
+                    //         },
+                    //   child: Text(
+                    //     AppLocalizations.of(context).resendCode,
+                    //     style: TextStyle(
+                    //         fontWeight: FontWeight.w400,
+                    //         fontSize: 15.0,
+                    //         color: _counter > 0 ? Colors.grey : Colors.blue),
+                    //     textAlign: TextAlign.center,
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 10,
                     ),

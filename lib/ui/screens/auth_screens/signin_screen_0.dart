@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
@@ -246,6 +247,7 @@ class _SigninScreen0State extends State<SigninScreen0>
                   child: CustomRaisedButton(
                     onPressed: () async {
                       print(_signInInfo);
+                      print(city);
                       if (_signInFormkey.currentState.validate() && !loading) {
                         _loginButtonController.forward();
                         setState(() {
@@ -260,6 +262,10 @@ class _SigninScreen0State extends State<SigninScreen0>
                               _signInInfo['mobile'].replaceFirst('0', '');
                         }
                         _signInInfo['version'] = version;
+                        _signInInfo['cordinates'] = userCoordinates.toString();
+                        _signInInfo['address'] = city.toString();
+
+                        print(_signInInfo);
 
                         /// change ip country
 
@@ -326,13 +332,48 @@ class _SigninScreen0State extends State<SigninScreen0>
                                     ));
                             // ignore: avoid_print
                             print('$_signInInfo infooooo');
+                          } else if (success == 'you are in waiting list') {
+                            _loginButtonController.reverse();
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(AppLocalizations.of(context)
+                                        .loginFailed),
+                                  ],
+                                ),
+                                content: Text(
+                                  AppLocalizations.of(context).waitingList,
+                                  //textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
                           } else {
                             _loginButtonController.reverse();
                             showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                      title: Text(AppLocalizations.of(context)
-                                          .loginFailed),
+                                      title: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.warning,
+                                            color: Colors.red,
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(AppLocalizations.of(context)
+                                              .loginFailed),
+                                        ],
+                                      ),
                                       content: Text(AppLocalizations.of(context)
                                           .invalidCredentials),
                                     ));

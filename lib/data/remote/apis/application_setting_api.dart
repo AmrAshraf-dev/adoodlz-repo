@@ -23,11 +23,21 @@ class ApplicationSetting {
       // print(body['configrations']['whatsapp_mobile']);
       if (response.statusCode == 200) {
         pref.remove(whatsappNumberKey);
+        pref.remove(registerStatusKey);
+
         whatsappNumber = body['configrations']['whatsapp_mobile'] as String;
+        registerStatus = body['configrations']['register'] as bool;
+
         // print(whatsappNumber);
         pref.setString(whatsappNumberKey, whatsappNumber);
+        pref.setBool(registerStatusKey, registerStatus);
+
         whatsappNumber = pref.getString(whatsappNumberKey);
+        registerStatus = pref.getBool(registerStatusKey);
         print(whatsappNumber);
+        print('/////////////////////////////////');
+        print(registerStatus);
+
         return body;
       }
       return body;
