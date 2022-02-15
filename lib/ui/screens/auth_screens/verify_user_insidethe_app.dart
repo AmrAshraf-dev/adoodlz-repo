@@ -264,12 +264,7 @@ class _VerifyUserInsideAppState extends State<VerifyUserInsideApp> {
                                                       .wrongOtp),
                                             ));
                                   }
-                                } else {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text(AppLocalizations.of(context)
-                                        .invalidOtp),
-                                  ));
-                                }
+                                } else {}
                               }),
                         ),
                       ),
@@ -351,15 +346,15 @@ class _VerifyUserInsideAppState extends State<VerifyUserInsideApp> {
                     //   onTap: _counter > 0
                     //       ? () {}
                     //       : () async {
-                    //           formData['mobile'] = widget.mobileNumber;
-                    //          // formData['password'] = widget.password;
+                    //           //formData['mobile'] = widget.mobileNumber;
+                    //           // formData['password'] = widget.password;
                     //           //formData['id'] = widget.id;
-                    //           _startTimer();
-                    //           ResetPasswordApi rest = ResetPasswordApi();
-                    //           rest.resendOtp(
-                    //               mobile: widget.mobileNumber,
-                    //               context: context);
-                    //           print(widget.mobileNumber);
+                    //         //  _startTimer();
+                    //           // ResetPasswordApi rest = ResetPasswordApi();
+                    //           // rest.resendOtp(
+                    //           //     mobile: widget.mobileNumber,
+                    //           //     context: context);
+                    //           // print(widget.mobileNumber);
                     //           // try {
 
                     //           //   final id = await Provider.of<AuthProvider>(

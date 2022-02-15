@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:adoodlz/blocs/models/user.dart';
 import 'package:adoodlz/blocs/validators/signin_request_body.dart';
 import 'package:adoodlz/data/remote/dio_client.dart';
@@ -179,6 +181,36 @@ class AuthApi implements IAuthApi {
 
         print(response['_id'] as String);
         return response['_id'] as String;
+      } else {
+        throw NetworkErrorException();
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> resetPassword(String mobile, String firebaseToken) async {
+    try {
+      final dynamic response = await _dioClient.post(endpoints.forgetPassword,
+          data: {"mobile": mobile, "firebase_token": firebaseToken});
+      print('this our new Response ${response.toString()}');
+      if (response['valid'] != null) {
+        return response['valid'] as bool;
+      } else {
+        throw NetworkErrorException();
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> updatePassword(String mobile, String password) async {
+    try {
+      final dynamic response = await _dioClient.post(endpoints.changePassword,
+          data: {"mobile": mobile, "password": password});
+      print('this our new Response ${response.toString()}');
+      if (response['message'] != null) {
+        return response['message'] as String;
       } else {
         throw NetworkErrorException();
       }

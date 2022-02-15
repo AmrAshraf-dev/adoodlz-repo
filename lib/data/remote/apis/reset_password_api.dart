@@ -16,105 +16,104 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResetPasswordApi {
   Dio dio;
   @override
-  Future<String> reset(
-      {@required String mobile, @required BuildContext context}) async {
-    // TODO: implement reset
-    try {
-      // formData.remove('password_confirmation');
-      // debugPrint('this our Data live ${formData.toString()}');
-      //final formDataToSend = FormData.fromMap(formData);
+  // Future<String> reset(
+  //     {@required String mobile, @required BuildContext context}) async {
+  //   // TODO: implement reset
+  //   try {
+  //     // formData.remove('password_confirmation');
+  //     // debugPrint('this our Data live ${formData.toString()}');
+  //     //final formDataToSend = FormData.fromMap(formData);
 
-      //debugPrint('this our Data ${formDataToSend.toString()}');
-      final getCountry =
-          Provider.of<ChangeCountryIpProvider>(context, listen: false);
-      var response = await http
-          .post(Uri.parse(endpoints.forgetPassword), body: {"mobile": mobile});
+  //     //debugPrint('this our Data ${formDataToSend.toString()}');
+  //     final getCountry =
+  //         Provider.of<ChangeCountryIpProvider>(context, listen: false);
+  //     var response = await http
+  //         .post(Uri.parse(endpoints.forgetPassword), body: {"mobile": mobile});
 
-      print('htttttttttttttttttttttttttttttp');
-      print(response.statusCode);
-      print(response.body);
-      print(endpoints.forgetPassword);
-      var body = jsonDecode(response.body);
+  //     print('htttttttttttttttttttttttttttttp');
+  //     print(response.statusCode);
+  //     print(response.body);
+  //     print(endpoints.forgetPassword);
+  //     var body = jsonDecode(response.body);
 
-      if (response.statusCode == 200) {
-        resetPasswordToken = body['token'] as String;
-        resetPasswordId = body['id'] as int;
-        print(body['id']);
-        //  print(resetPasswordToken);
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        pref.setString(resetPasswordTokenKey, resetPasswordToken.toString());
-        pref.setInt(resetPasswordIdKey, resetPasswordId);
-        resetPasswordToken = pref.getString(resetPasswordTokenKey);
-        resetPasswordId = pref.getInt(resetPasswordIdKey);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (builder) =>
-                VerifyResetPasswordScreen(mobile, body['id'].toString(), true),
-          ),
-        );
-      } else if (response.statusCode == 404 ||
-          response.statusCode == 403 ||
-          response.statusCode == 402 ||
-          response.statusCode == 401) {
-        if (body['message'] == 'invalid phone number') {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(AppLocalizations.of(context).processFailure),
-              content: Text(AppLocalizations.of(context).invalidCredentials),
-            ),
-          );
-        } else if (body['message'] == 'user not found') {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(AppLocalizations.of(context).processFailure),
-              content: Text(AppLocalizations.of(context).invalidPhone),
-            ),
-          );
-        } else if (body['message'] == 'user registeration is not completed') {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(AppLocalizations.of(context).processFailure),
-              content: Text(AppLocalizations.of(context).verifyAccountAgain),
-            ),
-          );
-        } else if (body['message'] == 'otp already sent') {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(AppLocalizations.of(context).processFailure),
-              content: Text(AppLocalizations.of(context).sentOtp),
-            ),
-          );
-        }
+  //     if (response.statusCode == 200) {
+  //       resetPasswordToken = body['token'] as String;
+  //       resetPasswordId = body['id'] as int;
+  //       print(body['id']);
+  //       //  print(resetPasswordToken);
+  //       SharedPreferences pref = await SharedPreferences.getInstance();
+  //       pref.setString(resetPasswordTokenKey, resetPasswordToken.toString());
+  //       pref.setInt(resetPasswordIdKey, resetPasswordId);
+  //       resetPasswordToken = pref.getString(resetPasswordTokenKey);
+  //       resetPasswordId = pref.getInt(resetPasswordIdKey);
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (builder) =>
+  //               VerifyResetPasswordScreen(mobile, body['id'].toString(), true),
+  //         ),
+  //       );
+  //     } else if (response.statusCode == 404 ||
+  //         response.statusCode == 403 ||
+  //         response.statusCode == 402 ||
+  //         response.statusCode == 401) {
+  //       if (body['message'] == 'invalid phone number') {
+  //         showDialog(
+  //           context: context,
+  //           builder: (context) => AlertDialog(
+  //             title: Text(AppLocalizations.of(context).processFailure),
+  //             content: Text(AppLocalizations.of(context).invalidCredentials),
+  //           ),
+  //         );
+  //       } else if (body['message'] == 'user not found') {
+  //         showDialog(
+  //           context: context,
+  //           builder: (context) => AlertDialog(
+  //             title: Text(AppLocalizations.of(context).processFailure),
+  //             content: Text(AppLocalizations.of(context).invalidPhone),
+  //           ),
+  //         );
+  //       } else if (body['message'] == 'user registeration is not completed') {
+  //         showDialog(
+  //           context: context,
+  //           builder: (context) => AlertDialog(
+  //             title: Text(AppLocalizations.of(context).processFailure),
+  //             content: Text(AppLocalizations.of(context).verifyAccountAgain),
+  //           ),
+  //         );
+  //       } else if (body['message'] == 'otp already sent') {
+  //         showDialog(
+  //           context: context,
+  //           builder: (context) => AlertDialog(
+  //             title: Text(AppLocalizations.of(context).processFailure),
+  //             content: Text(AppLocalizations.of(context).sentOtp),
+  //           ),
+  //         );
+  //       }
 
-        /////////////////////////////////
+  //       /////////////////////////////////
 
-        //print(pref.getString(resetPasswordTokenKey));
+  //       //print(pref.getString(resetPasswordTokenKey));
 
-        return response.body;
-      }
-      return response.body;
+  //       return response.body;
+  //     }
+  //     return response.body;
 
-      // if (response['sent'] != null && response['sent'] as bool) {
-      //   print('method Success');
-      //   print(response['_id'] as String);
-      //   return response['_id'] as String;
-      // } else {
-      //   throw NetworkErrorException();
-      // }
-    } catch (e) {
-      rethrow;
-    }
-  }
+  //     // if (response['sent'] != null && response['sent'] as bool) {
+  //     //   print('method Success');
+  //     //   print(response['_id'] as String);
+  //     //   return response['_id'] as String;
+  //     // } else {
+  //     //   throw NetworkErrorException();
+  //     // }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
   Future<String> requestNewPassword({
     @required BuildContext context,
@@ -129,7 +128,7 @@ class ResetPasswordApi {
 
       //debugPrint('this our Data ${formDataToSend.toString()}');
 
-      var response = await http.post(Uri.parse(endpoints.verifyResetPassword),
+      var response = await http.post(Uri.parse(endpoints.changePassword),
           body: {"password": password},
           headers: {"Authorization": 'Bearer $token'});
       print('================================================================');
@@ -165,7 +164,9 @@ class ResetPasswordApi {
   }
 
   Future<String> resendOtp(
-      {@required String mobile, @required BuildContext context}) async {
+      {@required String mobile,
+      @required BuildContext context,
+      @required firebaseTokenn}) async {
     // TODO: implement reset
     try {
       // formData.remove('password_confirmation');
@@ -175,8 +176,8 @@ class ResetPasswordApi {
       //debugPrint('this our Data ${formDataToSend.toString()}');
       final getCountry =
           Provider.of<ChangeCountryIpProvider>(context, listen: false);
-      var response = await http
-          .post(Uri.parse(endpoints.forgetPassword), body: {"mobile": mobile});
+      var response = await http.post(Uri.parse(endpoints.forgetPassword),
+          body: {"mobile": mobile, "firebase_token": firebaseTokenn});
 
       print('htttttttttttttttttttttttttttttp');
       print(response.statusCode);
@@ -184,15 +185,15 @@ class ResetPasswordApi {
       print(endpoints.forgetPassword);
       var body = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        resetPasswordToken = body['token'] as String;
-        resetPasswordId = body['id'] as int;
-        print(body['id']);
-        //  print(resetPasswordToken);
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        pref.setString(resetPasswordTokenKey, resetPasswordToken.toString());
-        pref.setInt(resetPasswordIdKey, resetPasswordId);
-        resetPasswordToken = pref.getString(resetPasswordTokenKey);
-        resetPasswordId = pref.getInt(resetPasswordIdKey);
+        // resetPasswordToken = body['token'] as String;
+        // resetPasswordId = body['id'] as int;
+        // print(body['id']);
+        // //  print(resetPasswordToken);
+        // SharedPreferences pref = await SharedPreferences.getInstance();
+        // pref.setString(resetPasswordTokenKey, resetPasswordToken.toString());
+        // pref.setInt(resetPasswordIdKey, resetPasswordId);
+        // resetPasswordToken = pref.getString(resetPasswordTokenKey);
+        // resetPasswordId = pref.getInt(resetPasswordIdKey);
       }
       return response.body;
 

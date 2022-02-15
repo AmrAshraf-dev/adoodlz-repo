@@ -14,6 +14,7 @@ SigninRequestBody _$SigninRequestBodyFromJson(Map<String, dynamic> json) {
     coordinates: json['cordinates'] as String,
     address: json['address'] as String,
     firebaseToken: json['firebase_token'] as String,
+    deviceId: json['deviceId'] as String,
   );
 }
 
@@ -25,4 +26,5 @@ Map<String, dynamic> _$SigninRequestBodyToJson(SigninRequestBody instance) =>
       'cordinates': instance.coordinates,
       'address': instance.address,
       'firebase_token': instance.firebaseToken,
+      'deviceId': instance.deviceId,
     };

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
+import 'package:adoodlz/data/remote/constants/consts_function.dart';
 import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
 import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 
@@ -48,18 +49,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   File image;
   final _passwordController = TextEditingController();
   String _countryCode;
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-
-  Future<void> getTokenFireBasee() async {
-    firebasetoken = await _fcm.getToken();
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString(firebasetokenKey, firebasetoken);
-    print('------------------------------------------');
-    print(pref.getString(firebasetokenKey));
-    firebasetoken = pref.getString(firebasetokenKey);
-
-    print(firebasetoken);
-  }
 
   @override
   void initState() {
@@ -506,6 +495,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           //     builder: (builder) => PenddingScreen(),
                           //   ),
                           // );
+                          print(deviceId);
                           print(registerVersion);
                           if (agree) {
                             if (_signupFormKey.currentState.validate() &&
@@ -528,6 +518,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 _signupInfo['address'] = city;
                                 _signupInfo['firebase_token'] =
                                     firebasetoken.toString();
+                                _signupInfo['deviceId'] = deviceId.toString();
 
                                 print(_signupInfo);
                                 try {

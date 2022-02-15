@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
+import 'package:adoodlz/data/remote/constants/consts_function.dart';
 import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/ui/screens/language_selection_screen_0.dart';
 import 'package:dio/dio.dart';
@@ -12,6 +13,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:adoodlz/blocs/validators/signin_request_body.dart';
 import 'package:adoodlz/helpers/ui/ui_helpers.dart';
 import 'package:adoodlz/ui/widgets/custom_raised_button.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:adoodlz/helpers/ui/app_colors.dart';
 import 'package:adoodlz/routes/router.dart';
@@ -44,6 +47,7 @@ class _SigninScreen0State extends State<SigninScreen0>
 
   @override
   void initState() {
+    //locationPermission();
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 300), vsync: this);
     buttonSqueezeAnimation = Tween(
@@ -67,6 +71,20 @@ class _SigninScreen0State extends State<SigninScreen0>
     _signInInfo = {};
     super.initState();
   }
+
+  // Future<void> locationPermission() async {
+  //   LocationPermission permission;
+  //   permission = await Geolocator.checkPermission();
+
+  //   if (permission == LocationPermission.denied ||
+  //       permission == LocationPermission.deniedForever) {
+  //     Get.defaultDialog(
+  //         // ignore: prefer_const_constructors
+  //         content: Center(
+  //       child: Text('You have to allow this app to access your location'),
+  //     ));
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -246,8 +264,6 @@ class _SigninScreen0State extends State<SigninScreen0>
                 Center(
                   child: CustomRaisedButton(
                     onPressed: () async {
-                      print(_signInInfo);
-                      print(city);
                       if (_signInFormkey.currentState.validate() && !loading) {
                         _loginButtonController.forward();
                         setState(() {
@@ -264,6 +280,7 @@ class _SigninScreen0State extends State<SigninScreen0>
                         _signInInfo['version'] = version;
                         _signInInfo['cordinates'] = userCoordinates.toString();
                         _signInInfo['address'] = city.toString();
+                        _signInInfo['deviceId'] = deviceId.toString();
 
                         print(_signInInfo);
 

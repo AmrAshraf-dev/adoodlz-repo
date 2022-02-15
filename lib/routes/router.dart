@@ -45,7 +45,7 @@ class Routes {
   static const String verifyResetPasswordPage = '/verifyResetPassword';
   static const String verifyInsideApp = '/verifyInsideApp';
 
-  static const String resetPasswordScreen = '/resetPasswordScreen';
+  // static const String resetPasswordScreen = '/resetPasswordScreen';
 
   /// //////////////////
   static const String changePasswordScreen = '/change_password';
@@ -114,9 +114,11 @@ class CustomRouter {
         final Map<String, dynamic> args =
             settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-          builder: (_) => VerifyResetPasswordScreen(args['number'] as String,
-              args['_id'] as String, args['resetPassword'] as bool,
-              password: args['password'] as String),
+          builder: (_) => VerifyResetPasswordScreen(
+            args['number'] as String,
+            // args['_id'] as String, args['resetPassword'] as bool,
+            // password: args['password'] as String
+          ),
         );
 
       case Routes.verifyInsideApp:
@@ -143,8 +145,11 @@ class CustomRouter {
             builder: (_) => PostDetailsScreen(post: args['post'] as Post));
       case Routes.aboutScreen:
         return MaterialPageRoute(builder: (_) => const AboutScreen());
-      case Routes.resetPasswordScreen:
-        return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
+      //case Routes.resetPasswordScreen:
+      // return MaterialPageRoute(
+      //     builder: (_) => ResetPasswordScreen(
+      //           rmobile: ,
+      //         ));
       case Routes.termsScreen:
         return MaterialPageRoute(builder: (_) => const TermsScreen());
       case Routes.signupScreen:

@@ -2,9 +2,12 @@ import 'package:adoodlz/blocs/providers/auth_provider.dart';
 import 'package:adoodlz/blocs/providers/change_ip_country_provider.dart';
 import 'package:adoodlz/data/remote/apis/auth_api.dart';
 import 'package:adoodlz/data/remote/apis/reset_password_api.dart';
+import 'package:adoodlz/data/remote/constants/consts_function.dart';
 import 'package:adoodlz/helpers/shared_preferences_keys.dart';
 import 'package:adoodlz/routes/router.dart';
 import 'package:adoodlz/data/remote/constants/endpoints.dart' as endpoints;
+import 'package:adoodlz/ui/screens/auth_screens/reset_password_screen.dart';
+import 'package:adoodlz/ui/screens/auth_screens/verify_reset_password.dart';
 
 import 'package:adoodlz/ui/widgets/custom_raised_button.dart';
 import 'package:dio/dio.dart';
@@ -50,6 +53,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
     _loginButtonController.addListener(() {
       setState(() {});
     });
+    getTokenFireBasee();
   }
 
   Widget build(BuildContext context) {
@@ -162,9 +166,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                       if (_forgetPasswordFormKey.currentState.validate() &&
                           !forgetPasswordloading) {
                         _loginButtonController.forward();
-                        // setState(() {
-                        //   forgetPasswordloading = true;
-                        // });
+                        setState(() {
+                          forgetPasswordloading = true;
+                        });
 
                         _forgetPasswordFormKey.currentState.save();
                         FocusManager.instance.primaryFocus.unfocus();
@@ -183,20 +187,43 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                                     listen: false)
                                 .changeToEgypt();
                           }
-                          ResetPasswordApi rest = ResetPasswordApi();
-                          rest.reset(mobile: mobileNumber, context: context);
-                          // String id = await Provider.of<AuthProvider>(context,
-                          //         listen: false)
-                          //     .toString();
-                          // Navigator.of(context).pushReplacementNamed(
-                          //     Routes.verifyResetPasswordPage,
-                          //     arguments: <String, dynamic>{
-                          //       'number': mobileNumber,
-                          //       '_id': id,
-                          //       'resetPassword': true,
-                          //     });
+                          final success =
+                              await Provider.of<AuthApi>(context, listen: false)
+                                  .resetPassword(mobileNumber, firebasetoken);
+
+                          print('validddddddddddddddddddddddddddddddd');
+                          print(firebasetoken);
+
+                          print(success);
+                          if (success) {
+                            Navigator.pop(context);
+
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) => ResetPasswordScreen(
+                                  rmobile: mobileNumber,
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              forgetPasswordloading = false;
+                            });
+                          } else if (!success) {
+                            print("mohamedd");
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) =>
+                                    VerifyResetPasswordScreen(mobileNumber),
+                              ),
+                            );
+                            setState(() {
+                              forgetPasswordloading = false;
+                            });
+                          }
                         } catch (e) {
-                          debugPrint((e as DioError).response.data.toString());
+                          print((e as DioError).response.data.toString());
                           debugPrint("Error Here Catch");
                           if ((e as DioError).response.data.toString() ==
                               'otp already sent') {
@@ -209,6 +236,57 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                                     Text(AppLocalizations.of(context).sentOtp),
                               ),
                             );
+                            setState(() {
+                              forgetPasswordloading = false;
+                            });
+                          } else if ((e as DioError)
+                                  .response
+                                  .data['message']
+                                  .toString() ==
+                              'user registeration is not completed') {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(AppLocalizations.of(context)
+                                    .processFailure),
+                                content: Text(
+                                    AppLocalizations.of(context).waitingList),
+                              ),
+                            );
+                            setState(() {
+                              forgetPasswordloading = false;
+                            });
+                          }
+                          if ((e as DioError)
+                                  .response
+                                  .data['message']
+                                  .toString() ==
+                              'user not found') {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(AppLocalizations.of(context)
+                                    .processFailure),
+                                content: Text(AppLocalizations.of(context)
+                                    .invalidCredentials),
+                              ),
+                            );
+                            setState(() {
+                              forgetPasswordloading = false;
+                            });
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(AppLocalizations.of(context)
+                                    .processFailure),
+                                content: Text(AppLocalizations.of(context)
+                                    .somethingWentWrong),
+                              ),
+                            );
+                            setState(() {
+                              forgetPasswordloading = false;
+                            });
                           }
                         }
 

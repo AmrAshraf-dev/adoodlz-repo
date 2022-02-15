@@ -20,12 +20,14 @@ import 'package:provider/provider.dart';
 class VerifyResetPasswordScreen extends StatefulWidget {
   // ignore: avoid_positional_boolean_parameters
   const VerifyResetPasswordScreen(
-      this.mobileNumber, this.id, this.resetPassword,
-      {this.password});
+    this.mobileNumber,
+    //  this.id, this.resetPassword,
+    // {this.password}
+  );
   final String mobileNumber;
-  final String id;
-  final bool resetPassword;
-  final String password;
+  // final String id;
+  // final bool resetPassword;
+  // final String password;
 
   @override
   _VerifyResetPasswordScreenState createState() =>
@@ -165,7 +167,8 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                               ),
                               backgroundColor:
                                   Theme.of(context).scaffoldBackgroundColor,
-                              onSubmitted: (value) async {
+                              onSubmitted: (value) async {},
+                              onChanged: (value) async {
                                 if (!loading &&
                                     _pinController.text.isNotEmpty &&
                                     _pinController.text.length == 4) {
@@ -180,53 +183,66 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                                         .verifyOtp(widget.mobileNumber, pin);
 
                                     if (successOtp) {
-                                      print('hey');
+                                      Navigator.pop(context);
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (builder) =>
+                                              ResetPasswordScreen(
+                                                  rmobile: widget.mobileNumber),
+                                        ),
+                                      );
+                                      //print("After Sign in");
+                                      setState(() {
+                                        loading = false;
+                                      });
 
-                                      print('we get pass');
-                                      try {
-                                        Navigator.pop(context);
-                                        Navigator.of(context)
-                                            .pushReplacementNamed(
-                                                Routes.resetPasswordScreen);
-                                        //print("After Sign in");
+                                      //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
 
-                                      } catch (e) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                                  title: Text(
-                                                      AppLocalizations.of(
-                                                              context)
-                                                          .loginFailed),
-                                                  content: Text(
-                                                      AppLocalizations.of(
-                                                              context)
-                                                          .wrongOtp),
-                                                ));
-                                        //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
-                                      }
                                     } else {
                                       showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
-                                                title: Text(
-                                                    AppLocalizations.of(context)
+                                                title: Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.warning,
+                                                      color: Colors.red,
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Text(AppLocalizations.of(
+                                                            context)
                                                         .processFailure),
+                                                  ],
+                                                ),
                                                 content: Text(
                                                     AppLocalizations.of(context)
-                                                        .somethingWentWrong),
+                                                        .wrongOtp),
                                               ));
                                     }
                                   } catch (e) {
                                     showDialog(
                                         context: context,
                                         builder: (context) => AlertDialog(
-                                              title: Text(
-                                                  AppLocalizations.of(context)
+                                              title: Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.warning,
+                                                    color: Colors.red,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(AppLocalizations.of(
+                                                          context)
                                                       .processFailure),
+                                                ],
+                                              ),
                                               content: Text(
                                                   AppLocalizations.of(context)
-                                                      .somethingWentWrong),
+                                                      .wrongOtp),
                                             ));
                                   } finally {
                                     setState(() {
@@ -234,13 +250,12 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                                     });
                                   }
                                 } else {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text(AppLocalizations.of(context)
-                                        .invalidOtp),
-                                  ));
+                                  // Scaffold.of(context).showSnackBar(SnackBar(
+                                  //   content: Text(AppLocalizations.of(context)
+                                  //       .invalidOtp),
+                                  // ));
                                 }
-                              },
-                              onChanged: (value) async {}),
+                              }),
                         ),
                       ),
                     ),
@@ -265,39 +280,20 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                                   .verifyOtp(widget.mobileNumber, pin);
 
                               if (successOtp) {
-                                print('hey');
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (builder) => ResetPasswordScreen(
+                                        rmobile: widget.mobileNumber),
+                                  ),
+                                );
+                                //print("After Sign in");
+                                setState(() {
+                                  loading = false;
+                                });
 
-                                print('we get pass');
-                                try {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).pushReplacementNamed(
-                                      Routes.resetPasswordScreen);
-                                  //print("After Sign in");
+                                //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
 
-                                } catch (e) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                            title: Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.warning,
-                                                  color: Colors.red,
-                                                ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                    AppLocalizations.of(context)
-                                                        .loginFailed),
-                                              ],
-                                            ),
-                                            content: Text(
-                                                AppLocalizations.of(context)
-                                                    .wrongOtp),
-                                          ));
-                                  //print('$_signupInfo my registeration info الاسم و الباسورد و التأكيد');
-                                }
                               } else {
                                 showDialog(
                                     context: context,
@@ -317,18 +313,29 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                                           ),
                                           content: Text(
                                               AppLocalizations.of(context)
-                                                  .somethingWentWrong),
+                                                  .wrongOtp),
                                         ));
                               }
                             } catch (e) {
                               showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                        title: Text(AppLocalizations.of(context)
-                                            .processFailure),
+                                        title: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.warning,
+                                              color: Colors.red,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(AppLocalizations.of(context)
+                                                .processFailure),
+                                          ],
+                                        ),
                                         content: Text(
                                             AppLocalizations.of(context)
-                                                .somethingWentWrong),
+                                                .wrongOtp),
                                       ));
                             } finally {
                               setState(() {
@@ -336,10 +343,10 @@ class _VerifyResetPasswordScreenState extends State<VerifyResetPasswordScreen> {
                               });
                             }
                           } else {
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text(AppLocalizations.of(context).invalidOtp),
-                            ));
+                            // Scaffold.of(context).showSnackBar(SnackBar(
+                            //   content:
+                            //       Text(AppLocalizations.of(context).invalidOtp),
+                            // ));
                           }
                         },
                         label: AppLocalizations.of(context).verify,

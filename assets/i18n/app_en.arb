@@ -382,7 +382,7 @@
         "description": "Account Verification"
     },
    
-   "waitingBalance": "Under process\n points",
+   "waitingBalance": "In review",
     "@waitingBalance": {
         "description": "Under processing points"
     },
@@ -491,7 +491,7 @@
         "description": "Dont have an acoount?"
     },
 
-    "resendCode": "Resend the code",
+    "resendCode": "Recount",
     "@resendCode": {
         "description": "Resend the code"
     },

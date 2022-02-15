@@ -11,6 +11,7 @@ class SigninRequestBody {
   final String coordinates;
   final String address;
   final String firebaseToken;
+  final String deviceId;
 
   SigninRequestBody(
       {this.mobile,
@@ -18,6 +19,7 @@ class SigninRequestBody {
       this.version,
       this.coordinates,
       this.firebaseToken,
+      this.deviceId,
       this.address});
 
   factory SigninRequestBody.fromJson(Map<String, dynamic> json) =>

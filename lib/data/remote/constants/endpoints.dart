@@ -50,8 +50,8 @@ const String getAppConfig = 'https://adoodlz.herokuapp.com/config';
 
 final String taskSubmit = '$baseUrl/taskSubmit';
 
-final String forgetPassword = '$_otpEndpoint/forget/password';
+final String forgetPassword = '$_otpEndpoint/forget/password/fb';
 
-final String verifyResetPassword = '$_otpEndpoint/change/password';
+final String changePassword = '$_otpEndpoint/change/password/fb';
 
 const ipUrl = 'http://ip-api.com/json';
